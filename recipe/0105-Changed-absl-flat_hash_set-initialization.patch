@@ -1,0 +1,31 @@
+From de5766257124a3b33352b258ace5eb93f71e931a Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Mon, 17 Aug 2020 10:17:58 +0000
+Subject: [PATCH] Changed absl flat_hash_set initialization
+
+---
+ tensorflow/core/profiler/utils/xplane_schema.cc | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/tensorflow/core/profiler/utils/xplane_schema.cc b/tensorflow/core/profiler/utils/xplane_schema.cc
+index 5ca8326..13e7522 100644
+--- a/tensorflow/core/profiler/utils/xplane_schema.cc
++++ b/tensorflow/core/profiler/utils/xplane_schema.cc
+@@ -221,12 +221,13 @@ absl::optional<int64> FindStatType(absl::string_view stat_name) {
+ }
+ 
+ bool IsInternalStat(absl::optional<int64> stat_type) {
+-  static const auto* const kInternalStats = new absl::flat_hash_set<int64>{
++  std::vector<int64> stats = {
+       StatType::kKernelDetails, StatType::kLevel0,
+       StatType::kProducerType,  StatType::kProducerId,
+       StatType::kConsumerType,  StatType::kConsumerId,
+       StatType::kIsRoot,        StatType::kIsAsync,
+       StatType::kFlops,         StatType::kBytesAccessed};
++  static const auto* const kInternalStats = new absl::flat_hash_set<int64>(stats.begin(), stats.end());
+   return stat_type.has_value() && kInternalStats->contains(*stat_type);
+ }
+ 
+-- 
+1.8.3.1
+

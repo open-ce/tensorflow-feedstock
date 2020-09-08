@@ -1,0 +1,25 @@
+# Recipe to build Tensorflow meta package
+{% set build_version = "2.3.0" %}
+{% set estimator_version = "2.3.0" %}
+
+package:
+  name: tensorflow{{ '' if build_type == 'cuda' else '-cpu' }}
+  version: {{ build_version }}
+
+build:
+  number: 1
+
+requirements:
+  run:
+    - tensorflow-base        {{ build_version }}
+    - _tensorflow_select     {{ tensorflow_select_version }}
+    - tensorboard          =={{ tensorboard }}
+    - tensorflow-estimator =={{ estimator_version }}
+
+about:
+  summary: Meta-package to install {{ 'GPU-enabled' if build_type == 'cuda' else 'CPU-only' }} TensorFlow variant
+
+extra:
+  recipe-maintainers:
+    - open-ce/open-ce-dev-team
+
