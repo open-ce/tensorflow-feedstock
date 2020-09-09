@@ -1,0 +1,101 @@
+From 102d99cac6758ab41d1fc11f3c580c2143ab9da7 Mon Sep 17 00:00:00 2001
+From: Jon Triebenbach <jlt@us.ibm.com>
+Date: Thu, 18 Jul 2019 19:23:28 +0000
+Subject: [PATCH] Include c and cc header files - mldlppc/tracker#10608
+
+---
+ tensorflow/cc/BUILD      | 51 ++++++++++++++++++++++++++++++++++++++++++++++++
+ tensorflow/cc/cc_ops.bzl | 15 ++++++++++++++
+ 2 files changed, 66 insertions(+)
+ create mode 100644 tensorflow/cc/cc_ops.bzl
+
+diff --git a/tensorflow/cc/BUILD b/tensorflow/cc/BUILD
+index e457608..8135c0e 100644
+--- a/tensorflow/cc/BUILD
++++ b/tensorflow/cc/BUILD
+@@ -12,6 +12,8 @@ load(
+     "transitive_hdrs",
+ )
+ 
++load("//tensorflow/cc:cc_ops.bzl", "tf_cc_ops_hdrs",)
++
+ package(
+     default_visibility = ["//visibility:public"],
+     licenses = ["notice"],  # Apache 2.0
+@@ -824,3 +826,52 @@ transitive_hdrs(
+         "//tensorflow/cc/tools:freeze_saved_model",
+     ],
+ )
++
++tf_cc_ops_hdrs(
++    name = "cc_ops_hdrs",
++    op_lib_names = [
++        "array_ops",
++        "audio_ops",
++        "candidate_sampling_ops",
++        "control_flow_ops",
++        "data_flow_ops",
++        "image_ops",
++        "io_ops",
++        "linalg_ops",
++        "logging_ops",
++        "lookup_ops",
++        "manip_ops",
++        "math_ops",
++        "nn_ops",
++        "no_op",
++        "parsing_ops",
++        "random_ops",
++        "sparse_ops",
++        "state_ops",
++        "string_ops",
++        "training_ops",
++        "user_ops",
++    ],
++    visibility = ["//tensorflow:__subpackages__"],
++)
++
++filegroup(
++    name = "cc_ops_headers",
++    srcs = [
++        "ops/const_op.h",
++        "ops/standard_ops.h",
++    ],
++    visibility = ["//tensorflow:__subpackages__"],
++)
++
++filegroup(
++    name = "cc_gen_headers",
++    srcs = glob(["ops/*.h"]) + [":cc_ops_hdrs"],
++    visibility = ["//tensorflow:__subpackages__"],
++)
++
++filegroup(
++    name = "cc_framework_headers",
++    srcs = glob(["framework/*.h"], exclude=["testutil.h"]),
++    visibility = ["//tensorflow:__subpackages__"],
++)
+diff --git a/tensorflow/cc/cc_ops.bzl b/tensorflow/cc/cc_ops.bzl
+new file mode 100644
+index 0000000..17fdd92
+--- /dev/null
++++ b/tensorflow/cc/cc_ops.bzl
+@@ -0,0 +1,15 @@
++def tf_cc_ops_hdrs(
++        name,
++        op_lib_names,
++        visibility):
++    subhdrs = []
++    internalhdrs = []
++    for n in op_lib_names:
++        subhdrs += ["ops/" + n + ".h"]
++        internalhdrs += ["ops/" + n + "_internal.h"]
++
++    native.filegroup(
++        name = name,
++        srcs = subhdrs + internalhdrs,
++        visibility = visibility,
++    )
+-- 
+1.8.3.1
+

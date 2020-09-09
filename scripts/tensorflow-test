@@ -1,0 +1,111 @@
+#!/bin/bash
+# *****************************************************************
+#
+# Licensed Materials - Property of IBM
+#
+# (C) Copyright IBM Corp. 2016, 2019. All Rights Reserved.
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# *****************************************************************
+
+if [ -z "$CONDA_PREFIX" ]
+then
+    echo "CONDA_PREFIX not set. A conda environment must be activated"
+    echo "before running this command. Run:"
+    echo "conda activate [<env>]"
+    exit 1
+fi
+
+SYS_PYTHON_MAJOR=$(python -c "import sys;print(sys.version_info.major)")
+SYS_PYTHON_MINOR=$(python -c "import sys;print(sys.version_info.minor)")
+COMPONENT="tensorflow"
+TF_PKG_PATH=${CONDA_PREFIX}/lib/python${SYS_PYTHON_MAJOR}.${SYS_PYTHON_MINOR}/site-packages/$COMPONENT
+
+if [ ! -d "$TF_PKG_PATH" ]
+then
+   echo "The directory $TF_PKG_PATH does not exist. Make sure the correct conda"
+   echo "environment is activated."
+   exit 1
+fi
+
+TMP_WORKINGDIR=""
+
+cleanup() {
+   popd
+   if [ "$TMP_WORKINGDIR" != "" ]; then
+     rm -rf $TMP_WORKINGDIR
+   fi
+}
+
+catch_ctrlc() {
+    cleanup
+    exit 2
+}
+
+# initialise trap to call catch_ctrlc function
+# when signal 2 (SIGINT) is received
+trap "catch_ctrlc" 2
+
+echo "Basic test of tensorflow - A Hello World!!!..."
+echo "--------------------------------------------------------------------------------------------------------"
+python ${CONDA_PREFIX}/bin/test-tensorflow-installation.py
+
+echo "Basic test of tensorflow 1.X APIs - A Hello World!!!..."
+echo "--------------------------------------------------------------------------------------------------------"
+python ${CONDA_PREFIX}/bin/test-tensorflow-installation-r1.py
+
+packages_to_install=""
+
+if ! python -c "import matplotlib" &> /dev/null; then
+    packages_to_install+=" matplotlib"
+fi
+if ! python -c "import pandas" &> /dev/null; then
+    packages_to_install+=" pandas"
+fi
+#Need to force seaborn to use the Agg backend for matplotlib in a terminal session
+if ! MPLBACKEND=Agg python -c "import seaborn" &> /dev/null; then
+    packages_to_install+=" seaborn"
+fi
+if ! python -c "import pathlib" &> /dev/null; then
+    packages_to_install+=" pathlib"
+fi
+
+if [ "$packages_to_install" != "" ]; then
+    echo "The following packages are necessary to run the example programs:$packages_to_install"
+    echo "Run: 'conda install$packages_to_install' to install the packages"
+    exit 1
+fi
+
+TMP_WORKINGDIR="$(mktemp -d -t tftest.XXXXXX)"
+pushd $TMP_WORKINGDIR
+
+echo "========================================================================================================"
+echo "Tensorflow tests ..."
+echo "========================================================================================================"
+
+all_python_files=`find ${TF_PKG_PATH}/examples/ -name "*.py"`
+
+skipped_files=("__init__.py" "mnist_util.py") 
+
+for file in $all_python_files; do
+
+  filename=`basename $file`
+  
+  if [[ ! -z $(echo "${skipped_files[@]}" | grep -w $filename) ]]; then
+    continue;
+  fi
+  
+  echo "-----------------------------------------------------------------------------------------------------";
+  echo $file;
+  echo "-----------------------------------------------------------------------------------------------------";
+
+  python $file
+
+  echo "=====================================================================================================";
+done
+
+cleanup
+echo "DONE!!!"
+

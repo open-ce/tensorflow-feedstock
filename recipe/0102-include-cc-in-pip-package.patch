@@ -1,0 +1,46 @@
+From 75272a8bea88ca58d5a92482a266ce14457f1c43 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Tue, 28 Jul 2020 12:50:55 +0000
+Subject: [PATCH] Pip package build additions
+
+---
+ tensorflow/tools/pip_package/BUILD    | 7 +++++++
+ tensorflow/tools/pip_package/setup.py | 4 +++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/tensorflow/tools/pip_package/BUILD b/tensorflow/tools/pip_package/BUILD
+index b2dd7e2..2ca7c69 100644
+--- a/tensorflow/tools/pip_package/BUILD
++++ b/tensorflow/tools/pip_package/BUILD
+@@ -102,6 +102,13 @@ COMMON_PIP_DEPS = [
+     "//tensorflow/lite/python/testdata:interpreter_test_data",
+     "//tensorflow/lite/python:tflite_convert",
+     "//tensorflow/lite/toco/python:toco_from_protos",
++    "//tensorflow/c:headers",
++    "//tensorflow/c/eager:headers",
++    "//tensorflow/cc:cc_ops_headers",
++    "//tensorflow/cc:cc_gen_headers",
++    "//tensorflow/cc:cc_framework_headers",
++    "//tensorflow:libtensorflow_cc.so",
++    "//tensorflow:libtensorflow.so",
+     "//tensorflow/python/autograph/core:test_lib",
+     "//tensorflow/python/autograph/impl/testing:pybind_for_testing",
+     "//tensorflow/python/autograph/pyct/testing",
+diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
+index 18306fe..cfe8889 100644
+--- a/tensorflow/tools/pip_package/setup.py
++++ b/tensorflow/tools/pip_package/setup.py
+@@ -253,7 +253,9 @@ headers = (
+     list(find_files('*', 'third_party/eigen3')) +
+     list(find_files('*.h', 'tensorflow/include/external/com_google_absl')) +
+     list(find_files('*.inc', 'tensorflow/include/external/com_google_absl')) +
+-    list(find_files('*', 'tensorflow/include/external/eigen_archive')))
++    list(find_files('*', 'tensorflow/include/external/eigen_archive')) +
++    list(find_files('*', 'tensorflow/c')) +
++    list(find_files('*', 'tensorflow/cc')))
+ 
+ setup(
+     name=project_name,
+-- 
+1.8.3.1
+

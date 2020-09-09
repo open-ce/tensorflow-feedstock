@@ -1,0 +1,70 @@
+From 9a48b3fb26146ae89d66db83ad19d963360ad629 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Mon, 17 Aug 2020 10:19:15 +0000
+Subject: [PATCH] Fixed linking error in conda builds
+
+---
+ .../gpus/crosstool/cc_toolchain_config.bzl.tpl     | 28 +++++++++++++---------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
+
+diff --git a/third_party/gpus/crosstool/cc_toolchain_config.bzl.tpl b/third_party/gpus/crosstool/cc_toolchain_config.bzl.tpl
+index eb320a9..c26c6c6 100644
+--- a/third_party/gpus/crosstool/cc_toolchain_config.bzl.tpl
++++ b/third_party/gpus/crosstool/cc_toolchain_config.bzl.tpl
+@@ -497,11 +497,6 @@ def _features(cpu, compiler, ctx):
+                     flag_set(
+                         actions = all_link_actions(),
+                         flag_groups = [
+-                            flag_group(flags = (
+-                                ["-Wl,-no-as-needed"] if cpu == "local" else []
+-                            ) + [
+-                                "-B" + ctx.attr.linker_bin_path,
+-                            ]),
+                             flag_group(
+                                 flags = ["@%{linker_param_file}"],
+                                 expand_if_available = "linker_param_file",
+@@ -556,17 +551,27 @@ def _features(cpu, compiler, ctx):
+                             "-Wl,-z,relro,-z,now",
+                         ])],
+                     ),
+-                ] if cpu == "local" else []) + ([
++                ] if cpu == "local" else []) + [
++                    flag_set(
++                        actions = all_link_actions(),
++                        flag_groups = [flag_group(flags = ["-Wl,-no-as-needed"])],
++                        with_features = [with_feature_set(features = ["alwayslink"])],
++                    ),
+                     flag_set(
+                         actions = all_link_actions(),
+                         flag_groups = [
+-                            flag_group(flags = ["-Wl,--gc-sections"]),
+-                            flag_group(
+-                                flags = ["-Wl,--build-id=md5", "-Wl,--hash-style=gnu"],
+-                            ),
++                            flag_group(flags = ["-B" + ctx.attr.linker_bin_path]),
+                         ],
+                     ),
+-                ] if cpu == "local" else []) + ([
++                ] + ([flag_set(
++                    actions = all_link_actions(),
++                    flag_groups = [
++                        flag_group(flags = ["-Wl,--gc-sections"]),
++                        flag_group(
++                            flags = ["-Wl,--build-id=md5", "-Wl,--hash-style=gnu"],
++                        ),
++                    ],
++                )] if cpu == "local" else []) + ([
+                     flag_set(
+                         actions = all_link_actions(),
+                         flag_groups = [flag_group(flags = ["-undefined", "dynamic_lookup"])],
+@@ -588,6 +593,7 @@ def _features(cpu, compiler, ctx):
+                 name = "opt",
+                 implies = ["disable-assertions"],
+             ),
++            feature(name = "alwayslink", enabled = cpu == "local"),
+             feature(name = "fastbuild"),
+             feature(name = "dbg"),
+             feature(name = "supports_dynamic_linker", enabled = True),
+-- 
+1.8.3.1
+

@@ -1,0 +1,20 @@
+# Recipe to build Tensorflow select packages
+
+package:
+  name: _tensorflow_select
+  version: {{ tensorflow_select_version }}
+
+build:
+  number: 1
+{% if build_type == 'cpu' %}
+  string: {{ build_type }}_{{ PKG_BUILDNUM }}
+{% else %}
+  string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_{{ PKG_BUILDNUM }}
+{% endif %}
+
+about:
+  summary : Package used to select the specific Tensorflow build variant
+
+extra:
+  recipe-maintainers:
+    - open-ce/open-ce-dev-team

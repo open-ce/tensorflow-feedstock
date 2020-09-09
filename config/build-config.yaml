@@ -1,0 +1,10 @@
+recipes:
+  - name : tensorflow-select
+    path : select_recipe
+
+  - name : tensorflow-base
+    path : recipe
+
+  - name : tensorflow-meta
+    path : meta_recipe
+
