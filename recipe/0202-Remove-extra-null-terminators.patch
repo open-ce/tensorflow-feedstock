@@ -3,7 +3,7 @@ From: "William D. Irons" <wdirons@us.ibm.com>
 Date: Thu, 10 Oct 2019 16:25:04 +0000
 Subject: [PATCH] Remove extra null terminators
 
-WML-CE Issue #11827 - TF_CUDA_TOOLKIT_PATH will be stored as an
+TF_CUDA_TOOLKIT_PATH will be stored as an
 absolute path during the bazel build. Conda uses build paths that are
 256 characters long. During conda install, it will replace the build path
 with the shorter install path and append null terminators to keep the
