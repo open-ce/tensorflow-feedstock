@@ -30,7 +30,6 @@ $SCRIPT_DIR/set_tensorflow_bazelrc.sh $SRC_DIR/tensorflow
 
 #Clean up old bazel cache to avoid problems building TF
 bazel clean --expunge
-rm -rf ~/.cache/bazel
 bazel shutdown
 
 bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build \
