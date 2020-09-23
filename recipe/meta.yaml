@@ -65,7 +65,7 @@ requirements:
     - bazel {{ bazel }}
     - pip
     - setuptools {{ setuptools }}
-    - python
+    - python {{ python }}
     - swig
 {% if build_type == 'cuda' %}
     - cudatoolkit-dev {{ cudatoolkit }}
