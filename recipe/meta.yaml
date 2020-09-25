@@ -1,5 +1,5 @@
 {% set tensorflow_select_version = '1.0' if build_type == 'cpu' else '2.0' %}
-{% set build_version = "2.3.0" %}
+{% set build_version = "2.3.1" %}
 
 # This is the recipe for the "cuda" variant of tensorflow-base
 package:
@@ -95,7 +95,6 @@ requirements:
     - wrapt {{ wrapt }}
     - wheel {{ wheel }}
     - six {{ six }}
-    - scipy {{ scipy }}
     - grpcio {{ grpcio }}
     - sqlite
   run:
@@ -124,7 +123,6 @@ requirements:
     - wrapt {{ wrapt }}
     - wheel {{ wheel }}
     - six {{ six }}
-    - scipy {{ scipy }}
     - grpcio {{ grpcio }}
     - sqlite
     - _tensorflow_select {{ tensorflow_select_version }}
