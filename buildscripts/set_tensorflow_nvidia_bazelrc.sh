@@ -45,8 +45,8 @@ build --action_env TF_CUDA_VERSION="${cudatoolkit%.*}"
 build --action_env TF_CUDNN_VERSION="${cudnn:0:1}" #First digit only
 build --action_env TF_TENSORRT_VERSION="${tensorrt:0:1}"
 build --action_env TF_NCCL_VERSION="${nccl:0:1}"
-build --action_env TF_CUDA_PATHS="$CUDA_TOOLKIT_PATH"
-build --action_env CUDA_TOOLKIT_PATH="$CUDA_TOOLKIT_PATH"
+build --action_env TF_CUDA_PATHS="$OPEN_CE_CUDA_HOME,$CUDA_TOOLKIT_PATH"
+build --action_env CUDA_TOOLKIT_PATH="$OPEN_CE_CUDA_HOME,$CUDA_TOOLKIT_PATH"
 build --action_env TF_CUDA_COMPUTE_CAPABILITIES="${CUDA_OPTION_1}"
 build --action_env GCC_HOST_COMPILER_PATH="${CC}"
 EOF

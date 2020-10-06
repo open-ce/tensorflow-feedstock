@@ -53,6 +53,9 @@ build:
     # - tensorboard = tensorboard.main:run_main
     - tf_upgrade_v2 = tensorflow.tools.compatibility.tf_upgrade_v2_main:main
     - estimator_ckpt_converter = tensorflow_estimator.python.estimator.tools.checkpoint_converter:main
+  script_env:
+    - OPEN_CE_CUDA_HOME
+
 
 requirements:
   build:
@@ -68,7 +71,7 @@ requirements:
     - python {{ python }}
     - swig
 {% if build_type == 'cuda' %}
-    - cudatoolkit-dev {{ cudatoolkit }}
+    - {{ compiler('cuda') }} 
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
     - tensorrt {{ tensorrt }}
