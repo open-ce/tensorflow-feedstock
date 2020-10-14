@@ -29,7 +29,7 @@ source:
     - 0202-Remove-extra-null-terminators.patch
     - 0203-Find-cublas-in-conda-environment.patch
     - 0204-Replace-var-lock-with-tmp-lock.patch
-    - 0205-Fix-the-build-on-x86-opence-container.patch 
+    - 0205-Fix-the-build-on-x86-opence-container.patch    #[x86_64] 
 {% endif %}
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
@@ -38,7 +38,7 @@ source:
     - 0302-Updated-pcre-to-8.44-for-a-security-fix.patch
 
 build:
-  number: 1
+  number: 2
 {% if build_type == 'cpu' %}
   string: {{ build_type }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
 {% else %}
@@ -53,12 +53,14 @@ build:
     # - tensorboard = tensorboard.main:run_main
     - tf_upgrade_v2 = tensorflow.tools.compatibility.tf_upgrade_v2_main:main
     - estimator_ckpt_converter = tensorflow_estimator.python.estimator.tools.checkpoint_converter:main
+  script_env:
+    - CUDA_HOME
+
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-
   host:
     # conda build requirements
     - git >=2.2
@@ -68,7 +70,6 @@ requirements:
     - python {{ python }}
     - swig
 {% if build_type == 'cuda' %}
-    - cudatoolkit-dev {{ cudatoolkit }}
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
     - tensorrt {{ tensorrt }}

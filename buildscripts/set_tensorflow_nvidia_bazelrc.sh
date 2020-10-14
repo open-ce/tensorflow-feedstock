@@ -11,7 +11,7 @@
 # *****************************************************************
 set -ex
 BAZEL_RC_DIR=$1
-CUDA_TOOLKIT_PATH=$PREFIX
+CUDA_TOOLKIT_PATH=$CUDA_HOME,$PREFIX
 
 # Determine architecture for specific settings
 ARCH=`uname -p`
