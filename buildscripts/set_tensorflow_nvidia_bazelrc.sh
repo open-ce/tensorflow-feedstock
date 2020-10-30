@@ -11,6 +11,8 @@
 # *****************************************************************
 set -ex
 BAZEL_RC_DIR=$1
+
+# Here "/usr/include" is added so that cublas headers can be located on baremetal.
 CUDA_TOOLKIT_PATH=$CUDA_HOME,$PREFIX,"/usr/include"
 
 # Determine architecture for specific settings
