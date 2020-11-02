@@ -52,6 +52,7 @@ build:opt --copt="${OPTION_3}"
 build:opt --copt="${OPTION_4}"
 build:opt --copt="${OPTION_5}"
 build:opt --copt="${OPTION_6}"
+build:opt --copt="${OPTION_7}"
 build:opt --host_copt="${OPTION_1}"
 build:opt --host_copt="${OPTION_2}"
 build:opt --define with_default_optimizations=true
