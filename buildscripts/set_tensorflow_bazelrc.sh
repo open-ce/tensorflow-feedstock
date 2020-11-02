@@ -17,7 +17,7 @@ ARCH=`uname -p`
 
 ## ARCHITECTURE SPECIFIC OPTIMIZATIONS
 ## These are settings and arguments to pass to GCC for
-## optimization settings specific to the target architecture
+## optimization settings specific to the target CPU architecture
 ##
 OPTION_1=''
 OPTION_2=''
@@ -27,8 +27,9 @@ if [[ "${ARCH}" == 'x86_64' ]]; then
     OPTION_3='-mavx'
     OPTION_4='-mavx2'
     OPTION_5='-mfma'
-    OPTION_6='-msse4.2'
-    ##OPTION_6='-mfpmath=both'
+    OPTION_6='-msse4.1'
+    OPTION_7='-msse4.2'
+    ##TODO: investigate '-mfpmath=both'
 fi
 if [[ "${ARCH}" == 'ppc64le' ]]; then
     OPTION_1='-mcpu=power8'
@@ -37,6 +38,7 @@ if [[ "${ARCH}" == 'ppc64le' ]]; then
     OPTION_4=''
     OPTION_5=''
     OPTION_6=''
+    OPTION_7=''
 fi
 
 SYSTEM_LIBS_PREFIX=$PREFIX
