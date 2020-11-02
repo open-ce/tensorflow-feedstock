@@ -22,12 +22,21 @@ ARCH=`uname -p`
 OPTION_1=''
 OPTION_2=''
 if [[ "${ARCH}" == 'x86_64' ]]; then
-    OPTION_1='-march=nocona'
-    OPTION_2='-mtune=haswell'
+    OPTION_1='-march=broadwell'
+    OPTION_2='-mtune=broadwell'
+    OPTION_3='-mavx'
+    OPTION_4='-mavx2'
+    OPTION_5='-mfma'
+    OPTION_6='-msse4.2'
+    ##OPTION_6='-mfpmath=both'
 fi
 if [[ "${ARCH}" == 'ppc64le' ]]; then
     OPTION_1='-mcpu=power8'
     OPTION_2='-mtune=power8'
+    OPTION_3=''
+    OPTION_4=''
+    OPTION_5=''
+    OPTION_6=''
 fi
 
 SYSTEM_LIBS_PREFIX=$PREFIX
@@ -37,6 +46,10 @@ build:xla --define with_xla_support=true
 build --config=xla
 build:opt --copt="${OPTION_1}"
 build:opt --copt="${OPTION_2}"
+build:opt --copt="${OPTION_3}"
+build:opt --copt="${OPTION_4}"
+build:opt --copt="${OPTION_5}"
+build:opt --copt="${OPTION_6}"
 build:opt --host_copt="${OPTION_1}"
 build:opt --host_copt="${OPTION_2}"
 build:opt --define with_default_optimizations=true
