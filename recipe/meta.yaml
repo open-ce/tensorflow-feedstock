@@ -1,5 +1,5 @@
 {% set tensorflow_select_version = '1.0' if build_type == 'cpu' else '2.0' %}
-{% set build_version = "2.3.1" %}
+{% set build_version = "2.4.0" %}
 
 # This is the recipe for the "cuda" variant of tensorflow-base
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   git_url: https://github.com/tensorflow/tensorflow.git
-  git_rev: v{{ build_version }}
+  git_rev: v{{ build_version }}-rc0
   patches:
     # 00xx - patch is carried forward from anaconda
 {% if build_type == 'cuda' %}
@@ -20,9 +20,9 @@ source:
     - 0102-include-cc-in-pip-package.patch
     - 0103-BUILD-changes-for-external-sqlite-package.patch
     - 0104-Fixed-linking-error-in-conda-builds.patch
-    - 0105-Changed-absl-flat_hash_set-initialization.patch
+#    - 0105-Changed-absl-flat_hash_set-initialization.patch
     - 0106-Upstream-patch-for-absl-error.patch    #[x86_64] 
-
+    - 0001-Eigen-back-level.patch
     # 02xx - GPU only patch specific to open-ce (maybe)
 {% if build_type == 'cuda' %}
     - 0201-add-additional-cuda-rpaths.patch

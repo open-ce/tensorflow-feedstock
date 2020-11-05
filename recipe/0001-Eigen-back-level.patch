@@ -1,0 +1,34 @@
+From 26937cd146d0a01611a54b07fb83d31337286190 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Thu, 5 Nov 2020 05:58:38 -0600
+Subject: [PATCH] Eigen back level
+
+---
+ tensorflow/workspace.bzl | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/tensorflow/workspace.bzl b/tensorflow/workspace.bzl
+index 37ae20a..78f68ed 100755
+--- a/tensorflow/workspace.bzl
++++ b/tensorflow/workspace.bzl
+@@ -197,12 +197,12 @@ def tf_repositories(path_prefix = "", tf_repo_name = ""):
+     tf_http_archive(
+         name = "eigen_archive",
+         build_file = clean_dep("//third_party:eigen.BUILD"),
+-        patch_file = clean_dep("//third_party/eigen3:gpu_packet_math.patch"),
+-        sha256 = "e807a6a6f3a0e8ab10adeb59bb5a9bbb113e8e1684f9b4b32f73f58fd758b4cf",  # SHARED_EIGEN_SHA
+-        strip_prefix = "eigen-011e0db31d1bed8b7f73662be6d57d9f30fa457a",
++        #patch_file = clean_dep("//third_party/eigen3:gpu_packet_math.patch"),
++        sha256 = "053ab9c9ffbd58057a26d148245a5498ba48f3377023708fcfb04a91ddc9c704",  # SHARED_EIGEN_SHA
++        strip_prefix = "eigen-dc252fbf00079ccab57948a164b1421703fe4361",
+         urls = [
+-            "https://storage.googleapis.com/mirror.tensorflow.org/gitlab.com/libeigen/eigen/-/archive/011e0db31d1bed8b7f73662be6d57d9f30fa457a/eigen-011e0db31d1bed8b7f73662be6d57d9f30fa457a.tar.gz",
+-            "https://gitlab.com/libeigen/eigen/-/archive/011e0db31d1bed8b7f73662be6d57d9f30fa457a/eigen-011e0db31d1bed8b7f73662be6d57d9f30fa457a.tar.gz",
++            "https://storage.googleapis.com/mirror.tensorflow.org/gitlab.com/libeigen/eigen/-/archive//eigen-dc252fbf00079ccab57948a164b1421703fe4361.tar.gz",
++            "https://gitlab.com/libeigen/eigen/-/archive/dc252fbf00079ccab57948a164b1421703fe4361/eigen-dc252fbf00079ccab57948a164b1421703fe4361.tar.gz",
+         ],
+     )
+ 
+-- 
+1.8.3.1
+

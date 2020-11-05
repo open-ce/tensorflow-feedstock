@@ -32,7 +32,7 @@ $SCRIPT_DIR/set_tensorflow_bazelrc.sh $SRC_DIR/tensorflow
 bazel clean --expunge
 bazel shutdown
 
-bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build \
+bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build -s\
     --config=opt \
     --config=numa \
     --curses=no \
