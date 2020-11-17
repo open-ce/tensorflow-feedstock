@@ -20,7 +20,6 @@ source:
     - 0102-include-cc-in-pip-package.patch
     - 0103-BUILD-changes-for-external-sqlite-package.patch
     - 0104-Fixed-linking-error-in-conda-builds.patch
-    - 0105-Eigen-customized.patch                         #[ppc64le]
     - 0106-Upstream-patch-for-absl-error.patch            #[x86_64]
 
     # 02xx - GPU only patch specific to open-ce (maybe)
@@ -36,6 +35,7 @@ source:
     - 0300-fix-constant_op_test.patch
     - 0301-update-ICU-patch-for-CVE-2020-10531.patch
     - 0302-Updated-pcre-to-8.44-for-a-security-fix.patch
+    - 0303-Eigen-customized.patch                        #[ppc64le]
 
 build:
   number: 1
