@@ -42,6 +42,9 @@ bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build \
 mkdir -p $SRC_DIR/tensorflow_pkg
 bazel-bin/tensorflow/tools/pip_package/build_pip_package $SRC_DIR/tensorflow_pkg
 
+mkdir -p "${SRC_DIR}/tensorflow/include/tensorflow/cc/ops"
+cp -R "bazel-bin/tensorflow/cc/ops/"*.h  "${SRC_DIR}/tensorflow/include/tensorflow/cc/ops"
+
 # install using pip from the whl file
 pip install --no-deps $SRC_DIR/tensorflow_pkg/*p${CONDA_PY}*.whl
 
@@ -50,31 +53,6 @@ rm -f ${PREFIX}/bin/tensorboard
 
 echo "PREFIX: $PREFIX"
 echo "RECIPE_DIR: $RECIPE_DIR"
-
-#
-# Include libtensorflow shared libraries
-#
-# Copy complete headers for libtensorflow C/C++ API
-mkdir -p "${SP_DIR}/tensorflow/include/tensorflow/cc"
-mkdir -p "${SP_DIR}/tensorflow/include/tensorflow/c"
-mkdir -p "${SP_DIR}/tensorflow/include/tensorflow/cc/ops"
-
-cd ./tensorflow/cc
-cp --parents `find -name \*.h*` "${SP_DIR}/tensorflow/include/tensorflow/cc"
-
-cd ../c
-cp --parents `find -name \*.h*` "${SP_DIR}/tensorflow/include/tensorflow/c"
-
-cd ../../
-cp -R "bazel-bin/tensorflow/cc/ops/"*.h  "${SP_DIR}/tensorflow/include/tensorflow/cc/ops"
-
-TF_MAJOR_VERSION=${PKG_VERSION:0:1}
-echo "TF_MAJOR_VERSION: $TF_MAJOR_VERSION"
-
-#Create sym link for libtensorflow_framework
-ln -s ${SP_DIR}/tensorflow/libtensorflow_framework.so.[0-9] "${SP_DIR}/tensorflow/libtensorflow_framework.so"
-ln -s ${SP_DIR}/tensorflow/libtensorflow.so "${SP_DIR}/tensorflow/libtensorflow.so.${TF_MAJOR_VERSION}"
-ln -s ${SP_DIR}/tensorflow/libtensorflow_cc.so "${SP_DIR}/tensorflow/libtensorflow_cc.so.${TF_MAJOR_VERSION}"
 
 # Install the activate / deactivate scripts that set environment variables
 mkdir -p "${PREFIX}"/etc/conda/activate.d
