@@ -40,6 +40,11 @@ if [[ "${ARCH}" == 'ppc64le' ]]; then
     CUDA_OPTION_1='sm_37,sm_60,sm_70,compute_75'
 fi
 
+CUDA_VERSION="${cudatoolkit%.*}"
+if [[ $CUDA_VERSION == '11' ]]; then
+    CUDA_OPTION_1+='compute_80'
+fi
+
 cat > $BAZEL_RC_DIR/nvidia_components_configure.bazelrc << EOF
 build --config=cuda
 build --config=tensorrt
