@@ -36,6 +36,7 @@ source:
     - 0301-update-ICU-patch-for-CVE-2020-10531.patch
     - 0302-Updated-pcre-to-8.44-for-a-security-fix.patch
     - 0303-Eigen-customized.patch                        #[ppc64le]
+    - 0304-Downgrade-protobuf-to-3.9.2.patch
 
 build:
   number: 1
