@@ -8,7 +8,7 @@ package:
 
 source:
   git_url: https://github.com/tensorflow/tensorflow.git
-  git_rev: v{{ build_version }}-rc3
+  git_rev: v{{ build_version }}-rc4
   patches:
     # 00xx - patch is carried forward from anaconda
 {% if build_type == 'cuda' %}
@@ -74,7 +74,7 @@ requirements:
 {% if build_type == 'cuda' %}
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
-    - tensorrt {{ tensorrt }}
+    - tensorrt {{ tensorrt }}     #[py<38]
 {% endif %}
     - zlib
     #  This list needs to match exacly tensorflow/tools/pip_package/setup.py.
@@ -106,7 +106,7 @@ requirements:
     - cudatoolkit {{ cudatoolkit }}
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
-    - tensorrt {{ tensorrt }}
+    - tensorrt {{ tensorrt }}         #[py<38]
 {% endif %}
     # Included for keras team keras
     - pillow {{ pillow }}
