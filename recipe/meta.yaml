@@ -34,7 +34,6 @@ source:
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0300-fix-constant_op_test.patch
     - 0301-update-ICU-patch-for-CVE-2020-10531.patch
-    - 0302-Updated-pcre-to-8.44-for-a-security-fix.patch
     - 0303-Eigen-customized.patch                        #[ppc64le]
 
 build:
@@ -85,6 +84,7 @@ requirements:
     #  setup.py list.
     - absl-py {{ absl_py }}
     - astunparse {{ astunparse }}
+    - python-flatbuffers {{ flatbuffers }}
     - gast {{ gast }}
     - google-pasta {{ google_pasta }}
     - h5py {{ h5py }}
@@ -95,10 +95,10 @@ requirements:
     # don't include tensorboard with base
     # don't include tensorflow_estimator
     - termcolor {{ termcolor }}
+    - typing_extensions {{ typing_extensions }}
     - wrapt {{ wrapt }}
     - wheel {{ wheel }}
     - six {{ six }}
-    - grpcio {{ grpcio }}
     - sqlite
   run:
     - python {{ python }}
@@ -113,6 +113,7 @@ requirements:
     # List from TensorFlow setup.py
     - absl-py {{ absl_py }}
     - astunparse {{ astunparse }}
+    - python-flatbuffers {{ flatbuffers }}
     - gast {{ gast }}
     - google-pasta {{ google_pasta }}
     - h5py {{ h5py }}
@@ -123,10 +124,10 @@ requirements:
     # don't include tensorboard with base
     # don't include tensorflow_estimator
     - termcolor {{ termcolor }}
+    - typing_extensions {{ typing_extensions }}
     - wrapt {{ wrapt }}
     - wheel {{ wheel }}
     - six {{ six }}
-    - grpcio {{ grpcio }}
     - sqlite
     - _tensorflow_select {{ tensorflow_select_version }}
 
