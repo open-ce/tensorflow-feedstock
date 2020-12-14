@@ -33,3 +33,7 @@ export TF_LIBRARY_DIR
 
 OMP_NUM_THREADS=16
 export OMP_NUM_THREADS
+
+#https://github.com/tensorflow/tensorflow/issues/40065
+CURL_CA_BUNDLE=${CONDA_PREFIX}/ssl/cacert.pem
+export CURL_CA_BUNDLE

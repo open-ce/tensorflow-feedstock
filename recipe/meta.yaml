@@ -21,6 +21,7 @@ source:
     - 0103-BUILD-changes-for-external-sqlite-package.patch
     - 0104-Fixed-linking-error-in-conda-builds.patch
     - 0106-Upstream-patch-for-absl-error.patch            #[x86_64]
+    - 0007-do-not-hardcode-ca-cert-location.patch
 
     # 02xx - GPU only patch specific to open-ce (maybe)
 {% if build_type == 'cuda' %}
