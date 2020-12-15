@@ -1,7 +1,7 @@
 {% set tensorflow_select_version = '1.0' if build_type == 'cpu' else '2.0' %}
-{% set build_version = "2.3.1" %}
+{% set build_version = "2.4.0" %}
 
-# This is the recipe to build both CPU and CUDA variants of py-tensorflow-base and libtensorflow
+#This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
   name: tensorflow-base
   version: {{ build_version }}
@@ -20,8 +20,8 @@ source:
     - 0102-include-cc-in-pip-package.patch
     - 0103-BUILD-changes-for-external-sqlite-package.patch
     - 0104-Fixed-linking-error-in-conda-builds.patch
-    - 0105-Changed-absl-flat_hash_set-initialization.patch
-    - 0106-Upstream-patch-for-absl-error.patch    #[x86_64]
+    - 0106-Upstream-patch-for-absl-error.patch            #[x86_64]
+    - 0107-do-not-hardcode-ca-cert-location.patch
 
     # 02xx - GPU only patch specific to open-ce (maybe)
 {% if build_type == 'cuda' %}
@@ -35,10 +35,10 @@ source:
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0300-fix-constant_op_test.patch
     - 0301-update-ICU-patch-for-CVE-2020-10531.patch
-    - 0302-Updated-pcre-to-8.44-for-a-security-fix.patch
+    - 0303-Eigen-customized.patch                        #[ppc64le]
 
 build:
-  number: 6
+  number: 2
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -76,7 +76,7 @@ outputs:
         - cudatoolkit {{ cudatoolkit }}
         - cudnn {{ cudnn }}
         - nccl {{ nccl }}
-        - tensorrt {{ tensorrt }}
+        - tensorrt {{ tensorrt }}     #[py<38]
         {% endif %}
         - zlib
         #  This list needs to match exacly tensorflow/tools/pip_package/setup.py.
@@ -87,6 +87,7 @@ outputs:
         #  setup.py list.
         - absl-py {{ absl_py }}
         - astunparse {{ astunparse }}
+        - python-flatbuffers {{ flatbuffers }}
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
         - h5py {{ h5py }}
@@ -100,7 +101,7 @@ outputs:
         - wrapt {{ wrapt }}
         - wheel {{ wheel }}
         - six {{ six }}
-        - grpcio {{ grpcio }}
+        - typing_extensions {{ typing_extensions }}
         - sqlite
       run:
         - python {{ python }}
@@ -108,13 +109,14 @@ outputs:
         - cudatoolkit {{ cudatoolkit }}
         - cudnn {{ cudnn }}
         - nccl {{ nccl }}
-        - tensorrt {{ tensorrt }}
+        - tensorrt {{ tensorrt }}     #[py<38]
         {% endif %}
         # Included for keras team keras
         - pillow {{ pillow }}
         # List from TensorFlow setup.py
         - absl-py {{ absl_py }}
         - astunparse {{ astunparse }}
+        - python-flatbuffers {{ flatbuffers }}
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
         - h5py {{ h5py }}
@@ -128,10 +130,9 @@ outputs:
         - wrapt {{ wrapt }}
         - wheel {{ wheel }}
         - six {{ six }}
-        - grpcio {{ grpcio }}
+        - typing_extensions {{ typing_extensions }}
         - sqlite
         - _tensorflow_select {{ tensorflow_select_version }}
-
 
   - name: libtensorflow
     script: build-libtensorflow.sh
@@ -151,7 +152,7 @@ outputs:
         - cudatoolkit {{ cudatoolkit }}
         - cudnn {{ cudnn }}
         - nccl {{ nccl }}
-        - tensorrt {{ tensorrt }}
+        - tensorrt {{ tensorrt }}     #[py<38]
         {% endif %}
         - protobuf {{ protobuf }}
         - _tensorflow_select {{ tensorflow_select_version }}

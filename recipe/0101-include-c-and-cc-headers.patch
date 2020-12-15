@@ -1,7 +1,7 @@
-From 102d99cac6758ab41d1fc11f3c580c2143ab9da7 Mon Sep 17 00:00:00 2001
-From: Jon Triebenbach <jlt@us.ibm.com>
-Date: Thu, 18 Jul 2019 19:23:28 +0000
-Subject: [PATCH] Include c and cc header files - mldlppc/tracker#10608
+From 1167775962a9a19570e21f9e2e4f2327451c6ad5 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Wed, 4 Nov 2020 03:13:12 -0600
+Subject: [PATCH] Include c and cc header files
 
 ---
  tensorflow/cc/BUILD      | 51 ++++++++++++++++++++++++++++++++++++++++++++++++
@@ -10,19 +10,19 @@ Subject: [PATCH] Include c and cc header files - mldlppc/tracker#10608
  create mode 100644 tensorflow/cc/cc_ops.bzl
 
 diff --git a/tensorflow/cc/BUILD b/tensorflow/cc/BUILD
-index e457608..8135c0e 100644
+index 8f7e447..1f5a7c4 100644
 --- a/tensorflow/cc/BUILD
 +++ b/tensorflow/cc/BUILD
-@@ -12,6 +12,8 @@ load(
-     "transitive_hdrs",
- )
+@@ -18,6 +18,8 @@ load("//tensorflow:tensorflow.bzl", "filegroup")
+ # buildifier: disable=same-origin-load
+ load("//tensorflow:tensorflow.bzl", "tf_gen_op_wrappers_cc")
  
 +load("//tensorflow/cc:cc_ops.bzl", "tf_cc_ops_hdrs",)
 +
  package(
      default_visibility = ["//visibility:public"],
      licenses = ["notice"],  # Apache 2.0
-@@ -824,3 +826,52 @@ transitive_hdrs(
+@@ -865,3 +867,52 @@ transitive_hdrs(
          "//tensorflow/cc/tools:freeze_saved_model",
      ],
  )

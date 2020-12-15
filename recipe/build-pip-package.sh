@@ -23,7 +23,7 @@ $SCRIPT_DIR/set_python_path_for_bazelrc.sh $SRC_DIR/tensorflow
 if [[ $build_type == "cuda" ]]
 then
   # Pick up the CUDA and CUDNN environment
-  $SCRIPT_DIR/set_tensorflow_nvidia_bazelrc.sh $SRC_DIR/tensorflow
+  $SCRIPT_DIR/set_tensorflow_nvidia_bazelrc.sh $SRC_DIR/tensorflow $PY_VER
 fi
 # Build the bazelrc
 $SCRIPT_DIR/set_tensorflow_bazelrc.sh $SRC_DIR/tensorflow
