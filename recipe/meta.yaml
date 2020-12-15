@@ -101,7 +101,7 @@ outputs:
         - wrapt {{ wrapt }}
         - wheel {{ wheel }}
         - six {{ six }}
-        - typing_extensions {{ typing_extensions }}
+        - typing_extensions {{ typing_extensions }}     #[py<38]
         - sqlite
       run:
         - python {{ python }}
@@ -130,7 +130,7 @@ outputs:
         - wrapt {{ wrapt }}
         - wheel {{ wheel }}
         - six {{ six }}
-        - typing_extensions {{ typing_extensions }}
+        - typing_extensions {{ typing_extensions }}     #[py<38]
         - sqlite
         - _tensorflow_select {{ tensorflow_select_version }}
 
