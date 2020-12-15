@@ -43,3 +43,5 @@ unset TF_INCLUDE_DIR
 unset TF_LIBRARY_DIR
 
 unset OMP_NUM_THREADS
+
+unset CURL_CA_BUNDLE
