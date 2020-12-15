@@ -2,7 +2,7 @@ tests:
    - name: SetupTensorFlow Models repo
      command: |
          echo "setup"
-         git clone --recursive -b v$(python -c "import tensorflow; print(tensorflow.__version__)") https://github.com/tensorflow/models
+         git clone --recursive -b r$(python -c "import tensorflow; print(tensorflow.__version__)") https://github.com/tensorflow/models
          conda install pandas tensorflow-addons tensorflow-model-optimization
    - name: Run Recommendation model
      command: |
