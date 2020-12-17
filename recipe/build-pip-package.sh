@@ -54,6 +54,11 @@ rm -f ${PREFIX}/bin/tensorboard
 echo "PREFIX: $PREFIX"
 echo "RECIPE_DIR: $RECIPE_DIR"
 
+# Cache libtensorflow libs in SRC_DIR so they can be picked up by
+# the libtensorflow output
+mv ${SP_DIR}/tensorflow/libtensorflow.so ${SRC_DIR}/tensorflow_pkg/
+mv ${SP_DIR}/tensorflow/libtensorflow_cc.so ${SRC_DIR}/tensorflow_pkg/
+
 # Install the activate / deactivate scripts that set environment variables
 mkdir -p "${PREFIX}"/etc/conda/activate.d
 mkdir -p "${PREFIX}"/etc/conda/deactivate.d
