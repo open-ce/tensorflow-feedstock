@@ -15,6 +15,19 @@ set -vex
 #
 # Include libtensorflow shared libraries and headers
 #
+
+TF_MAJOR_VERSION=${PKG_VERSION:0:1}
+echo "TF_MAJOR_VERSION: $TF_MAJOR_VERSION"
+
+# Move libtensorflow libs in from SRC_DIR cache
+mv ${SRC_DIR}/tensorflow_pkg/libtensorflow.so ${SP_DIR}/tensorflow/
+mv ${SRC_DIR}/tensorflow_pkg/libtensorflow_cc.so ${SP_DIR}/tensorflow/
+
+#Create version sym links
+ln -s ${SP_DIR}/tensorflow/libtensorflow_framework.so.[0-9] "${SP_DIR}/tensorflow/libtensorflow_framework.so"
+ln -s ${SP_DIR}/tensorflow/libtensorflow.so "${SP_DIR}/tensorflow/libtensorflow.so.${TF_MAJOR_VERSION}"
+ln -s ${SP_DIR}/tensorflow/libtensorflow_cc.so "${SP_DIR}/tensorflow/libtensorflow_cc.so.${TF_MAJOR_VERSION}"
+
 # Copy complete headers for libtensorflow C/C++ API
 mkdir -p "${SP_DIR}/tensorflow/include/tensorflow/cc"
 mkdir -p "${SP_DIR}/tensorflow/include/tensorflow/c"
@@ -36,10 +49,3 @@ else
     cp -R "${SRC_DIR}/tensorflow/include/tensorflow/cc/ops/"*.h "${SP_DIR}/tensorflow/include/tensorflow/cc/ops"
 fi
 
-TF_MAJOR_VERSION=${PKG_VERSION:0:1}
-echo "TF_MAJOR_VERSION: $TF_MAJOR_VERSION"
-
-#Create sym link for libtensorflow_framework
-ln -s ${SP_DIR}/tensorflow/libtensorflow_framework.so.[0-9] "${SP_DIR}/tensorflow/libtensorflow_framework.so"
-ln -s ${SP_DIR}/tensorflow/libtensorflow.so "${SP_DIR}/tensorflow/libtensorflow.so.${TF_MAJOR_VERSION}"
-ln -s ${SP_DIR}/tensorflow/libtensorflow_cc.so "${SP_DIR}/tensorflow/libtensorflow_cc.so.${TF_MAJOR_VERSION}"
