@@ -5,7 +5,6 @@ tests:
          git clone --recursive -b r$(python -c "import tensorflow; print(tensorflow.__version__)") https://github.com/tensorflow/models
          cd models
          git apply ${FEEDSTOCK_DIR}/recipe/0304-Fixed-models-test-on-x86.patch
-         cd ..
          conda install -y pandas tensorflow-addons tensorflow-model-optimization 
    - name: Run Recommendation model
      command: |
@@ -15,7 +14,6 @@ tests:
          mkdir data
          python movielens.py --data_dir=./data --dataset=ml-1m
          python ncf_keras_main.py --data_dir=./data --dataset=ml-1m
-         cd ../../..
    - name: Run MNIST model
      command: |
          CURDIR=$(pwd)
