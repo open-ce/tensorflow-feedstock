@@ -7,7 +7,9 @@ package:
   version: {{ build_version }}
 
 build:
-  number: 1
+  number: 2
+  string: py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}   #[build_type == 'cpu']
+  string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }} #[build_type == 'cuda']
 
 requirements:
   run:
@@ -15,6 +17,8 @@ requirements:
     - _tensorflow_select     {{ tensorflow_select_version }}
     - tensorboard          =={{ tensorboard }}
     - tensorflow-estimator =={{ estimator_version }}
+    - python                 {{ python }}
+    - cudatoolkit            {{ cudatoolkit }} #[build_type == 'cuda']
 
 about:
   summary: Meta-package to install {{ 'GPU-enabled' if build_type == 'cuda' else 'CPU-only' }} TensorFlow variant
