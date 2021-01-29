@@ -1,5 +1,5 @@
 {% set tensorflow_select_version = '1.0' if build_type == 'cpu' else '2.0' %}
-{% set build_version = "2.4.0" %}
+{% set build_version = "2.4.1" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
@@ -38,7 +38,7 @@ source:
     - 0303-Eigen-customized.patch                        #[ppc64le]
 
 build:
-  number: 5
+  number: 1
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
