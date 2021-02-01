@@ -1,14 +1,14 @@
-From e9ce9c11729cf466058f9cd5d1269e5c66b9a2b4 Mon Sep 17 00:00:00 2001
+From 632b95945e2244a492ad30ce73f934ebb450e78f Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Thu, 12 Nov 2020 10:25:08 +0000
-Subject: [PATCH] Eigen customized
+Date: Sun, 31 Jan 2021 23:30:10 -0600
+Subject: [PATCH] Eigen customized for ppc
 
 ---
  tensorflow/workspace.bzl | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/tensorflow/workspace.bzl b/tensorflow/workspace.bzl
-index a6ea009..98b0c54 100755
+index 89062b1..0bf8c5d 100755
 --- a/tensorflow/workspace.bzl
 +++ b/tensorflow/workspace.bzl
 @@ -198,11 +198,11 @@ def tf_repositories(path_prefix = "", tf_repo_name = ""):
@@ -22,8 +22,8 @@ index a6ea009..98b0c54 100755
          urls = [
 -            "https://storage.googleapis.com/mirror.tensorflow.org/gitlab.com/libeigen/eigen/-/archive/011e0db31d1bed8b7f73662be6d57d9f30fa457a/eigen-011e0db31d1bed8b7f73662be6d57d9f30fa457a.tar.gz",
 -            "https://gitlab.com/libeigen/eigen/-/archive/011e0db31d1bed8b7f73662be6d57d9f30fa457a/eigen-011e0db31d1bed8b7f73662be6d57d9f30fa457a.tar.gz",
-+            "https://storage.googleapis.com/mirror.tensorflow.org/gist.github.com/npanpaliya/2c30c40969f39fd2905af28262d8aa9b/raw/8476806d9e1654fade629b261d5d988459cb6f8a/eigen-2d540f1b0899a8f7b0d188a5d524ce72dec33329.tar.gz",
-+            "https://gist.github.com/npanpaliya/2c30c40969f39fd2905af28262d8aa9b/raw/8476806d9e1654fade629b261d5d988459cb6f8a/eigen-2d540f1b0899a8f7b0d188a5d524ce72dec33329.tar.gz",
++            "https://storage.googleapis.com/mirror.tensorflow.org/github.com/open-ce/TF-eigen-ppc/raw/master/eigen-2d540f1b0899a8f7b0d188a5d524ce72dec33329.tar.gz",
++            "https://github.com/open-ce/TF-eigen-ppc/raw/master/eigen-2d540f1b0899a8f7b0d188a5d524ce72dec33329.tar.gz",
          ],
      )
  
