@@ -38,7 +38,7 @@ source:
     - 0303-Eigen-customized.patch                        #[ppc64le]
 
 build:
-  number: 1
+  number: 2 
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -161,6 +161,7 @@ about:
   home: http://tensorflow.org/
   license: Apache 2.0
   license_family: Apache
+  license_file: LICENSE
   summary: TensorFlow is a machine learning library, base GPU package, tensorflow only.
   description: |
     TensorFlow provides multiple APIs.The lowest level API, TensorFlow Core
