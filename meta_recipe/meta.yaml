@@ -24,7 +24,6 @@ about:
   home: http://tensorflow.org/
   license: Apache 2.0
   license_family: Apache
-  license_file: ../LICENSE
   summary: Meta-package to install {{ 'GPU-enabled' if build_type == 'cuda' else 'CPU-only' }} TensorFlow variant
   description: Meta-package to install {{ 'GPU-enabled' if build_type == 'cuda' else 'CPU-only' }} TensorFlow variant
   dev_url: https://github.com/tensorflow/tensorflow
