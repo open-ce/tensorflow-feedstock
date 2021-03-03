@@ -7,7 +7,7 @@ package:
   version: {{ build_version }}
 
 build:
-  number: 1
+  number: 2
   string: py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}   #[build_type == 'cpu']
   string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }} #[build_type == 'cuda']
 
@@ -21,7 +21,14 @@ requirements:
     - cudatoolkit            {{ cudatoolkit }} #[build_type == 'cuda']
 
 about:
+  home: http://tensorflow.org/
+  license: Apache 2.0
+  license_family: Apache
   summary: Meta-package to install {{ 'GPU-enabled' if build_type == 'cuda' else 'CPU-only' }} TensorFlow variant
+  description: Meta-package to install {{ 'GPU-enabled' if build_type == 'cuda' else 'CPU-only' }} TensorFlow variant
+  dev_url: https://github.com/tensorflow/tensorflow
+  doc_url: https://www.tensorflow.org/get_started/get_started
+  doc_source_url: https://github.com/tensorflow/tensorflow/tree/master/tensorflow/docs_src
 
 extra:
   recipe-maintainers:

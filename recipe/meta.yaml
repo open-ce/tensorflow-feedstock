@@ -161,6 +161,7 @@ about:
   home: http://tensorflow.org/
   license: Apache 2.0
   license_family: Apache
+  license_file: LICENSE
   summary: TensorFlow is a machine learning library, base GPU package, tensorflow only.
   description: |
     TensorFlow provides multiple APIs.The lowest level API, TensorFlow Core
