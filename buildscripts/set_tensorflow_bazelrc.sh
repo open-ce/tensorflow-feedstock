@@ -58,3 +58,17 @@ build --color=yes
 build --verbose_failures
 build --spawn_strategy=standalone
 EOF
+echo "MKL flag: $MKL_FEATURE"
+
+if [ ! "${MKL_FEATURE+x}" ]; then
+# MKL if unset
+cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
+build --define tensorflow_mkldnn_contraction_kernel=0
+EOF
+elif [[ ${MKL_FEATURE} == "ON" && "${ARCH}" == 'x86_64' ]]; then
+# If MKL_FEATURE is set to ON and ARCH is x86_64
+echo "Enabled MKL"
+cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
+build --config=mkl
+EOF
+fi
