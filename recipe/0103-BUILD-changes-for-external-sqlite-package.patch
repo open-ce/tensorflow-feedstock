@@ -1,17 +1,17 @@
-From 0a1faf0711ad275111dcb0a031904c0acd68a2f7 Mon Sep 17 00:00:00 2001
-From: PowerAI CI Functional ID <pwraiciw@us.ibm.com>
-Date: Thu, 7 May 2020 09:46:54 +0000
+From 99da70188e54c5d9b0019c54f2838abf1fbfb4c1 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Tue, 16 Mar 2021 01:52:08 -0500
 Subject: [PATCH] SQlite BUILD changes for external sqlite package
 
 ---
- third_party/systemlibs/sqlite.BUILD | 29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ third_party/systemlibs/sqlite.BUILD | 27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
 diff --git a/third_party/systemlibs/sqlite.BUILD b/third_party/systemlibs/sqlite.BUILD
-index 20ee1eb..4ac172e 100644
+index 20ee1eb..1e914b1 100644
 --- a/third_party/systemlibs/sqlite.BUILD
 +++ b/third_party/systemlibs/sqlite.BUILD
-@@ -1,12 +1,39 @@
+@@ -1,12 +1,37 @@
  licenses(["unencumbered"])  # Public Domain
  
 +HEADERS = [
@@ -23,7 +23,6 @@ index 20ee1eb..4ac172e 100644
 +   "libsqlite3.so",
 +   "libsqlite3.so.0",
 +   "libsqlite3.so.0.8.6",
-+   "libsqlite3.a",
 +]
 +
  # Production build of SQLite library that's baked into TensorFlow.
@@ -44,8 +43,7 @@ index 20ee1eb..4ac172e 100644
 +      cp -fL "$(INCLUDEDIR)/sqlite3ext.h" "$(@D)" &&
 +      cp -fL "$(LIBDIR)/libsqlite3.so.0.8.6" "$(@D)" &&
 +      ln -sf "$(LIBDIR)/libsqlite3.so.0.8.6" "$(@D)/libsqlite3.so.0" &&
-+      ln -sf "$(LIBDIR)/libsqlite3.so.0.8.6" "$(@D)/libsqlite3.so" &&
-+      cp -fL "$(LIBDIR)/libsqlite3.a" "$(@D)"
++      ln -sf "$(LIBDIR)/libsqlite3.so.0.8.6" "$(@D)/libsqlite3.so"
 +    """,
 +)
 +
