@@ -59,7 +59,7 @@ build --verbose_failures
 build --spawn_strategy=standalone
 EOF
 
-echo "mkl : $use_mkl"
+echo "Building with mkl : $use_mkl"
 
 if [[ $use_mkl == "true" && "${ARCH}" == 'x86_64' ]]; then
 # If MKL_FEATURE is set to ON and ARCH is x86_64
