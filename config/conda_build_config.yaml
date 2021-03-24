@@ -4,6 +4,9 @@ c_compiler_version:
 cxx_compiler_version:
   - 5.4.0                      # [x86_64]
   - 7.2.0                      # [ppc64le]
+# One can change the value for below field on x86_64 if MKL is to be turned on.
+use_mkl:
+  - "false"
 build_type:
   - "cpu"
   - "cuda"
