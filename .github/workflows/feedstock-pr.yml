@@ -15,7 +15,7 @@ jobs:
         with:
           auto-update-conda: true
           python-version: "3.7"
-      - uses: open-ce/open-ce/.github/actions/feedstock-optional-pr@main
+      - uses: bethune-bryant/open-ce/.github/actions/feedstock-optional-pr@issue_345
   required_tests:
     runs-on: ubuntu-latest
     steps:
@@ -26,4 +26,4 @@ jobs:
         with:
           auto-update-conda: true
           python-version: "3.7"
-      - uses: open-ce/open-ce/.github/actions/feedstock-required-pr@main
+      - uses: bethune-bryant/open-ce/.github/actions/feedstock-required-pr@issue_345
