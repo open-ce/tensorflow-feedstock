@@ -27,8 +27,8 @@ about:
   summary: Meta-package to install {{ 'GPU-enabled' if build_type == 'cuda' else 'CPU-only' }} TensorFlow variant
   description: Meta-package to install {{ 'GPU-enabled' if build_type == 'cuda' else 'CPU-only' }} TensorFlow variant
   dev_url: https://github.com/tensorflow/tensorflow
-  doc_url: https://www.tensorflow.org/get_started/get_started
-  doc_source_url: https://github.com/tensorflow/tensorflow/tree/master/tensorflow/docs_src
+  doc_url: https://www.tensorflow.org
+  doc_source_url: https://github.com/tensorflow/docs
 
 extra:
   recipe-maintainers:
