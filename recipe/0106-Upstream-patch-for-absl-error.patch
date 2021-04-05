@@ -15,9 +15,9 @@ index 1b53190..643dca0 100644
       visibility = ["//visibility:public"],
       deps = [
           ":civil_time",
-+diff -Naur abseil-cpp/absl/time/internal/cctz/include/cctz/civil_time_detail.h abseil-cpp_org/absl/time/internal/cctz/include/cctz/civil_time_detail.h
-+--- abseil-cpp/absl/time/internal/cctz/include/cctz/civil_time_detail.h 2021-01-19 18:49:15.000000000 +0000
-++++ abseil-cpp_org/absl/time/internal/cctz/include/cctz/civil_time_detail.h     2021-04-02 09:19:29.053075408 +0000
++diff --git a/absl/time/internal/cctz/include/cctz/civil_time_detail.h b/absl/time/internal/cctz/include/cctz/civil_time_detail.h
++--- a/absl/time/internal/cctz/include/cctz/civil_time_detail.h
+++++ b/absl/time/internal/cctz/include/cctz/civil_time_detail.h
 +@@ -23,7 +23,7 @@
 + #include "absl/base/config.h"
 +
