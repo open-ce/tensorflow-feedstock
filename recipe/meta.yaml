@@ -35,9 +35,10 @@ source:
     - 0300-fix-constant_op_test.patch
     - 0301-update-ICU-patch-for-CVE-2020-10531.patch
     - 0303-Eigen-customized.patch                        #[ppc64le]
+    - 0305-Updated-protobuf-to-3.11.2.patch              #[protobuf == "3.11.2"]
 
 build:
-  number: 5
+  number: 6
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
