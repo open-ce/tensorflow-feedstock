@@ -38,7 +38,7 @@ source:
     - 0305-Updated-protobuf-to-3.11.2.patch              #[protobuf == "3.11.2"]
 
 build:
-  number: 6
+  number: 7
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -131,7 +131,7 @@ outputs:
         - wheel {{ wheel }}
         - six {{ six }}
         - typing_extensions {{ typing_extensions }}     #[py<38]
-        - sqlite
+        - {{ pin_compatible('sqlite', lower_bound='3.33.0', upper_bound='4.0a0') }}
         - _tensorflow_select {{ tensorflow_select_version }}
 
   - name: libtensorflow
