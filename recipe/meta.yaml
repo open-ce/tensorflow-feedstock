@@ -102,7 +102,7 @@ outputs:
         - wheel {{ wheel }}
         - six {{ six }}
         - typing_extensions {{ typing_extensions }}     #[py<38]
-        - sqlite
+        - sqlite 3.33.0
       run:
         - python {{ python }}
         {% if build_type == 'cuda' %}
