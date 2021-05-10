@@ -48,6 +48,7 @@ build:opt --host_copt="${OPTION_2}"
 build:opt --define with_default_optimizations=true
 build:opt --copt=-DNO_CONSTEXPR_FOR_YOU=1
 build:opt --host_copt=-DNO_CONSTEXPR_FOR_YOU=1
+build --cxxopt=-std=c++14
 build --action_env TF_CONFIGURE_IOS="0"
 build --action_env TF_SYSTEM_LIBS="org_sqlite"
 build --define=PREFIX="$SYSTEM_LIBS_PREFIX"

@@ -1,0 +1,115 @@
+From 360c80560cc13adc56521f86828380596bab5366 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Fri, 7 May 2021 09:30:53 +0000
+Subject: [PATCH] Changed CXX std
+
+---
+ ...m_google_absl_fix_mac_and_nvcc_build.patch | 83 ++++++++++++++++++-
+ 1 file changed, 82 insertions(+), 1 deletion(-)
+
+diff --git a/third_party/absl/com_google_absl_fix_mac_and_nvcc_build.patch b/third_party/absl/com_google_absl_fix_mac_and_nvcc_build.patch
+index 1b531907926..4513b68d2b9 100644
+--- a/third_party/absl/com_google_absl_fix_mac_and_nvcc_build.patch
++++ b/third_party/absl/com_google_absl_fix_mac_and_nvcc_build.patch
+@@ -1,5 +1,59 @@
++From 7715f5d141fa63060f28b103e608524adf657c6a Mon Sep 17 00:00:00 2001
++From: Nishidha Panpaliya <npanpa23@in.ibm.com>
++Date: Fri, 7 May 2021 09:27:57 +0000
++Subject: [PATCH] Changed CXX std
++
++---
++ absl/base/options.h                        |   8 +-
++ absl/container/internal/compressed_tuple.h | 151 ++++-----------------
++ absl/copts/GENERATED_copts.bzl             |   1 +
++ absl/copts/copts.py                        |   1 +
++ absl/strings/string_view.h                 |  35 +++++
++ absl/time/internal/cctz/BUILD.bazel        |   9 --
++ 6 files changed, 68 insertions(+), 137 deletions(-)
++
++diff --git a/absl/base/options.h b/absl/base/options.h
++index 6a0fb07..adb5f02 100644
++--- a/absl/base/options.h
+++++ b/absl/base/options.h
++@@ -100,7 +100,7 @@
++ // User code should not inspect this macro.  To check in the preprocessor if
++ // absl::any is a typedef of std::any, use the feature macro ABSL_USES_STD_ANY.
++ 
++-#define ABSL_OPTION_USE_STD_ANY 2
+++#define ABSL_OPTION_USE_STD_ANY 0
++ 
++ 
++ // ABSL_OPTION_USE_STD_OPTIONAL
++@@ -127,7 +127,7 @@
++ // absl::optional is a typedef of std::optional, use the feature macro
++ // ABSL_USES_STD_OPTIONAL.
++ 
++-#define ABSL_OPTION_USE_STD_OPTIONAL 2
+++#define ABSL_OPTION_USE_STD_OPTIONAL 0
++ 
++ 
++ // ABSL_OPTION_USE_STD_STRING_VIEW
++@@ -154,7 +154,7 @@
++ // absl::string_view is a typedef of std::string_view, use the feature macro
++ // ABSL_USES_STD_STRING_VIEW.
++ 
++-#define ABSL_OPTION_USE_STD_STRING_VIEW 2
+++#define ABSL_OPTION_USE_STD_STRING_VIEW 0
++ 
++ // ABSL_OPTION_USE_STD_VARIANT
++ //
++@@ -180,7 +180,7 @@
++ // absl::variant is a typedef of std::variant, use the feature macro
++ // ABSL_USES_STD_VARIANT.
++ 
++-#define ABSL_OPTION_USE_STD_VARIANT 2
+++#define ABSL_OPTION_USE_STD_VARIANT 0
++ 
++ 
++ // ABSL_OPTION_USE_INLINE_NAMESPACE
+ diff --git a/absl/container/internal/compressed_tuple.h b/absl/container/internal/compressed_tuple.h
+-index 02bfd03..d25d96d 100644
++index 02bfd03..01db713 100644
+ --- a/absl/container/internal/compressed_tuple.h
+ +++ b/absl/container/internal/compressed_tuple.h
+ @@ -32,7 +32,6 @@
+@@ -232,6 +286,30 @@ index 02bfd03..d25d96d 100644
+    }
+  };
+  
++diff --git a/absl/copts/GENERATED_copts.bzl b/absl/copts/GENERATED_copts.bzl
++index bcdd61e..d57c42a 100644
++--- a/absl/copts/GENERATED_copts.bzl
+++++ b/absl/copts/GENERATED_copts.bzl
++@@ -91,6 +91,7 @@ ABSL_GCC_FLAGS = [
++     "-Wno-missing-field-initializers",
++     "-Wno-sign-compare",
++     "-DNOMINMAX",
+++    "-std=c++17",
++ ]
++ 
++ ABSL_GCC_TEST_FLAGS = [
++diff --git a/absl/copts/copts.py b/absl/copts/copts.py
++index a3437c1..7326296 100644
++--- a/absl/copts/copts.py
+++++ b/absl/copts/copts.py
++@@ -143,6 +143,7 @@ COPT_VARS = {
++         "-Wno-sign-compare",
++         # Don't define min and max macros (Build on Windows using gcc)
++         "-DNOMINMAX",
+++        "-std=c++17",
++     ],
++     "ABSL_GCC_TEST_FLAGS": [
++         "-Wno-conversion-null",
+ diff --git a/absl/strings/string_view.h b/absl/strings/string_view.h
+ index 5260b5b..1e4740c 100644
+ --- a/absl/strings/string_view.h
+@@ -333,3 +411,6 @@ index 45a9529..57c954e 100644
+      visibility = ["//visibility:public"],
+      deps = [
+          ":civil_time",
++-- 
++2.27.0
++
+-- 
+2.27.0
+

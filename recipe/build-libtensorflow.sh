@@ -27,6 +27,7 @@ echo "TF_MAJOR_VERSION: $TF_MAJOR_VERSION"
 # Move libtensorflow libs in from SRC_DIR cache
 mv ${SRC_DIR}/tensorflow_pkg/libtensorflow.so ${SP_DIR}/tensorflow/
 mv ${SRC_DIR}/tensorflow_pkg/libtensorflow_cc.so ${SP_DIR}/tensorflow/
+mv ${SRC_DIR}/tensorflow_pkg/libtensorflow_framework.so.2 ${SP_DIR}/tensorflow/
 
 #Create version sym links
 ln -s ${SP_DIR}/tensorflow/libtensorflow_framework.so.[0-9] "${SP_DIR}/tensorflow/libtensorflow_framework.so"

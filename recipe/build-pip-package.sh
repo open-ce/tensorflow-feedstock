@@ -37,7 +37,13 @@ $SCRIPT_DIR/set_tensorflow_bazelrc.sh $SRC_DIR/tensorflow
 bazel clean --expunge
 bazel shutdown
 
-bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build \
+BAZEL_CXXOPTS=-std=c++14
+
+bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build -s \
+    --cxxopt=-std=c++14 \
+    --copt=-std=c++14 \
+    --host_cxxopt=-std=c++14 \
+    --host_copt=-std=c++14 \
     --config=opt \
     --config=numa \
     --curses=no \
@@ -63,6 +69,7 @@ echo "RECIPE_DIR: $RECIPE_DIR"
 # the libtensorflow output
 mv ${SP_DIR}/tensorflow/libtensorflow.so ${SRC_DIR}/tensorflow_pkg/
 mv ${SP_DIR}/tensorflow/libtensorflow_cc.so ${SRC_DIR}/tensorflow_pkg/
+mv ${SP_DIR}/tensorflow/libtensorflow_framework.so.2 ${SRC_DIR}/tensorflow_pkg/
 
 # Install the activate / deactivate scripts that set environment variables
 mkdir -p "${PREFIX}"/etc/conda/activate.d
