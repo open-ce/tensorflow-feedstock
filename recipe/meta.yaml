@@ -112,7 +112,6 @@ outputs:
         - tensorrt {{ tensorrt }}     #[py<38]
         {% endif %}
         # Included for keras team keras
-        - pillow {{ pillow }}
         # List from TensorFlow setup.py
         - absl-py {{ absl_py }}
         - astunparse {{ astunparse }}
