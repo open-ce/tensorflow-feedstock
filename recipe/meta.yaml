@@ -38,7 +38,7 @@ source:
     - 0305-Updated-protobuf-to-3.11.2.patch              #[protobuf == "3.11.2"]
 
 build:
-  number: 9
+  number: 10
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -112,7 +112,6 @@ outputs:
         - tensorrt {{ tensorrt }}     #[py<38]
         {% endif %}
         # Included for keras team keras
-        - pillow {{ pillow }}
         # List from TensorFlow setup.py
         - absl-py {{ absl_py }}
         - astunparse {{ astunparse }}
