@@ -36,6 +36,8 @@ $SCRIPT_DIR/set_tensorflow_bazelrc.sh $SRC_DIR/tensorflow
 #Clean up old bazel cache to avoid problems building TF
 bazel clean --expunge
 bazel shutdown
+echo "CAche dir: $cached_dir"
+#exit 1
 
 bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build \
     --config=opt \
@@ -63,6 +65,20 @@ echo "RECIPE_DIR: $RECIPE_DIR"
 # the libtensorflow output
 mv ${SP_DIR}/tensorflow/libtensorflow.so ${SRC_DIR}/tensorflow_pkg/
 mv ${SP_DIR}/tensorflow/libtensorflow_cc.so ${SRC_DIR}/tensorflow_pkg/
+mv ${SP_DIR}/tensorflow/libtensorflow_framework.so.2 ${SRC_DIR}/tensorflow_pkg/
+
+#Cache the libs and headers needed by libtensorflow
+
+CACHE_DIR="/tmp/tf-libs"
+if [ -d $CACHE_DIR ]; then
+    rm -rf $CACHE_DIR
+fi
+
+mkdir -p $CACHE_DIR/lib
+mkdir -p $CACHE_DIR/include
+
+cp "${SRC_DIR}/tensorflow_pkg/"*.so* $CACHE_DIR/lib
+cp "${SRC_DIR}/tensorflow/include/tensorflow/cc/ops/"*.h $CACHE_DIR/include
 
 # Install the activate / deactivate scripts that set environment variables
 mkdir -p "${PREFIX}"/etc/conda/activate.d

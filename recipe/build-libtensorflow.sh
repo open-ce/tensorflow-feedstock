@@ -24,9 +24,19 @@ set -vex
 TF_MAJOR_VERSION=${PKG_VERSION:0:1}
 echo "TF_MAJOR_VERSION: $TF_MAJOR_VERSION"
 
-# Move libtensorflow libs in from SRC_DIR cache
-mv ${SRC_DIR}/tensorflow_pkg/libtensorflow.so ${SP_DIR}/tensorflow/
-mv ${SRC_DIR}/tensorflow_pkg/libtensorflow_cc.so ${SP_DIR}/tensorflow/
+SHOW_ERR=0
+CACHE_DIR="/tmp/tf-libs"
+if [ -d ${SRC_DIR}/tensorflow_pkg ]; then
+    # Move libtensorflow libs in from SRC_DIR cache
+    mv ${SRC_DIR}/tensorflow_pkg/libtensorflow.so ${SP_DIR}/tensorflow/
+    mv ${SRC_DIR}/tensorflow_pkg/libtensorflow_cc.so ${SP_DIR}/tensorflow/
+    mv ${SRC_DIR}/tensorflow_pkg/libtensorflow_framework.so.[0-9] ${SP_DIR}/tensorflow/
+
+elif [ -d $CACHE_DIR ]; then
+    cp "$CACHE_DIR/lib/"*.so* ${SP_DIR}/tensorflow/
+else
+    SHOW_ERR=1
+fi
 
 #Create version sym links
 ln -s ${SP_DIR}/tensorflow/libtensorflow_framework.so.[0-9] "${SP_DIR}/tensorflow/libtensorflow_framework.so"
@@ -45,12 +55,18 @@ cd ../c
 cp --parents `find -name \*.h*` "${SP_DIR}/tensorflow/include/tensorflow/c"
 
 cd ../../
-if [[ ! -d ${SRC_DIR}/tensorflow/include/tensorflow/cc/ops ]]
+if [[ -d ${SRC_DIR}/tensorflow/include/tensorflow/cc/ops ]]
 then
+    cp -R "${SRC_DIR}/tensorflow/include/tensorflow/cc/ops/"*.h "${SP_DIR}/tensorflow/include/tensorflow/cc/ops"
+elif [ -d $CACHE_DIR ]; then
+    cp "$CACHE_DIR/include/"*.h "${SP_DIR}/tensorflow/include/tensorflow/cc/ops"
+else
+    SHOW_ERR=1
+fi
+
+if [ $SHOW_ERR == 1 ]; then
     echo "ERROR: You need to rebuild tensorflow-base package."
     echo "Please delete the previously generated tensorflow-base package from the output folder and rerun the build."
     exit 1
-else
-    cp -R "${SRC_DIR}/tensorflow/include/tensorflow/cc/ops/"*.h "${SP_DIR}/tensorflow/include/tensorflow/cc/ops"
 fi
 
