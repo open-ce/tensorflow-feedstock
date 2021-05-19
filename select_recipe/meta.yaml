@@ -6,11 +6,7 @@ package:
 
 build:
   number: 1
-{% if build_type == 'cpu' %}
   string: {{ build_type }}_{{ PKG_BUILDNUM }}
-{% else %}
-  string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_{{ PKG_BUILDNUM }}
-{% endif %}
 
 about:
   summary : Package used to select the specific Tensorflow build variant
