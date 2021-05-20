@@ -1,0 +1,26 @@
+From 6edba11d28e926e444e4c93d115b9f8b467da0f3 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Wed, 19 May 2021 10:55:41 +0000
+Subject: [PATCH] Trial change
+
+---
+ tensorflow/core/profiler/utils/xplane_utils.cc | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/tensorflow/core/profiler/utils/xplane_utils.cc b/tensorflow/core/profiler/utils/xplane_utils.cc
+index 5b7d22ce22f..bcaff8e634a 100644
+--- a/tensorflow/core/profiler/utils/xplane_utils.cc
++++ b/tensorflow/core/profiler/utils/xplane_utils.cc
+@@ -101,7 +101,8 @@ const XPlane* FindPlaneWithName(const XSpace& space, absl::string_view name) {
+ 
+ std::vector<const XPlane*> FindPlanesWithNames(
+     const XSpace& space, const std::vector<absl::string_view>& names) {
+-  absl::flat_hash_set<absl::string_view> names_set(names.begin(), names.end());
++  absl::flat_hash_set<absl::string_view> names_set;
++  names_set.insert(names.begin(), names.end());
+   std::vector<int> indices =
+       FindAll(space.planes(), [&names_set](const XPlane* plane) {
+         return names_set.contains(plane->name());
+-- 
+2.27.0
+

@@ -7,7 +7,7 @@ package:
 
 source:
   git_url: https://github.com/tensorflow/tensorflow.git
-  git_rev: v{{ build_version }}-rc3
+  git_rev: v{{ build_version }}
   patches:
     # 00xx - patch is carried forward from anaconda
 {% if build_type == 'cuda' %}
@@ -34,9 +34,8 @@ source:
     - 0301-update-ICU-patch-for-CVE-2020-10531.patch
     - 0001-Fix-cub-BUILD-file-for-local_config_cuda-reference.patch
     - 0305-Updated-protobuf-to-3.11.2.patch              #[protobuf == "3.11.2"]
-#    - 0001-Absl-version.patch
-#    - 0001-Some-trial.patch
-    - 0001-Changed-C-standard-in-Absl.patch
+    - 0001-Trial-change.patch
+    - 0001-Removed-optional.patch
 
 build:
   number: 1 
