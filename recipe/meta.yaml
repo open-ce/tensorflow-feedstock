@@ -36,6 +36,7 @@ source:
     - 0305-Updated-protobuf-to-3.11.2.patch              #[protobuf == "3.11.2"]
     - 0001-Trial-change.patch
     - 0001-Removed-optional.patch
+    - 0308-Upstream-patch-to-disable-absl-cord.patch
 
 build:
   number: 1 

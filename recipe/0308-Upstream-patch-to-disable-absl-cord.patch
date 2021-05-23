@@ -1,0 +1,29 @@
+From 4d4eec61d0b2e74723e04b51edeaf4c2b5f40609 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Sun, 23 May 2021 10:04:19 +0000
+Subject: [PATCH] Upstream patch to disable absl cord
+
+---
+ tensorflow/core/platform/default/cord.h | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/tensorflow/core/platform/default/cord.h b/tensorflow/core/platform/default/cord.h
+index cdfab1e5da9..febd6fa08ba 100644
+--- a/tensorflow/core/platform/default/cord.h
++++ b/tensorflow/core/platform/default/cord.h
+@@ -16,7 +16,12 @@ limitations under the License.
+ #ifndef TENSORFLOW_CORE_PLATFORM_DEFAULT_CORD_H_
+ #define TENSORFLOW_CORE_PLATFORM_DEFAULT_CORD_H_
+ 
++// It seems CORD doesn't work well with CUDA <= 10.2
++#if !defined(__CUDACC__) || ((defined(__CUDACC__) && CUDA_VERSOIN > 10020))
++
+ #include "absl/strings/cord.h"
+ #define TF_CORD_SUPPORT 1
+ 
++#endif  // __CUDACC__
++
+ #endif  // TENSORFLOW_CORE_PLATFORM_DEFAULT_CORD_H_
+-- 
+2.23.0
+
