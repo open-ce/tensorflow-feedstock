@@ -18,7 +18,7 @@ source:
     - 0101-include-c-and-cc-headers.patch
     - 0102-include-cc-in-pip-package.patch
     - 0103-BUILD-changes-for-external-sqlite-package.patch
-    - 0106-Upstream-patch-for-absl-error.patch            #[x86_64]
+    #- 0106-Upstream-patch-for-absl-error.patch            #[x86_64]
     - 0107-do-not-hardcode-ca-cert-location.patch
 
     # 02xx - GPU only patch specific to open-ce (maybe)
@@ -32,12 +32,12 @@ source:
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0300-fix-constant_op_test.patch
     - 0301-update-ICU-patch-for-CVE-2020-10531.patch
-    - 0001-Fix-cub-BUILD-file-for-local_config_cuda-reference.patch
+    - 0001-Fix-cub-BUILD-file-for-local_config_cuda-reference.patch    #[cudatoolkit == "10.2"]
     - 0305-Updated-protobuf-to-3.11.2.patch              #[protobuf == "3.11.2"]
-    - 0001-Trial-change.patch
-    - 0001-Removed-optional.patch
-    - 0308-Upstream-patch-to-disable-absl-cord.patch
-    - 0001-Fix-for-eigen-TensorReduction.patch           #[x86_64]
+    - 0306-Fix-absl-linker-error.patch
+    - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
+    - 0308-Upstream-patch-to-disable-absl-cord.patch     #[cudatoolkit == "10.2"]
+    - 0309-Removed-optional-hdr-inclusion.patch
 
 build:
   number: 1 
