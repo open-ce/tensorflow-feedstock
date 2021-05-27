@@ -5,6 +5,7 @@ tests:
          # Tensorflow/models repo doesn't have branch/tag for 2.4.1 but its r2.4.0 branch works
          # with TF 2.4.1
          TF_MODELS_VERSION=2.5.0
+         conda install -y git
          git clone --recursive -b v${TF_MODELS_VERSION} https://github.com/tensorflow/models
          cd models
          git apply ${FEEDSTOCK_DIR}/recipe/0304-Fixed-models-test-on-x86.patch
