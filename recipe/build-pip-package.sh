@@ -65,7 +65,6 @@ echo "RECIPE_DIR: $RECIPE_DIR"
 # the libtensorflow output
 mv ${SP_DIR}/tensorflow/libtensorflow.so ${SRC_DIR}/tensorflow_pkg/
 mv ${SP_DIR}/tensorflow/libtensorflow_cc.so ${SRC_DIR}/tensorflow_pkg/
-#mv ${SP_DIR}/tensorflow/libtensorflow_framework.so.2 ${SRC_DIR}/tensorflow_pkg/
 
 # Install the activate / deactivate scripts that set environment variables
 mkdir -p "${PREFIX}"/etc/conda/activate.d
