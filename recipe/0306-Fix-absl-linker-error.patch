@@ -1,7 +1,7 @@
 From 6edba11d28e926e444e4c93d115b9f8b467da0f3 Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
 Date: Wed, 19 May 2021 10:55:41 +0000
-Subject: [PATCH] Trial change
+Subject: [PATCH] Workaround to fix absl undefined error for std::allocator
 
 ---
  tensorflow/core/profiler/utils/xplane_utils.cc | 3 ++-

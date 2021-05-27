@@ -37,8 +37,6 @@ $SCRIPT_DIR/set_tensorflow_bazelrc.sh $SRC_DIR/tensorflow
 bazel clean --expunge
 bazel shutdown
 
-#BAZEL_CXXOPTS=-std=c++17
-
 bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build \
     --local_cpu_resources=HOST_CPUS-10 \
     --local_ram_resources=HOST_RAM*0.50 \
