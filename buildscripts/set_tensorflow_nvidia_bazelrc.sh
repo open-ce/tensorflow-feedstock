@@ -43,7 +43,7 @@ if [[ "${ARCH}" == 'x86_64' ]]; then
 fi
 if [[ "${ARCH}" == 'ppc64le' ]]; then
     ## M40 and P4 never fully qualified on ppc64le
-    CUDA_OPTION_1='sm_60,sm_70,compute_75'
+    CUDA_OPTION_1='sm_37,sm_60,sm_70,compute_75'
 fi
 
 CUDA_VERSION="${cudatoolkit%.*}"

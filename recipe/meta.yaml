@@ -18,7 +18,6 @@ source:
     - 0101-include-c-and-cc-headers.patch
     - 0102-include-cc-in-pip-package.patch
     - 0103-BUILD-changes-for-external-sqlite-package.patch
-    #- 0106-Upstream-patch-for-absl-error.patch            #[x86_64]
     - 0107-do-not-hardcode-ca-cert-location.patch
 
     # 02xx - GPU only patch specific to open-ce (maybe)
