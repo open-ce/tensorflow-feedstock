@@ -31,7 +31,7 @@ source:
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0300-fix-constant_op_test.patch
     - 0301-update-ICU-patch-for-CVE-2020-10531.patch
-    - 0001-Fix-cub-BUILD-file-for-local_config_cuda-reference.patch    #[cudatoolkit == "10.2"]
+    - 0302-Fix-cub-BUILD-file-for-local_config_cuda-reference.patch    #[cudatoolkit == "10.2"]
     - 0305-Updated-protobuf-to-3.11.2.patch              #[protobuf == "3.11.2"]
     - 0306-Fix-absl-linker-error.patch
     - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
