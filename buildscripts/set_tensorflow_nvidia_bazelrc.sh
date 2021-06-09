@@ -64,7 +64,7 @@ build --action_env TF_CUDA_COMPUTE_CAPABILITIES="${CUDA_OPTION_1}"
 build --action_env GCC_HOST_COMPILER_PATH="${CC}"
 EOF
 
-if [[ $ARCH == "x86_64" && $PY_VER < 3.9 ]]; then
+if [[ $ARCH == "x86_64" && $PY_VER < 3.8 ]]; then
 cat >> $BAZEL_RC_DIR/nvidia_components_configure.bazelrc << EOF
 build --config=tensorrt
 build --action_env TF_TENSORRT_VERSION="${tensorrt:0:1}"
