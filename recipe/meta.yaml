@@ -38,7 +38,7 @@ source:
     - 0305-Updated-protobuf-to-3.11.2.patch              #[protobuf == "3.11.2"]
 
 build:
-  number: 10
+  number: 11
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -64,6 +64,9 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
+        # Use pins to control cos6/cos7 match
+        - libgcc-ng  {{ libgcc }}
+        - libstdcxx-ng  {{ libstdcxx }}
       host:
         # conda build requirements
         - git >=2.2
@@ -103,6 +106,10 @@ outputs:
         - six {{ six }}
         - typing_extensions {{ typing_extensions }}     #[py<38]
         - sqlite 3.33.0
+        # Use pins to control cos6/cos7 match
+        - libgcc-ng  {{ libgcc }}
+        - libstdcxx-ng  {{ libstdcxx }}
+
       run:
         - python {{ python }}
         {% if build_type == 'cuda' %}
