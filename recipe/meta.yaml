@@ -36,7 +36,6 @@ source:
     - 0306-Fix-absl-linker-error.patch
     - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
     - 0308-Upstream-patch-to-disable-absl-cord.patch     #[cudatoolkit == "10.2"]
-    - 0309-Removed-optional-hdr-inclusion.patch
 
 build:
   number: 1 
