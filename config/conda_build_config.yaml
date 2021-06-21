@@ -1,9 +1,7 @@
 c_compiler_version:
-  - 7.2.0                      # [x86_64]
-  - 7.3.0                      # [ppc64le]
+  - 7.3.0                     
 cxx_compiler_version:
-  - 7.2.0                      # [x86_64]
-  - 7.3.0                      # [ppc64le]
+  - 7.3.0                     
 # One can change the value for below field on x86_64 if MKL is to be turned on.
 use_mkl:
   - "false"
