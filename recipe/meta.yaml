@@ -113,11 +113,10 @@ outputs:
         - six {{ six }}
         - typing_extensions {{ typing_extensions }}     #[py<38]
         - sqlite 3.33.0
-        - grpcio >={{ grpcio }}
+        - grpcio {{ grpcio }}
         # Use pins to control cos6/cos7 match
         - libgcc-ng  {{ libgcc }}
         - libstdcxx-ng  {{ libstdcxx }}
-
       run:
         - python {{ python }}
         {% if build_type == 'cuda' %}
@@ -126,7 +125,6 @@ outputs:
         - nccl {{ nccl }}
        #- tensorrt {{ tensorrt }}     #[py<38 and x86_64]
         {% endif %}
-        # Included for keras team keras
         # List from TensorFlow setup.py
         - absl-py {{ absl_py }}
         - astunparse {{ astunparse }}
@@ -145,7 +143,7 @@ outputs:
         - wheel {{ wheel }}
         - six {{ six }}
         - typing_extensions {{ typing_extensions }}     #[py<38]
-        - grpcio >={{ grpcio }}
+        - grpcio {{ grpcio }}
         # Allow newer sqlite versions at runtime as they release
         - sqlite >=3.33.0, <4.0
         - _tensorflow_select {{ tensorflow_select_version }}
