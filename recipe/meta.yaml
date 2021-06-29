@@ -86,7 +86,8 @@ outputs:
         - cudatoolkit {{ cudatoolkit }}
         - cudnn {{ cudnn }}
         - nccl {{ nccl }}
-       #- tensorrt {{ tensorrt }}     #[py<38 and x86_64]
+        # Uncomment TRT after it is updated to newer versions
+        #- tensorrt {{ tensorrt }}     #[py<38 and x86_64]
         {% endif %}
         - zlib
         #  This list needs to match exacly tensorflow/tools/pip_package/setup.py.
@@ -123,7 +124,8 @@ outputs:
         - cudatoolkit {{ cudatoolkit }}
         - cudnn {{ cudnn }}
         - nccl {{ nccl }}
-       #- tensorrt {{ tensorrt }}     #[py<38 and x86_64]
+        # Uncomment TRT after it is updated to newer versions
+        #- tensorrt {{ tensorrt }}     #[py<38 and x86_64]
         {% endif %}
         # List from TensorFlow setup.py
         - absl-py {{ absl_py }}
@@ -170,7 +172,8 @@ outputs:
         - cudatoolkit {{ cudatoolkit }}
         - cudnn {{ cudnn }}
         - nccl {{ nccl }}
-       #- tensorrt {{ tensorrt }}     #[py<38 and x86_64]
+        # Uncomment TRT after it is updated to newer versions
+        #- tensorrt {{ tensorrt }}     #[py<38 and x86_64]
         {% endif %}
         - protobuf {{ protobuf }}
         - _tensorflow_select {{ tensorflow_select_version }}
