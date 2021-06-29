@@ -61,8 +61,12 @@ echo "RECIPE_DIR: $RECIPE_DIR"
 
 # Cache libtensorflow libs in SRC_DIR so they can be picked up by
 # the libtensorflow output
+TF_MAJOR_VERSION=${PKG_VERSION:0:1}
+echo "TF_MAJOR_VERSION: $TF_MAJOR_VERSION"
+
 mv ${SP_DIR}/tensorflow/libtensorflow.so ${SRC_DIR}/tensorflow_pkg/
 mv ${SP_DIR}/tensorflow/libtensorflow_cc.so ${SRC_DIR}/tensorflow_pkg/
+mv ${SP_DIR}/tensorflow/libtensorflow_framework.so.${TF_MAJOR_VERSION} ${SRC_DIR}/tensorflow_pkg/
 
 # Install the activate / deactivate scripts that set environment variables
 mkdir -p "${PREFIX}"/etc/conda/activate.d
