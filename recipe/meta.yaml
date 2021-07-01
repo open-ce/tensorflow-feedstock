@@ -170,8 +170,7 @@ outputs:
         - cudatoolkit {{ cudatoolkit }}
         - cudnn {{ cudnn }}
         - nccl {{ nccl }}
-        # Uncomment TRT after it is updated to newer versions
-        #- tensorrt {{ tensorrt }}     #[py<38 and x86_64]
+        - tensorrt {{ tensorrt }}     #[py<38]
         {% endif %}
         - protobuf {{ protobuf }}
         - _tensorflow_select {{ tensorflow_select_version }}
