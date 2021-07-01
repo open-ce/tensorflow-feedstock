@@ -1,0 +1,23 @@
+From 7573ddb0732ca3a7b8e3dbd0006b8ee53df80609 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Mon, 5 Apr 2021 13:52:11 +0000
+Subject: [PATCH] Fix cub BUILD file for local_config_cuda reference
+
+---
+ third_party/cub.BUILD | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/third_party/cub.BUILD b/third_party/cub.BUILD
+index 581d8dd..a84d539 100644
+--- a/third_party/cub.BUILD
++++ b/third_party/cub.BUILD
+@@ -11,5 +11,5 @@ exports_files(["LICENSE.TXT"])
+ cc_library(
+     name = "cub",
+     hdrs = glob(["cub/**"]),
+-    deps = ["@local_cuda//:cuda_headers"],
++    deps = ["@local_config_cuda//cuda:cuda_headers"],
+ )
+--
+1.8.3.1
+

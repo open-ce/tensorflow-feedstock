@@ -1,4 +1,4 @@
-{% set build_version = "2.4.2" %}
+{% set build_version = "2.5.0" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
@@ -18,15 +18,12 @@ source:
     - 0101-include-c-and-cc-headers.patch
     - 0102-include-cc-in-pip-package.patch
     - 0103-BUILD-changes-for-external-sqlite-package.patch
-    - 0104-Fixed-linking-error-in-conda-builds.patch
-    - 0106-Upstream-patch-for-absl-error.patch            #[x86_64]
     - 0107-do-not-hardcode-ca-cert-location.patch
 
     # 02xx - GPU only patch specific to open-ce (maybe)
 {% if build_type == 'cuda' %}
     - 0201-add-additional-cuda-rpaths.patch
     - 0202-Remove-extra-null-terminators.patch
-    - 0203-Find-cublas-in-conda-environment.patch
     - 0204-Replace-var-lock-with-tmp-lock.patch
     - 0205-Fix-the-build-on-x86-opence-container.patch    #[x86_64] 
 {% endif %}
@@ -34,11 +31,14 @@ source:
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0300-fix-constant_op_test.patch
     - 0301-update-ICU-patch-for-CVE-2020-10531.patch
-    - 0303-Eigen-customized.patch                        #[ppc64le]
+    - 0302-Fix-cub-BUILD-file-for-local_config_cuda-reference.patch    #[cudatoolkit == "10.2"]
     - 0305-Updated-protobuf-to-3.11.2.patch              #[protobuf == "3.11.2"]
+    - 0306-Fix-absl-linker-error.patch
+    - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
+    - 0308-Upstream-patch-to-disable-absl-cord.patch     #[cudatoolkit == "10.2"]
 
 build:
-  number: 14
+  number: 1 
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main

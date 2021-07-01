@@ -1,26 +1,26 @@
-From edf1c880d78c82a16727ab510bed22d01be634fd Mon Sep 17 00:00:00 2001
+From edeaa4462808838c4549d7cbe000ae0e71b47cec Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Fri, 26 Mar 2021 18:15:10 +0000
+Date: Tue, 27 Apr 2021 08:23:20 +0000
 Subject: [PATCH] Updated protobuf to 3.11.2
 
 ---
- tensorflow/workspace.bzl            |  8 +++----
+ tensorflow/workspace2.bzl           |  8 +++----
  third_party/protobuf/protobuf.patch | 42 +++++++++++++++++++++----------------
  2 files changed, 28 insertions(+), 22 deletions(-)
 
-diff --git a/tensorflow/workspace.bzl b/tensorflow/workspace.bzl
-index 89062b1..2ccb6c0 100755
---- a/tensorflow/workspace.bzl
-+++ b/tensorflow/workspace.bzl
-@@ -580,15 +580,15 @@ def tf_repositories(path_prefix = "", tf_repo_name = ""):
+diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
+index 4b26bdd..54670af 100644
+--- a/tensorflow/workspace2.bzl
++++ b/tensorflow/workspace2.bzl
+@@ -564,15 +564,15 @@ def _tf_repositories():
      tf_http_archive(
          name = "com_google_protobuf",
-         patch_file = clean_dep("//third_party/protobuf:protobuf.patch"),
+         patch_file = "//third_party/protobuf:protobuf.patch",
 -        sha256 = "cfcba2df10feec52a84208693937c17a4b5df7775e1635c1e3baffc487b24c9b",
 -        strip_prefix = "protobuf-3.9.2",
 +        sha256 = "e4f8bedb19a93d0dccc359a126f51158282e0b24d92e0cad9c76a9699698268d",
 +        strip_prefix = "protobuf-3.11.2",
-         system_build_file = clean_dep("//third_party/systemlibs:protobuf.BUILD"),
+         system_build_file = "//third_party/systemlibs:protobuf.BUILD",
          system_link_files = {
              "//third_party/systemlibs:protobuf.bzl": "protobuf.bzl",
          },

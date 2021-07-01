@@ -1,0 +1,60 @@
+From f2c948d4d5517b091b35fa60e7db02c557de4b0e Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Fri, 30 Apr 2021 13:34:20 -0400
+Subject: [PATCH] Fix in Eigen
+
+---
+ third_party/eigen3/eigen.patch   | 28 ++++++++++++++++++++++++++++
+ third_party/eigen3/workspace.bzl |  1 +
+ 2 files changed, 29 insertions(+)
+ create mode 100644 third_party/eigen3/eigen.patch
+
+diff --git a/third_party/eigen3/eigen.patch b/third_party/eigen3/eigen.patch
+new file mode 100644
+index 00000000000..f9740cb5145
+--- /dev/null
++++ b/third_party/eigen3/eigen.patch
+@@ -0,0 +1,28 @@
++diff -Naur a/unsupported/Eigen/CXX11/src/Tensor/TensorReduction.h b/unsupported/Eigen/CXX11/src/Tensor/TensorReduction.h
++--- a/unsupported/Eigen/CXX11/src/Tensor/TensorReduction.h
+++++ b/unsupported/Eigen/CXX11/src/Tensor/TensorReduction.h
++@@ -815,8 +815,9 @@
++       const Index firstIndex = firstInput(index);
++       for (Index i = 0; i < PacketSize; ++i) {
++         Op reducer(m_reducer);
++-        values[i] = internal::InnerMostDimReducer<Self, Op>::reduce(*this, firstIndex + i * num_values_to_reduce,
++-                                                                    num_values_to_reduce, reducer);
+++        Self::CoeffReturnType a = internal::InnerMostDimReducer<Self, Op>::reduce(*this,
+++                                       firstIndex + i * num_values_to_reduce, num_values_to_reduce, reducer);
+++        values[i] = a;
++       }
++     } else if (PreservingInnerMostDims) {
++       const Index firstIndex = firstInput(index);
++diff -Naur a/unsupported/Eigen/CXX11/src/Tensor/TensorImagePatch.h b/unsupported/Eigen/CXX11/src/Tensor/TensorImagePatch.h
++--- a/unsupported/Eigen/CXX11/src/Tensor/TensorImagePatch.h
+++++ b/unsupported/Eigen/CXX11/src/Tensor/TensorImagePatch.h
++@@ -543,7 +543,8 @@
++     EIGEN_ALIGN_MAX typename internal::remove_const<CoeffReturnType>::type values[PacketSize];
++     EIGEN_UNROLL_LOOP
++     for (int i = 0; i < PacketSize; ++i) {
++-      values[i] = coeff(index+i);
+++      Self::CoeffReturnType a = coeff(index+i);
+++      values[i] = a;
++     }
++     PacketReturnType rslt = internal::pload<PacketReturnType>(values);
++     return rslt;
+diff --git a/third_party/eigen3/workspace.bzl b/third_party/eigen3/workspace.bzl
+index 233231f5636..7bf6b17f3ce 100644
+--- a/third_party/eigen3/workspace.bzl
++++ b/third_party/eigen3/workspace.bzl
+@@ -13,6 +13,7 @@ def repo():
+         name = "eigen_archive",
+         build_file = "//third_party/eigen3:eigen_archive.BUILD",
+         sha256 = EIGEN_SHA256,
++        patch_file = "//third_party/eigen3:eigen.patch",
+         strip_prefix = "eigen-{commit}".format(commit = EIGEN_COMMIT),
+         urls = [
+             "https://storage.googleapis.com/mirror.tensorflow.org/gitlab.com/libeigen/eigen/-/archive/{commit}/eigen-{commit}.tar.gz".format(commit = EIGEN_COMMIT),
+-- 
+2.23.0
+

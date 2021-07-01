@@ -1,13 +1,13 @@
 # Recipe to build Tensorflow meta package
-{% set build_version = "2.4.2" %}
-{% set estimator_version = "2.4.0" %}
+{% set build_version = "2.5.0" %}
+{% set estimator_version = "2.5.0" %}
 
 package:
   name: tensorflow{{ '' if build_type == 'cuda' else '-cpu' }}
   version: {{ build_version }}
 
 build:
-  number: 2
+  number: 1
   string: py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}   #[build_type == 'cpu']
   string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }} #[build_type == 'cuda']
 
