@@ -38,7 +38,7 @@ source:
     - 0308-Upstream-patch-to-disable-absl-cord.patch     #[cudatoolkit == "10.2"]
 
 build:
-  number: 1 
+  number: 2
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
