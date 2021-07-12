@@ -40,6 +40,7 @@ bazel shutdown
 bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build \
     --local_cpu_resources=HOST_CPUS-10 \
     --local_ram_resources=HOST_RAM*0.50 \
+    --jobs 32 \
     --config=opt \
     --config=numa \
     --curses=no \
