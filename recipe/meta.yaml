@@ -48,9 +48,6 @@ build:
     # - tensorboard = tensorboard.main:run_main
     - tf_upgrade_v2 = tensorflow.tools.compatibility.tf_upgrade_v2_main:main
     - estimator_ckpt_converter = tensorflow_estimator.python.estimator.tools.checkpoint_converter:main
-  ignore_run_exports:
-    - libgcc-ng
-    - libstdcxx-ng
 
 outputs:
   - name: tensorflow-base
@@ -64,8 +61,6 @@ outputs:
 {% endif %}
       ignore_run_exports:
         - sqlite
-        - libgcc-ng
-        - libstdcxx-ng
 
     requirements:
       build:
@@ -147,9 +142,6 @@ outputs:
         # Allow newer sqlite versions at runtime as they release
         - sqlite >=3.33.0, <4.0
         - _tensorflow_select {{ tensorflow_select_version }}
-        # Use pins to control cos6/cos7 match
-        - libgcc-ng  {{ libgcc }}
-        - libstdcxx-ng  {{ libstdcxx }}
 
 
   - name: libtensorflow
