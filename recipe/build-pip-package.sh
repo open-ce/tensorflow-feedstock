@@ -66,7 +66,7 @@ echo "TF_MAJOR_VERSION: $TF_MAJOR_VERSION"
 
 mv ${SP_DIR}/tensorflow/libtensorflow.so ${SRC_DIR}/tensorflow_pkg/
 mv ${SP_DIR}/tensorflow/libtensorflow_cc.so ${SRC_DIR}/tensorflow_pkg/
-mv ${SP_DIR}/tensorflow/libtensorflow_framework.so.${TF_MAJOR_VERSION} ${SRC_DIR}/tensorflow_pkg/
+ln -s ${SP_DIR}/tensorflow/libtensorflow_framework.so.${TF_MAJOR_VERSION} ${SP_DIR}/tensorflow/libtensorflow_framework.so
 
 # Install the activate / deactivate scripts that set environment variables
 mkdir -p "${PREFIX}"/etc/conda/activate.d
