@@ -36,10 +36,10 @@ source:
     - 0306-Fix-absl-linker-error.patch
     - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
     - 0308-Upstream-patch-to-disable-absl-cord.patch     #[cudatoolkit == "10.2"]
-    - 0309-disable-ppc64le-custom-gemm_pack_rhs-to-use-the-convolution-specialization
+    - 0309-disable-ppc64le-custom-gemm_pack_rhs-to-use-the-convolution-specialization # [ppc64le]
 
 build:
-  number: 4
+  number: 5
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
