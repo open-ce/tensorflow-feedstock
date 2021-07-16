@@ -36,6 +36,7 @@ source:
     - 0306-Fix-absl-linker-error.patch
     - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
     - 0308-Upstream-patch-to-disable-absl-cord.patch     #[cudatoolkit == "10.2"]
+    - 0309-disable-ppc64le-custom-gemm_pack_rhs-to-use-the-convolution-specialization
 
 build:
   number: 4
