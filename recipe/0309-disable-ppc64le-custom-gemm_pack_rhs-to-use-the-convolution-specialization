@@ -1,4 +1,31 @@
-warning: refname 'v2.5.0' is ambiguous.
+From b12b446d9fdf10e22356f0d2212570e1084fd466 Mon Sep 17 00:00:00 2001
+From: "Maxiwell S. Garcia" <maxiwell@linux.ibm.com>
+Date: Wed, 7 Jul 2021 13:08:02 -0700
+Subject: [PATCH] Disable ppc64le custom gemm_pack_rhs to use the
+convolution specialization
+
+BUILD: Only include conv_2d rule on NN_DEPS in case of cuda and rocm
+
+Disable ppc64le custom gemm_pack_rhs to use the convolution specialization
+
+Eigen ppc64le has a gemm_pack_rhs specialization for AltiVec architecture.
+TF Convolution also specializes this packing routine, improving the Tensor
+code and avoiding a lot of index computation. Based on eigen_benchmark_cpu_test,
+we found a good scenario for ppc64le, where gemm_pack_rhs from TF headers
+together with VSX/MMA from ppc64le speeds up the performance of convolution.
+
+This patch fixes the column computation for convolution in case of ppc64le
+and disables the Eigen ppc64le gemm_pack_rhs using the define
+EIGEN_ALTIVEC_USE_CUSTOM_PACK=0
+---
+ tensorflow/core/kernels/BUILD                  |  6 ++++--
+ .../eigen_backward_cuboid_convolutions.h       |  1 +
+ .../eigen_backward_spatial_convolutions.h      |  1 +
+ .../core/kernels/eigen_cuboid_convolution.h    | 18 +++++++++++-------
+ .../kernels/eigen_spatial_convolutions-inl.h   | 18 +++++++++++-------
+ third_party/eigen3/workspace.bzl               |  4 ++--
+ 6 files changed, 30 insertions(+), 18 deletions(-)
+
 diff --git a/tensorflow/core/kernels/BUILD b/tensorflow/core/kernels/BUILD
 index c65695c3cab..e06a779424b 100644
 --- a/tensorflow/core/kernels/BUILD
@@ -157,3 +184,6 @@ index 233231f5636..96371dda195 100644
  
      tf_http_archive(
          name = "eigen_archive",
+-- 
+2.23.0
+
