@@ -1,15 +1,15 @@
-From edeaa4462808838c4549d7cbe000ae0e71b47cec Mon Sep 17 00:00:00 2001
-From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Tue, 27 Apr 2021 08:23:20 +0000
-Subject: [PATCH] Updated protobuf to 3.11.2
+From 147de194977315497a1d191e6ff9809555c137c8 Mon Sep 17 00:00:00 2001
+From: Jason Furmanek <furmanek@us.ibm.com>
+Date: Mon, 12 Jul 2021 11:13:34 -0500
+Subject: [PATCH] [PATCH] Update protobuf to 3.14
 
 ---
- tensorflow/workspace2.bzl           |  8 +++----
- third_party/protobuf/protobuf.patch | 42 +++++++++++++++++++++----------------
- 2 files changed, 28 insertions(+), 22 deletions(-)
+ tensorflow/workspace2.bzl           |  8 ++---
+ third_party/protobuf/protobuf.patch | 47 +++++++++++++++++------------
+ 2 files changed, 31 insertions(+), 24 deletions(-)
 
 diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
-index 4b26bdd..54670af 100644
+index efc50709b8f..b34ca40f7da 100644
 --- a/tensorflow/workspace2.bzl
 +++ b/tensorflow/workspace2.bzl
 @@ -564,15 +564,15 @@ def _tf_repositories():
@@ -18,8 +18,8 @@ index 4b26bdd..54670af 100644
          patch_file = "//third_party/protobuf:protobuf.patch",
 -        sha256 = "cfcba2df10feec52a84208693937c17a4b5df7775e1635c1e3baffc487b24c9b",
 -        strip_prefix = "protobuf-3.9.2",
-+        sha256 = "e4f8bedb19a93d0dccc359a126f51158282e0b24d92e0cad9c76a9699698268d",
-+        strip_prefix = "protobuf-3.11.2",
++        sha256 = "bf0e5070b4b99240183b29df78155eee335885e53a8af8683964579c214ad301",
++        strip_prefix = "protobuf-3.14.0",
          system_build_file = "//third_party/systemlibs:protobuf.BUILD",
          system_link_files = {
              "//third_party/systemlibs:protobuf.bzl": "protobuf.bzl",
@@ -27,25 +27,32 @@ index 4b26bdd..54670af 100644
          urls = [
 -            "https://storage.googleapis.com/mirror.tensorflow.org/github.com/protocolbuffers/protobuf/archive/v3.9.2.zip",
 -            "https://github.com/protocolbuffers/protobuf/archive/v3.9.2.zip",
-+            "https://storage.googleapis.com/mirror.tensorflow.org/github.com/protocolbuffers/protobuf/archive/v3.11.2.zip",
-+            "https://github.com/protocolbuffers/protobuf/archive/v3.11.2.zip",
++            "https://storage.googleapis.com/mirror.tensorflow.org/github.com/protocolbuffers/protobuf/archive/v3.14.0.zip",
++            "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.zip",
          ],
      )
  
 diff --git a/third_party/protobuf/protobuf.patch b/third_party/protobuf/protobuf.patch
-index 8ce4a84..a869ecd 100644
+index 8ce4a843759..9b93d58a180 100644
 --- a/third_party/protobuf/protobuf.patch
 +++ b/third_party/protobuf/protobuf.patch
-@@ -1,25 +1,24 @@
--diff --git a/BUILD b/BUILD
+@@ -1,25 +1,34 @@
++From b4e0065741603ea8979539873438656f07d54fa3 Mon Sep 17 00:00:00 2001
++From: Jason Furmanek <furmanek@us.ibm.com>
++Date: Mon, 12 Jul 2021 11:09:55 -0500
++Subject: [PATCH] [PATCH] Update protobuf to 3.14
++
++---
++ BUILD | 6 ++++--
++ 1 file changed, 4 insertions(+), 2 deletions(-)
++
+ diff --git a/BUILD b/BUILD
 -index dbae719ff..87dc38470 100644
----- a/BUILD
--+++ b/BUILD
++index 112432160..4ba0da0ee 100644
+ --- a/BUILD
+ +++ b/BUILD
 -@@ -23,7 +23,7 @@ config_setting(
-+diff -Naur protobuf-3.11.2_org/BUILD protobuf-3.11.2/BUILD
-+--- protobuf-3.11.2_org/BUILD	2021-03-26 18:06:54.584171427 +0000
-++++ protobuf-3.11.2/BUILD	2021-03-26 18:11:40.206735470 +0000
-+@@ -24,7 +24,7 @@
++@@ -50,7 +50,7 @@ GTEST_MAIN = select({
   # ZLIB configuration
   ################################################################################
 -
@@ -57,7 +64,7 @@ index 8ce4a84..a869ecd 100644
   ################################################################################
   # Protobuf Runtime Library
 -@@ -143,6 +143,7 @@ cc_library(
-+@@ -154,6 +154,7 @@
++@@ -199,6 +199,7 @@ cc_library(
       copts = COPTS,
       includes = ["src/"],
       linkopts = LINK_OPTS,
@@ -67,11 +74,11 @@ index 8ce4a84..a869ecd 100644
 -
 -@@ -213,6 +214,7 @@ cc_library(
 + 
-+@@ -226,6 +227,7 @@
++@@ -271,6 +272,7 @@ cc_library(
       copts = COPTS,
       includes = ["src/"],
       linkopts = LINK_OPTS,
-@@ -27,17 +26,24 @@ index dbae719ff..87dc38470 100644
+@@ -27,17 +36,15 @@ index dbae719ff..87dc38470 100644
       visibility = ["//visibility:public"],
       deps = [":protobuf_lite"] + PROTOBUF_DEPS,
   )
@@ -81,8 +88,13 @@ index 8ce4a84..a869ecd 100644
 -+++ b/protobuf.bzl
 -@@ -84,7 +84,9 @@ def _proto_gen_impl(ctx):
 -
-+@@ -887,7 +889,7 @@
-+     py_extra_srcs = glob(["python/**/__init__.py"]),
+-     for dep in ctx.attr.deps:
+-         import_flags += dep.proto.import_flags
+-         deps += dep.proto.deps
+-+    import_flags = depset(import_flags).to_list()
+-+    deps = depset(deps).to_list()
++@@ -867,7 +869,7 @@ py_proto_library(
++     protoc = ":protoc",
 +     py_libs = [
 +         ":python_srcs",
 +-        "@six//:six",
@@ -90,21 +102,12 @@ index 8ce4a84..a869ecd 100644
 +     ],
 +     srcs_version = "PY2AND3",
 +     visibility = ["//visibility:public"],
-+diff -Naur protobuf-3.11.2_org/protobuf.bzl protobuf-3.11.2/protobuf.bzl
-+--- protobuf-3.11.2_org/protobuf.bzl	2021-03-26 18:06:54.674165933 +0000
-++++ protobuf-3.11.2/protobuf.bzl	2021-03-26 18:12:31.123627226 +0000
-+@@ -87,6 +87,8 @@
-      for dep in ctx.attr.deps:
-          import_flags += dep.proto.import_flags
-          deps += dep.proto.deps
- +    import_flags = depset(import_flags).to_list()
- +    deps = depset(deps).to_list()
--
-+ 
-      if not ctx.attr.gen_cc and not ctx.attr.gen_py and not ctx.executable.plugin:
++-- 
++2.23.0
+ 
+-     if not ctx.attr.gen_cc and not ctx.attr.gen_py and not ctx.executable.plugin:
 -         return struct(
 \ No newline at end of file
-+         return struct(
 -- 
-1.8.3.1
+2.23.0
 

@@ -32,7 +32,7 @@ source:
     - 0300-fix-constant_op_test.patch
     - 0301-update-ICU-patch-for-CVE-2020-10531.patch
     - 0302-Fix-cub-BUILD-file-for-local_config_cuda-reference.patch    #[cudatoolkit == "10.2"]
-    - 0305-Updated-protobuf-to-3.11.2.patch              #[protobuf == "3.11.2"]
+    - 0305-Updated-protobuf-to-3.14.patch                #[protobuf == "3.14.*"]
     - 0306-Fix-absl-linker-error.patch
     - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
     - 0308-Upstream-patch-to-disable-absl-cord.patch     #[cudatoolkit == "10.2"]
@@ -82,7 +82,7 @@ outputs:
         - cudatoolkit {{ cudatoolkit }}
         - cudnn {{ cudnn }}
         - nccl {{ nccl }}
-        - tensorrt {{ tensorrt }}     #[py<38]
+        #- tensorrt {{ tensorrt }}     #[py<38]
         {% endif %}
         - zlib
         #  This list needs to match exacly tensorflow/tools/pip_package/setup.py.
@@ -119,7 +119,7 @@ outputs:
         - cudatoolkit {{ cudatoolkit }}
         - cudnn {{ cudnn }}
         - nccl {{ nccl }}
-        - tensorrt {{ tensorrt }}     #[py<38]
+        #- tensorrt {{ tensorrt }}     #[py<38]
         {% endif %}
         # List from TensorFlow setup.py
         - absl-py {{ absl_py }}
@@ -163,7 +163,7 @@ outputs:
         - cudatoolkit {{ cudatoolkit }}
         - cudnn {{ cudnn }}
         - nccl {{ nccl }}
-        - tensorrt {{ tensorrt }}     #[py<38]
+        #- tensorrt {{ tensorrt }}     #[py<38]
         {% endif %}
         - protobuf {{ protobuf }}
         - _tensorflow_select {{ tensorflow_select_version }}
