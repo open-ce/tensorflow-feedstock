@@ -38,7 +38,7 @@ source:
     - 0308-Upstream-patch-to-disable-absl-cord.patch     #[cudatoolkit == "10.2"]
 
 build:
-  number: 4
+  number: 5
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -81,7 +81,7 @@ outputs:
         - cudatoolkit {{ cudatoolkit }}
         - cudnn {{ cudnn }}
         - nccl {{ nccl }}
-        - tensorrt {{ tensorrt }}     #[py<38]
+        #- tensorrt {{ tensorrt }}     #[py<38]
         {% endif %}
         - zlib
         #  This list needs to match exacly tensorflow/tools/pip_package/setup.py.
@@ -118,7 +118,7 @@ outputs:
         - cudatoolkit {{ cudatoolkit }}
         - cudnn {{ cudnn }}
         - nccl {{ nccl }}
-        - tensorrt {{ tensorrt }}     #[py<38]
+        #- tensorrt {{ tensorrt }}     #[py<38]
         {% endif %}
         # List from TensorFlow setup.py
         - absl-py {{ absl_py }}
@@ -162,7 +162,7 @@ outputs:
         - cudatoolkit {{ cudatoolkit }}
         - cudnn {{ cudnn }}
         - nccl {{ nccl }}
-        - tensorrt {{ tensorrt }}     #[py<38]
+        #- tensorrt {{ tensorrt }}     #[py<38]
         {% endif %}
         - protobuf {{ protobuf }}
         - _tensorflow_select {{ tensorflow_select_version }}
