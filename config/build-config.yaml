@@ -6,7 +6,7 @@ recipes:
     path : recipe
     resources:
        memory: 200Gi  #[ppc64le]
-       memory: 10Gi   # [not ppc64le]
+       memory: 10Gi   #[not ppc64le]
 
   - name : tensorflow-meta
     path : meta_recipe
