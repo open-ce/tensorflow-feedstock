@@ -1,4 +1,4 @@
-{% set build_version = "2.4.2" %}
+{% set build_version = "2.4.3" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
@@ -38,7 +38,7 @@ source:
     - 0305-Updated-protobuf-to-3.11.2.patch              #[protobuf == "3.11.2"]
 
 build:
-  number: 15
+  number: 1
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
