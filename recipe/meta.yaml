@@ -1,4 +1,4 @@
-{% set build_version = "2.5.0" %}
+{% set build_version = "2.5.1" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
@@ -39,7 +39,7 @@ source:
     - 0309-disable-ppc64le-custom-gemm_pack_rhs-to-use-the-convolution-specialization.patch # [ppc64le]
 
 build:
-  number: 8
+  number: 1
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
