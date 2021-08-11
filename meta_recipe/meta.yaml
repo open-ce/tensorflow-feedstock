@@ -1,5 +1,5 @@
 # Recipe to build Tensorflow meta package
-{% set build_version = "2.5.0" %}
+{% set build_version = "2.5.1" %}
 {% set estimator_version = "2.5.0" %}
 
 package:
