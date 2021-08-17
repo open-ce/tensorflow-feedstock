@@ -1,0 +1,28 @@
+tests:
+   - name: SetupTensorFlow Models repo
+     command: |
+         echo "setup"
+         # Tensorflow/models repo doesn't have branch/tag for 2.4.1 but its r2.4.0 branch works
+         # with TF 2.4.1
+         TF_MODELS_VERSION=2.5.0
+         conda install -y git
+         git clone --recursive -b v${TF_MODELS_VERSION} https://github.com/tensorflow/models
+         cd models
+         git apply ${FEEDSTOCK_DIR}/recipe/0304-Fixed-models-test-on-x86.patch
+         conda install -y pandas
+   - name: Run Recommendation model
+     command: |
+         CURDIR=$(pwd)
+         export PYTHONPATH=$PYTHONPATH:$CURDIR/models
+         cd models/official/recommendation
+         mkdir data
+         python movielens.py --data_dir=./data --dataset=ml-1m
+         python ncf_keras_main.py --data_dir=./data --dataset=ml-1m
+   - name: Run MNIST model
+     command: |
+         CURDIR=$(pwd)
+         export PYTHONPATH=$PYTHONPATH:$CURDIR/models
+         cd models/official/vision/image_classification
+         python mnist_main.py --model_dir=./model_stor --data_dir=./data --train_epochs=10 --distribution_strategy=one_device --num_gpus=1 --download
+   - name: Clean tests
+     command: rm -rf models

@@ -1,6 +1,6 @@
 # Recipe to build Tensorflow meta package
-{% set build_version = "2.3.1" %}
-{% set estimator_version = "2.3.0" %}
+{% set build_version = "2.5.1" %}
+{% set estimator_version = "2.5.0" %}
 
 package:
   name: tensorflow{{ '' if build_type == 'cuda' else '-cpu' }}
@@ -8,6 +8,8 @@ package:
 
 build:
   number: 1
+  string: py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}   #[build_type == 'cpu']
+  string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }} #[build_type == 'cuda']
 
 requirements:
   run:
@@ -15,9 +17,18 @@ requirements:
     - _tensorflow_select     {{ tensorflow_select_version }}
     - tensorboard          =={{ tensorboard }}
     - tensorflow-estimator =={{ estimator_version }}
+    - python                 {{ python }}
+    - cudatoolkit            {{ cudatoolkit }} #[build_type == 'cuda']
 
 about:
+  home: http://tensorflow.org/
+  license: Apache 2.0
+  license_family: Apache
   summary: Meta-package to install {{ 'GPU-enabled' if build_type == 'cuda' else 'CPU-only' }} TensorFlow variant
+  description: Meta-package to install {{ 'GPU-enabled' if build_type == 'cuda' else 'CPU-only' }} TensorFlow variant
+  dev_url: https://github.com/tensorflow/tensorflow
+  doc_url: https://www.tensorflow.org
+  doc_source_url: https://github.com/tensorflow/docs
 
 extra:
   recipe-maintainers:
