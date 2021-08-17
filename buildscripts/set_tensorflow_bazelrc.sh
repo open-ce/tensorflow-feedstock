@@ -27,6 +27,11 @@ ARCH=`uname -p`
 ##
 OPTION_1=''
 OPTION_2=''
+OPTION_3=''
+OPTION_4=''
+OPTION_5=''
+OPTION_6=''
+OPTION_7=''
 if [[ "${ARCH}" == 'x86_64' ]]; then
     OPTION_1='-march=broadwell'
     OPTION_2='-mtune=broadwell'
@@ -40,11 +45,7 @@ fi
 if [[ "${ARCH}" == 'ppc64le' ]]; then
     OPTION_1='-mcpu=power8'
     OPTION_2='-mtune=power8'
-    OPTION_3=''
-    OPTION_4=''
-    OPTION_5=''
-    OPTION_6=''
-    OPTION_7=''
+    OPTION_3='-mvsx'
 fi
 
 SYSTEM_LIBS_PREFIX=$PREFIX
