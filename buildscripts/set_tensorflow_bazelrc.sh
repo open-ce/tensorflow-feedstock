@@ -21,58 +21,76 @@ BAZEL_RC_DIR=$1
 #Determine architecture for specific options
 ARCH=`uname -p`
 
+SYSTEM_LIBS_PREFIX=$PREFIX
 ## ARCHITECTURE SPECIFIC OPTIMIZATIONS
-## These are settings and arguments to pass to GCC for
+## The settings in OPTION_x are arguments to pass to GCC for
 ## optimization settings specific to the target CPU architecture
 ##
-OPTION_1=''
-OPTION_2=''
-OPTION_3=''
-OPTION_4=''
-OPTION_5=''
-OPTION_6=''
-OPTION_7=''
 if [[ "${ARCH}" == 'x86_64' ]]; then
-    OPTION_1='-march=broadwell'
-    OPTION_2='-mtune=broadwell'
+    ## Settings for Sandy Bridge and newer
+    ## As of TF2.5, the env Var: TF_ENABLE_ONEDNN_OPTS=1
+    ## can be used for runtime optimization
+    OPTION_1='-march=sandybridge'
+    OPTION_2='-mtune=haswell'
     OPTION_3='-mavx'
-    OPTION_4='-mavx2'
-    OPTION_5='-mfma'
-    OPTION_6='-msse4.1'
-    OPTION_7='-msse4.2'
-    ##TODO: investigate '-mfpmath=both'
+    OPTION_4='-msse4.1'
+    OPTION_5='-msse4.2'
+    ##TODO: Settings for newer Intel CPUs
+    ##OPTION_6='-mfma'
+    ##OPTION_7='-mavx2'
+    ##OPTION_8='-mfpmath=both'
+
+    cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
+    import %workspace%/tensorflow/python_configure.bazelrc
+    build:xla --define with_xla_support=true
+    build --config=xla
+    build:opt --copt="${OPTION_1}"
+    build:opt --copt="${OPTION_2}"
+    build:opt --copt="${OPTION_3}"
+    build:opt --copt="${OPTION_4}"
+    build:opt --copt="${OPTION_5}"
+    build:opt --host_copt="${OPTION_1}"
+    build:opt --host_copt="${OPTION_2}"
+    build:opt --define with_default_optimizations=true
+    build --action_env TF_CONFIGURE_IOS="0"
+    build --action_env TF_SYSTEM_LIBS="org_sqlite"
+    build --define=PREFIX="$SYSTEM_LIBS_PREFIX"
+    build --define=LIBDIR="$SYSTEM_LIBS_PREFIX/lib"
+    build --define=INCLUDEDIR="$SYSTEM_LIBS_PREFIX/include"
+    build --strip=always
+    build --color=yes
+    build --verbose_failures
+    build --spawn_strategy=standalone
+    EOF
 fi
 if [[ "${ARCH}" == 'ppc64le' ]]; then
+    ## Settings for POWER8 and newer
     OPTION_1='-mcpu=power8'
-    OPTION_2='-mtune=power8'
+    OPTION_2='-mtune=power9'
     OPTION_3='-mvsx'
+
+    cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
+    import %workspace%/tensorflow/python_configure.bazelrc
+    build:xla --define with_xla_support=true
+    build --config=xla
+    build:opt --copt="${OPTION_1}"
+    build:opt --copt="${OPTION_2}"
+    build:opt --copt="${OPTION_3}"
+    build:opt --host_copt="${OPTION_1}"
+    build:opt --host_copt="${OPTION_2}"
+    build:opt --define with_default_optimizations=true
+    build --action_env TF_CONFIGURE_IOS="0"
+    build --action_env TF_SYSTEM_LIBS="org_sqlite"
+    build --define=PREFIX="$SYSTEM_LIBS_PREFIX"
+    build --define=LIBDIR="$SYSTEM_LIBS_PREFIX/lib"
+    build --define=INCLUDEDIR="$SYSTEM_LIBS_PREFIX/include"
+    build --strip=always
+    build --color=yes
+    build --verbose_failures
+    build --spawn_strategy=standalone
+    EOF
 fi
 
-SYSTEM_LIBS_PREFIX=$PREFIX
-cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
-import %workspace%/tensorflow/python_configure.bazelrc
-build:xla --define with_xla_support=true
-build --config=xla
-build:opt --copt="${OPTION_1}"
-build:opt --copt="${OPTION_2}"
-build:opt --copt="${OPTION_3}"
-build:opt --copt="${OPTION_4}"
-build:opt --copt="${OPTION_5}"
-build:opt --copt="${OPTION_6}"
-build:opt --copt="${OPTION_7}"
-build:opt --host_copt="${OPTION_1}"
-build:opt --host_copt="${OPTION_2}"
-build:opt --define with_default_optimizations=true
-build --action_env TF_CONFIGURE_IOS="0"
-build --action_env TF_SYSTEM_LIBS="org_sqlite"
-build --define=PREFIX="$SYSTEM_LIBS_PREFIX"
-build --define=LIBDIR="$SYSTEM_LIBS_PREFIX/lib"
-build --define=INCLUDEDIR="$SYSTEM_LIBS_PREFIX/include"
-build --strip=always
-build --color=yes
-build --verbose_failures
-build --spawn_strategy=standalone
-EOF
 
 echo "Building with mkl : $use_mkl"
 
