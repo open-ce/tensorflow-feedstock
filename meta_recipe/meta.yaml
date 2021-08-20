@@ -1,6 +1,6 @@
 # Recipe to build Tensorflow meta package
-{% set build_version = "2.5.1" %}
-{% set estimator_version = "2.5.0" %}
+{% set build_version = "2.6.0" %}
+{% set estimator_version = "2.6.0" %}
 
 package:
   name: tensorflow{{ '' if build_type == 'cuda' else '-cpu' }}
@@ -17,6 +17,7 @@ requirements:
     - _tensorflow_select     {{ tensorflow_select_version }}
     - tensorboard          =={{ tensorboard }}
     - tensorflow-estimator =={{ estimator_version }}
+    - keras                =={{ keras }}
     - python                 {{ python }}
     - cudatoolkit            {{ cudatoolkit }} #[build_type == 'cuda']
 

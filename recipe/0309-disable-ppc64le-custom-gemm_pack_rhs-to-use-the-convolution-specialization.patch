@@ -19,39 +19,14 @@ and disables the Eigen ppc64le gemm_pack_rhs using the define
 EIGEN_ALTIVEC_USE_CUSTOM_PACK=0
 Also, cherry-picked some changes from f4ccc2ca4796d72e0bf60bd1f0ca548a4149b64a
 ---
- .../core/common_runtime/gpu/gpu_device.cc      |  6 ++----
  tensorflow/core/kernels/BUILD                  |  6 ++++--
  .../eigen_backward_cuboid_convolutions.h       |  1 +
  .../eigen_backward_spatial_convolutions.h      |  1 +
  .../core/kernels/eigen_cuboid_convolution.h    | 18 +++++++++++-------
  .../kernels/eigen_spatial_convolutions-inl.h   | 18 +++++++++++-------
  third_party/eigen3/workspace.bzl               |  4 ++--
- 7 files changed, 32 insertions(+), 22 deletions(-)
+ 6 files changed, 30 insertions(+), 18 deletions(-)
 
-diff --git a/tensorflow/core/common_runtime/gpu/gpu_device.cc b/tensorflow/core/common_runtime/gpu/gpu_device.cc
-index ea8403040ed..67bb2553b8d 100644
---- a/tensorflow/core/common_runtime/gpu/gpu_device.cc
-+++ b/tensorflow/core/common_runtime/gpu/gpu_device.cc
-@@ -115,9 +115,7 @@ using se::rocm::ScopedActivateExecutorContext;
- class EigenGpuStreamDevice : public ::Eigen::StreamInterface {
-  public:
-   EigenGpuStreamDevice()
--      : scratch_(nullptr), semaphore_(nullptr), context_(nullptr) {
--    Eigen::initializeDeviceProp();
--  }
-+      : scratch_(nullptr), semaphore_(nullptr), context_(nullptr) {}
-   ~EigenGpuStreamDevice() override {}
-   void Reinitialize(OpKernelContext* context, const gpuStream_t* gpu_stream,
-                     TfDeviceId tf_device_id, ::tensorflow::Allocator* alloc,
-@@ -135,7 +133,7 @@ class EigenGpuStreamDevice : public ::Eigen::StreamInterface {
-     PlatformDeviceId platform_device_id;
-     TF_CHECK_OK(
-         GpuIdManager::TfToPlatformDeviceId(tf_device_id, &platform_device_id));
--    device_prop_ = &Eigen::m_deviceProperties[platform_device_id.value()];
-+    device_prop_ = &Eigen::GetGpuDeviceProperties(platform_device_id.value());
-   }
- 
-   const gpuStream_t& stream() const override { return *stream_; }
 diff --git a/tensorflow/core/kernels/BUILD b/tensorflow/core/kernels/BUILD
 index c65695c3cab..e06a779424b 100644
 --- a/tensorflow/core/kernels/BUILD
@@ -203,8 +178,8 @@ index 233231f5636..96371dda195 100644
      """Imports Eigen."""
  
      # Attention: tools parse and update these lines.
--    EIGEN_COMMIT = "f612df273689a19d25b45ca4f8269463207c4fee"
--    EIGEN_SHA256 = "e3fe5cac59763b7419af2de39840b5342d77624ddf8b181fb9f9f532615ec518"
+-    EIGEN_COMMIT = "12e8d57108c50d8a63605c6eb0144c838c128337"
+-    EIGEN_SHA256 = "f689246e342c3955af48d26ce74ac34d21b579a00675c341721a735937919b02"
 +    EIGEN_COMMIT = "7b35638ddb99a0298c5d3450de506a8e8e0203d3"
 +    EIGEN_SHA256 = "2f25d7d0279c57ce7c533bc71ba78af9c24a0a0aac4102bfeb28c2b5737499d1"
  
