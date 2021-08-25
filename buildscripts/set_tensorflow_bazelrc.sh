@@ -35,9 +35,10 @@ if [[ "${ARCH}" == 'ppc64le' ]]; then
 fi
 
 vecs=$(echo ${vector_settings} | tr "," "\n")
+NL=$'\n'
 for setting in $vecs
 do
-	VEC_OPTIONS+="build:opt --copt=-m${setting} "
+	VEC_OPTIONS+="build:opt --copt=-m${setting}${NL}"
 done
 
 echo ${OPTION_1}
