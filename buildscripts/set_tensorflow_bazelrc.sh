@@ -26,15 +26,23 @@ ARCH=`uname -p`
 ## optimization settings specific to the target architecture
 ##
 OPTION_1=''
-OPTION_2=''
+OPTION_2="-mtune=${cpu_opt_tune}"
 if [[ "${ARCH}" == 'x86_64' ]]; then
-    OPTION_1='-march=nocona'
-    OPTION_2='-mtune=haswell'
+     OPTION_1="-march=${cpu_opt_arch}"
 fi
 if [[ "${ARCH}" == 'ppc64le' ]]; then
-    OPTION_1='-mcpu=power8'
-    OPTION_2='-mtune=power8'
+     OPTION_1="-mcpu=${cpu_opt_arch}"
 fi
+
+vecs=$(echo ${vector_settings} | tr "," "\n")
+for setting in $vecs
+do
+	VEC_OPTIONS+="build:opt --copt=-m${setting} "
+done
+
+echo ${OPTION_1}
+echo ${OPTION_2}
+echo ${VEC_OPTIONS}
 
 SYSTEM_LIBS_PREFIX=$PREFIX
 cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
@@ -45,6 +53,7 @@ build:opt --copt="${OPTION_1}"
 build:opt --copt="${OPTION_2}"
 build:opt --host_copt="${OPTION_1}"
 build:opt --host_copt="${OPTION_2}"
+${VEC_OPTIONS}
 build:opt --define with_default_optimizations=true
 build --action_env TF_CONFIGURE_IOS="0"
 build --action_env TF_SYSTEM_LIBS="org_sqlite"
