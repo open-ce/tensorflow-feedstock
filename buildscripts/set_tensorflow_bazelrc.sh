@@ -21,19 +21,44 @@ BAZEL_RC_DIR=$1
 #Determine architecture for specific options
 ARCH=`uname -p`
 
-## ARCHITECTURE SPECIFIC OPTIMIZATIONS
-## These are settings and arguments to pass to GCC for
-## optimization settings specific to the target architecture
+## 
+## Use centralized optimization settings
 ##
-OPTION_1=''
-OPTION_2=''
-if [[ "${ARCH}" == 'x86_64' ]]; then
-    OPTION_1='-march=nocona'
-    OPTION_2='-mtune=haswell'
+NL=$'\n'
+BUILD_COPT="build:opt --copt="
+BUILD_HOST_COPT="build:opt --host_copt="
+if [ -z "${cpu_opt_tune}"]; then
+     CPU_ARCH_OPTION='';
+     CPU_ARCH_HOST_OPTION='';
+else
+     if [[ "${ARCH}" == 'x86_64' ]]; then
+          CPU_ARCH_FRAG="-march=${cpu_opt_arch}"
+     fi
+     if [[ "${ARCH}" == 'ppc64le' ]]; then
+          CPU_ARCH_FRAG="-mcpu=${cpu_opt_arch}"
+     fi
+
+     CPU_ARCH_OPTION=${BUILD_COPT}${CPU_ARCH_FRAG}
+     CPU_ARCH_HOST_OPTION=${BUILD_HOST_COPT}${CPU_ARCH_FRAG}
 fi
-if [[ "${ARCH}" == 'ppc64le' ]]; then
-    OPTION_1='-mcpu=power8'
-    OPTION_2='-mtune=power8'
+
+if [ -z "${cpu_opt_tune}"]; then
+     CPU_TUNE_OPTION='';
+     CPU_TUNE_HOST_OPTION='';
+else
+     CPU_TUNE_FRAG="-mtune=${cpu_opt_tune}";
+     CPU_TUNE_OPTION=${BUILD_COPT}${CPU_TUNE_FRAG}
+     CPU_TUNE_HOST_OPTION=${BUILD_HOST_COPT}${CPU_TUNE_FRAG}
+fi
+
+if [ -z "${vector_settings}"]; then
+     VEC_OPTIONS='';
+else
+     vecs=$(echo ${vector_settings} | tr "," "\n")
+     for setting in $vecs
+     do
+          VEC_OPTIONS+="build:opt --copt=-m${setting}${NL}"
+     done
 fi
 
 SYSTEM_LIBS_PREFIX=$PREFIX
@@ -41,10 +66,11 @@ cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
 import %workspace%/tensorflow/python_configure.bazelrc
 build:xla --define with_xla_support=true
 build --config=xla
-build:opt --copt="${OPTION_1}"
-build:opt --copt="${OPTION_2}"
-build:opt --host_copt="${OPTION_1}"
-build:opt --host_copt="${OPTION_2}"
+${CPU_ARCH_OPTION}
+${CPU_ARCH_HOST_OPTION}
+${CPU_TUNE_OPTION}
+${CPU_TUNE_HOST_OPTION}
+${VEC_OPTIONS}
 build:opt --define with_default_optimizations=true
 build --action_env TF_CONFIGURE_IOS="0"
 build --action_env TF_SYSTEM_LIBS="org_sqlite"
