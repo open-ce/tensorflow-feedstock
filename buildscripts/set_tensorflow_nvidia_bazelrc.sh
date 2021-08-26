@@ -24,28 +24,15 @@ CUDA_TOOLKIT_PATH=$CUDA_HOME,$PREFIX,"/usr/include"
 # Determine architecture for specific settings
 ARCH=`uname -p`
 
-## CUDA OPTION 1: CUDA CAPABILITY LEVEL
-## More information on Capability Levels found at: 
-##  https://developer.nvidia.com/cuda-gpus
 ##
-## Note 1: CUBINs are compatible within the same major architecture, 
-## which means we only need to ship PTX to JIT for future architectures.
-##
-## Note 2: This has changed for TF 2.3. We can now designate which 
-## architectures to include PTX code for:
-##     - compute_<cuda_arch> : include PTX
-##     - sm_<cuda_arch> : do not include PTX
-##
+## Use centralized CUDA capability settings
 ##
 CUDA_VERSION="${cudatoolkit%.*}"
 CUDA_CAPABILITIES="${cuda_levels_details}"
 
 if [[ $CUDA_VERSION == '11' ]]; then
-    #CUDA_OPTION_1+=',compute_80'
     CUDA_CAPABILITIES+=",${cuda11_levels_details}"
 fi
-
-echo ${CUDA_CAPABILITIES}
 
 PY_VER=$2
 

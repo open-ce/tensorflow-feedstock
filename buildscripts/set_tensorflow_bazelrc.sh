@@ -21,9 +21,8 @@ BAZEL_RC_DIR=$1
 #Determine architecture for specific options
 ARCH=`uname -p`
 
-## ARCHITECTURE SPECIFIC OPTIMIZATIONS
-## These are settings and arguments to pass to GCC for
-## optimization settings specific to the target architecture
+## 
+## Use centralized optimization settings
 ##
 OPTION_1=''
 OPTION_2="-mtune=${cpu_opt_tune}"
@@ -40,10 +39,6 @@ for setting in $vecs
 do
 	VEC_OPTIONS+="build:opt --copt=-m${setting}${NL}"
 done
-
-echo ${OPTION_1}
-echo ${OPTION_2}
-echo ${VEC_OPTIONS}
 
 SYSTEM_LIBS_PREFIX=$PREFIX
 cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
