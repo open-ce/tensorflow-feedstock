@@ -48,6 +48,7 @@ bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build \
 
 # build a whl file
 mkdir -p $SRC_DIR/tensorflow_pkg
+cp $PREFIX/lib/python${PY_VER}/_sysconfigdata_x86_64_conda_cos6_linux_gnu.py $PREFIX/lib/python${PY_VER}/_sysconfigdata_x86_64_conda_linux_gnu.py
 bazel-bin/tensorflow/tools/pip_package/build_pip_package $SRC_DIR/tensorflow_pkg
 
 mkdir -p "${SRC_DIR}/tensorflow/include/tensorflow/cc/ops"
