@@ -4,7 +4,7 @@ tests:
          echo "setup"
          # Tensorflow/models repo doesn't have branch/tag for 2.4.1 but its r2.4.0 branch works
          # with TF 2.4.1
-         TF_MODELS_VERSION=2.5.0
+         TF_MODELS_VERSION=2.6.0
          conda install -y git
          git clone --recursive -b v${TF_MODELS_VERSION} https://github.com/tensorflow/models
          cd models
@@ -17,7 +17,7 @@ tests:
          cd models/official/recommendation
          mkdir data
          python movielens.py --data_dir=./data --dataset=ml-1m
-         python ncf_keras_main.py --data_dir=./data --dataset=ml-1m
+         python ncf_keras_main.py --data_dir=./data --dataset=ml-1m --distribution_strategy=one_device --num_gpus=1
    - name: Run MNIST model
      command: |
          CURDIR=$(pwd)
