@@ -24,16 +24,6 @@ CUDA_TOOLKIT_PATH=$CUDA_HOME,$PREFIX,"/usr/include"
 # Determine architecture for specific settings
 ARCH=`uname -p`
 
-##
-## Use centralized CUDA capability settings
-##
-CUDA_VERSION="${cudatoolkit%.*}"
-CUDA_CAPABILITIES="${cuda_levels_details}"
-
-if [[ $CUDA_VERSION == '11' ]]; then
-    CUDA_CAPABILITIES+=",${cuda11_levels_details}"
-fi
-
 PY_VER=$2
 
 cat > $BAZEL_RC_DIR/nvidia_components_configure.bazelrc << EOF
@@ -43,7 +33,7 @@ build --action_env TF_CUDNN_VERSION="${cudnn:0:1}" #First digit only
 build --action_env TF_NCCL_VERSION="${nccl:0:1}"
 build --action_env TF_CUDA_PATHS="$CUDA_TOOLKIT_PATH"
 build --action_env CUDA_TOOLKIT_PATH="$CUDA_TOOLKIT_PATH"
-build --action_env TF_CUDA_COMPUTE_CAPABILITIES="${CUDA_CAPABILITIES}"
+build --action_env TF_CUDA_COMPUTE_CAPABILITIES="${cuda_levels_details}"          ## Use centralized CUDA capability settings
 build --action_env GCC_HOST_COMPILER_PATH="${CC}"
 EOF
 
