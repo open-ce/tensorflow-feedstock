@@ -1,4 +1,4 @@
-{% set build_version = "2.5.1" %}
+{% set build_version = "2.6.0" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
@@ -33,7 +33,7 @@ source:
     - 0301-update-ICU-patch-for-CVE-2020-10531.patch
     - 0302-Fix-cub-BUILD-file-for-local_config_cuda-reference.patch    #[cudatoolkit == "10.2"]
     - 0305-Updated-protobuf-to-3.14.patch                #[protobuf == "3.14.*"]
-    - 0306-Fix-absl-linker-error.patch
+    - 0306-Fix-absl-linker-error.patch                   #[x86_64]
     - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
     - 0308-Upstream-patch-to-disable-absl-cord.patch     #[cudatoolkit == "10.2"]
     - 0309-disable-ppc64le-custom-gemm_pack_rhs-to-use-the-convolution-specialization.patch # [ppc64le]
@@ -67,9 +67,6 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
-        # Use pins to control cos6/cos7 match
-        - libgcc-ng  {{ libgcc }}
-        - libstdcxx-ng  {{ libstdcxx }}
       host:
         # conda build requirements
         - git >=2.2
@@ -93,6 +90,7 @@ outputs:
         #  setup.py list.
         - absl-py {{ absl_py }}
         - astunparse {{ astunparse }}
+        - python-clang {{ clang }}
         - python-flatbuffers {{ flatbuffers }}
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
@@ -110,9 +108,6 @@ outputs:
         - typing_extensions {{ typing_extensions }}     #[py<38]
         - sqlite 3.33.0
         - grpcio {{ grpcio }}
-        # Use pins to control cos6/cos7 match
-        - libgcc-ng  {{ libgcc }}
-        - libstdcxx-ng  {{ libstdcxx }}
       run:
         - python {{ python }}
         {% if build_type == 'cuda' %}
@@ -124,6 +119,7 @@ outputs:
         # List from TensorFlow setup.py
         - absl-py {{ absl_py }}
         - astunparse {{ astunparse }}
+        - python-clang {{ clang }}
         - python-flatbuffers {{ flatbuffers }}
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}

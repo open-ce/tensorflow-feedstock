@@ -5,8 +5,7 @@ Subject: [PATCH] do not include -B/usr/bin/ flag
 
 ---
  third_party/gpus/cuda_configure.bzl               | 10 ++++++----
- third_party/toolchains/cpus/arm/cc_config.bzl.tpl |  1 -
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ 1 files changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/third_party/gpus/cuda_configure.bzl b/third_party/gpus/cuda_configure.bzl
 index 3ba3447..82ef913 100644
@@ -29,18 +28,6 @@ index 3ba3447..82ef913 100644
  
      cuda_defines["%{extra_no_canonical_prefixes_flags}"] = ""
      cuda_defines["%{unfiltered_compile_flags}"] = ""
-diff --git a/third_party/toolchains/cpus/arm/cc_config.bzl.tpl b/third_party/toolchains/cpus/arm/cc_config.bzl.tpl
-index f698149..bdd0651 100644
---- a/third_party/toolchains/cpus/arm/cc_config.bzl.tpl
-+++ b/third_party/toolchains/cpus/arm/cc_config.bzl.tpl
-@@ -569,7 +569,6 @@ def _impl(ctx):
-                         flag_group(
-                             flags = [
-                                 "-lstdc++",
--                                "-B/usr/bin/",
-                                 "-Wl,-z,relro,-z,now",
-                                 "-no-canonical-prefixes",
-                                 "-pass-exit-codes",
 -- 
 1.8.3.1
 

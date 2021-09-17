@@ -23,4 +23,3 @@ index 5b7d22ce22f..bcaff8e634a 100644
          return names_set.contains(plane->name());
 -- 
 2.27.0
-
