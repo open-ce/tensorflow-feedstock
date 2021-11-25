@@ -35,7 +35,6 @@ source:
     - 0305-Updated-protobuf-to-3.14.patch                #[protobuf == "3.14.*"]
     - 0306-Fix-absl-linker-error.patch                   #[x86_64]
     - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
-    - 0308-Upstream-patch-to-disable-absl-cord.patch     #[cudatoolkit == "10.2"]
     - 0309-Build-llvm-for-ppc64le-target.patch           #[ppc64le]
 
 build:
