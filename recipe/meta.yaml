@@ -36,6 +36,7 @@ source:
     - 0306-Fix-absl-linker-error.patch                   #[x86_64]
     - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
     - 0309-Build-llvm-for-ppc64le-target.patch           #[ppc64le]
+    - 0310-Updated-Dist-info-for-tf-estimator-tensorboard-and-k.patch
 
 build:
   number: 1
@@ -89,6 +90,7 @@ outputs:
         #  setup.py list.
         - absl-py {{ absl_py }}
         - astunparse {{ astunparse }}
+        - flatbuffers {{ flatbuffers }}
         - python-clang {{ clang }}
         - python-flatbuffers {{ flatbuffers }}
         - gast {{ gast }}
@@ -119,6 +121,7 @@ outputs:
         - absl-py {{ absl_py }}
         - astunparse {{ astunparse }}
         - python-clang {{ clang }}
+        - flatbuffers {{ flatbuffers }}
         - python-flatbuffers {{ flatbuffers }}
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}

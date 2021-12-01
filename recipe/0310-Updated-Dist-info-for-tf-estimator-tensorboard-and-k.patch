@@ -1,0 +1,32 @@
+From 5d97899a19c8899704c95c5f49cc3d21421dbf98 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Tue, 30 Nov 2021 04:46:17 -0500
+Subject: [PATCH] Updated Dist-info for tf estimator, tensorboard and keras
+ versions
+
+---
+ tensorflow/tools/pip_package/setup.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
+index 26306e43aaf..f6ab01b4cec 100644
+--- a/tensorflow/tools/pip_package/setup.py
++++ b/tensorflow/tools/pip_package/setup.py
+@@ -101,11 +101,11 @@ REQUIRED_PACKAGES = [
+     # These need to be in sync with the existing TF version
+     # They are updated during the release process
+     # When updating these, please also update the nightly versions below
+-    'tensorboard ~= 2.6',
+-    'tensorflow_estimator ~= 2.7.0rc0, < 2.8',
++    'tensorboard ~= 2.7',
++    'tensorflow_estimator ~= 2.7.0, < 2.8',
+     # Keras release is not backward compatible with old tf release, and we have
+     # to make the version aligned between TF and Keras.
+-    'keras >= 2.7.0rc0, < 2.8',
++    'keras >= 2.7.0, < 2.8',
+     'tensorflow-io-gcs-filesystem >= 0.21.0',
+ ]
+ 
+-- 
+2.27.0
+
