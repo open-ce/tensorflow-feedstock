@@ -1,4 +1,4 @@
-{% set build_version = "2.6.0" %}
+{% set build_version = "2.7.0" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
@@ -35,8 +35,8 @@ source:
     - 0305-Updated-protobuf-to-3.14.patch                #[protobuf == "3.14.*"]
     - 0306-Fix-absl-linker-error.patch                   #[x86_64]
     - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
-    - 0308-Upstream-patch-to-disable-absl-cord.patch     #[cudatoolkit == "10.2"]
-    - 0309-disable-ppc64le-custom-gemm_pack_rhs-to-use-the-convolution-specialization.patch # [ppc64le]
+    - 0309-Build-llvm-for-ppc64le-target.patch           #[ppc64le]
+    - 0310-Updated-Dist-info-for-tf-estimator-tensorboard-and-k.patch
 
 build:
   number: 1
@@ -90,6 +90,7 @@ outputs:
         #  setup.py list.
         - absl-py {{ absl_py }}
         - astunparse {{ astunparse }}
+        - flatbuffers {{ flatbuffers }}
         - python-clang {{ clang }}
         - python-flatbuffers {{ flatbuffers }}
         - gast {{ gast }}
@@ -120,6 +121,7 @@ outputs:
         - absl-py {{ absl_py }}
         - astunparse {{ astunparse }}
         - python-clang {{ clang }}
+        - flatbuffers {{ flatbuffers }}
         - python-flatbuffers {{ flatbuffers }}
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
