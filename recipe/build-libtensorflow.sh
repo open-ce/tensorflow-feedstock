@@ -25,23 +25,24 @@ TF_MAJOR_VERSION=${PKG_VERSION:0:1}
 echo "TF_MAJOR_VERSION: $TF_MAJOR_VERSION"
 
 # Move libtensorflow libs in from SRC_DIR cache
-mv ${SRC_DIR}/tensorflow_pkg/libtensorflow.so ${SP_DIR}/tensorflow/
-mv ${SRC_DIR}/tensorflow_pkg/libtensorflow_cc.so ${SP_DIR}/tensorflow/
+mkdir -p ${PREFIX}/lib
+mv ${SRC_DIR}/tensorflow_pkg/libtensorflow.so ${PREFIX}/lib/
+mv ${SRC_DIR}/tensorflow_pkg/libtensorflow_cc.so ${PREFIX}/lib/
 
 #Create version sym links
-ln -s ${SP_DIR}/tensorflow/libtensorflow.so "${SP_DIR}/tensorflow/libtensorflow.so.${TF_MAJOR_VERSION}"
-ln -s ${SP_DIR}/tensorflow/libtensorflow_cc.so "${SP_DIR}/tensorflow/libtensorflow_cc.so.${TF_MAJOR_VERSION}"
+ln -s ${PREFIX}/lib/libtensorflow.so "${PREFIX}/lib/libtensorflow.so.${TF_MAJOR_VERSION}"
+ln -s ${PREFIX}/lib/libtensorflow_cc.so "${PREFIX}/lib/libtensorflow_cc.so.${TF_MAJOR_VERSION}"
 
 # Copy complete headers for libtensorflow C/C++ API
-mkdir -p "${SP_DIR}/tensorflow/include/tensorflow/cc"
-mkdir -p "${SP_DIR}/tensorflow/include/tensorflow/c"
-mkdir -p "${SP_DIR}/tensorflow/include/tensorflow/cc/ops"
+mkdir -p "${PREFIX}/include/tensorflow/cc"
+mkdir -p "${PREFIX}/include/tensorflow/c"
+mkdir -p "${PREFIX}/include/tensorflow/cc/ops"
 
 cd ./tensorflow/cc
-cp --parents `find -name \*.h*` "${SP_DIR}/tensorflow/include/tensorflow/cc"
+cp --parents `find -name \*.h*` "${PREFIX}/include/tensorflow/cc"
 
 cd ../c
-cp --parents `find -name \*.h*` "${SP_DIR}/tensorflow/include/tensorflow/c"
+cp --parents `find -name \*.h*` "${PREFIX}/include/tensorflow/c"
 
 cd ../../
 if [[ ! -d ${SRC_DIR}/tensorflow/include/tensorflow/cc/ops ]]
@@ -50,6 +51,6 @@ then
     echo "Please delete the previously generated tensorflow-base package from the output folder and rerun the build."
     exit 1
 else
-    cp -R "${SRC_DIR}/tensorflow/include/tensorflow/cc/ops/"*.h "${SP_DIR}/tensorflow/include/tensorflow/cc/ops"
+    cp -R "${SRC_DIR}/tensorflow/include/tensorflow/cc/ops/"*.h "${PREFIX}/include/tensorflow/cc/ops"
 fi
 
