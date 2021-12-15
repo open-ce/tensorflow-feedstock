@@ -75,12 +75,10 @@ outputs:
         - setuptools {{ setuptools }}
         - python {{ python }}
         - swig
-        {% if build_type == 'cuda' %}
-        - cudatoolkit {{ cudatoolkit }}
-        - cudnn {{ cudnn }}
-        - nccl {{ nccl }}
-        #- tensorrt {{ tensorrt }}     #[py<38]
-        {% endif %}
+        - cudatoolkit {{ cudatoolkit }}   #[build_type == 'cuda']
+        - cudnn {{ cudnn }}               #[build_type == 'cuda']
+        - nccl {{ nccl }}                 #[build_type == 'cuda']
+        #- tensorrt {{ tensorrt }}     #[py<38 and build_type == 'cuda']
         - zlib
         #  This list needs to match exacly tensorflow/tools/pip_package/setup.py.
         #  This list is what is displayed on "conda info" for the package.
@@ -111,12 +109,10 @@ outputs:
         - grpcio {{ grpcio }}
       run:
         - python {{ python }}
-        {% if build_type == 'cuda' %}
-        - cudatoolkit {{ cudatoolkit }}
-        - cudnn {{ cudnn }}
-        - nccl {{ nccl }}
-        #- tensorrt {{ tensorrt }}     #[py<38]
-        {% endif %}
+        - cudatoolkit {{ cudatoolkit }}     #[build_type == 'cuda']
+        - cudnn {{ cudnn }}                 #[build_type == 'cuda']
+        - nccl {{ nccl }}                   #[build_type == 'cuda']
+        #- tensorrt {{ tensorrt }}     #[py<38 and build_type == 'cuda']
         # List from TensorFlow setup.py
         - absl-py {{ absl_py }}
         - astunparse {{ astunparse }}
@@ -152,18 +148,15 @@ outputs:
       script_env:
         - CUDA_HOME
 {% endif %}
-      noarch: generic
 
     requirements:
       build:
         - tensorflow-base {{ tensorflow }}
       run:
-        {% if build_type == 'cuda' %}
-        - cudatoolkit {{ cudatoolkit }}
-        - cudnn {{ cudnn }}
-        - nccl {{ nccl }}
-        #- tensorrt {{ tensorrt }}     #[py<38]
-        {% endif %}
+        - cudatoolkit {{ cudatoolkit }}  #[build_type == 'cuda']
+        - cudnn {{ cudnn }}              #[build_type == 'cuda']
+        - nccl {{ nccl }}                #[build_type == 'cuda']
+        #- tensorrt {{ tensorrt }}     #[py<38 and build_type == 'cuda']
         - protobuf {{ protobuf }}
         - _tensorflow_select {{ tensorflow_select_version }}
 
