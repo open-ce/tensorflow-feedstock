@@ -72,6 +72,12 @@ ${CPU_TUNE_OPTION}
 ${CPU_TUNE_HOST_OPTION}
 ${VEC_OPTIONS}
 build:opt --define with_default_optimizations=true
+#build:opt --copt=-mno-pcre1
+#build:opt --host_copt=-mno-pcre1
+#build --action_env=GCC_HOST_COMPILER_PATH="/opt/rh/gcc-toolset-10/root/usr/bin/gcc"
+#build --action_env=CC="/opt/rh/gcc-toolset-10/root/usr/bin/gcc"
+#build --action_env=CXX="/opt/rh/gcc-toolset-10/root/usr/bin/g++"
+
 build --action_env TF_CONFIGURE_IOS="0"
 build --action_env TF_SYSTEM_LIBS="org_sqlite"
 build --define=PREFIX="$SYSTEM_LIBS_PREFIX"

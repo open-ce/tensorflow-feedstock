@@ -19,7 +19,7 @@ source:
     - 0102-include-cc-in-pip-package.patch
     - 0103-BUILD-changes-for-external-sqlite-package.patch
     - 0107-do-not-hardcode-ca-cert-location.patch
-
+    - 0108-P10-changes.patch                    #[arch == 'p10']
     # 02xx - GPU only patch specific to open-ce (maybe)
 {% if build_type == 'cuda' %}
     - 0201-add-additional-cuda-rpaths.patch
@@ -39,7 +39,7 @@ source:
     - 0310-Updated-Dist-info-for-tf-estimator-tensorboard-and-k.patch
 
 build:
-  number: 2
+  number: 3
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -65,8 +65,8 @@ outputs:
 
     requirements:
       build:
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
+        - {{ compiler('c') }}      #[arch != 'p10']
+        - {{ compiler('cxx') }}    #[arch != 'p10']
       host:
         # conda build requirements
         - git >=2.2

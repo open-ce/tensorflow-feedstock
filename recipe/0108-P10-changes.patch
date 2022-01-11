@@ -1,0 +1,55 @@
+From c99b6b0e4ef4c3cf790fe974cb84fd2a766646a0 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Mon, 10 Jan 2022 09:52:02 -0600
+Subject: [PATCH] P10 changes
+
+---
+ tensorflow/core/platform/platform_strings.h          | 1 +
+ tensorflow/core/platform/platform_strings_computed.h | 5 +++++
+ third_party/jpeg/BUILD.bazel                         | 2 +-
+ 3 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/tensorflow/core/platform/platform_strings.h b/tensorflow/core/platform/platform_strings.h
+index b4c8a74d8e2..fc99f749522 100644
+--- a/tensorflow/core/platform/platform_strings.h
++++ b/tensorflow/core/platform/platform_strings.h
+@@ -213,6 +213,7 @@ limitations under the License.
+         TF_PLAT_STR___NO_LWSYNC__                                          \
+         TF_PLAT_STR___POWER8_VECTOR__                                      \
+         TF_PLAT_STR___POWER9_VECTOR__                                      \
++        TF_PLAT_STR___POWER10_VECTOR__                                      \
+         TF_PLAT_STR___PPC405__                                             \
+         TF_PLAT_STR___QUAD_MEMORY_ATOMIC__                                 \
+         TF_PLAT_STR___RECIPF__                                             \
+diff --git a/tensorflow/core/platform/platform_strings_computed.h b/tensorflow/core/platform/platform_strings_computed.h
+index 6a17f3bfc3a..464a3fb56b0 100644
+--- a/tensorflow/core/platform/platform_strings_computed.h
++++ b/tensorflow/core/platform/platform_strings_computed.h
+@@ -367,6 +367,11 @@ limitations under the License.
+ #else
+ #define TF_PLAT_STR___POWER9_VECTOR__
+ #endif
++#if defined(__POWER10_VECTOR__)
++#define TF_PLAT_STR___POWER10_VECTOR__ TF_PLAT_STR_(__POWER10_VECTOR__)
++#else
++#define TF_PLAT_STR___POWER10_VECTOR__
++#endif
+ #if defined(__PPC405__)
+ #define TF_PLAT_STR___PPC405__ TF_PLAT_STR_(__PPC405__)
+ #else
+diff --git a/third_party/jpeg/BUILD.bazel b/third_party/jpeg/BUILD.bazel
+index cc17e06ff17..2bdc45e77e5 100644
+--- a/third_party/jpeg/BUILD.bazel
++++ b/third_party/jpeg/BUILD.bazel
+@@ -38,7 +38,7 @@ libjpegturbo_copts = select({
+     ],
+     ":linux_ppc64le": [
+         "-mcpu=power8",
+-        "-mtune=power8",
++        "-mtune=power10",
+     ],
+     "//conditions:default": [],
+ })
+-- 
+2.27.0
+
