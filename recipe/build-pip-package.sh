@@ -17,9 +17,13 @@
 
 set -vex
 
-export PATH=/opt/rh/gcc-toolset-10/root/usr/bin/:$PATH
-export CC=/opt/rh/gcc-toolset-10/root/usr/bin/gcc
-export CXX=/opt/rh/gcc-toolset-10/root/usr/bin/g++
+if [[ $ppc_arch == "p10" ]]
+then
+  export PATH=/opt/rh/gcc-toolset-10/root/usr/bin/:$PATH
+  export CC=/opt/rh/gcc-toolset-10/root/usr/bin/gcc
+  export CXX=/opt/rh/gcc-toolset-10/root/usr/bin/g++
+  export BAZEL_LINKLIBS=-l%:libstdc++.a
+fi
 
 # Build Tensorflow from source
 SCRIPT_DIR=$RECIPE_DIR/../buildscripts
@@ -49,7 +53,7 @@ if [[ $ARCH == "x86_64" ]]; then
   cp $PREFIX/lib/python${PY_VER}/_sysconfigdata_x86_64_conda_cos6_linux_gnu.py $PREFIX/lib/python${PY_VER}/_sysconfigdata_x86_64_conda_linux_gnu.py
 fi
 
-BAZEL_LINKLIBS=-l%:libstdc++.a bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build -s \
+bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build \
     --local_cpu_resources=HOST_CPUS*0.50 \
     --local_ram_resources=HOST_RAM*0.50 \
     --jobs=HOST_CPUS*0.5 \

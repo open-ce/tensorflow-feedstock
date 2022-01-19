@@ -19,7 +19,7 @@ source:
     - 0102-include-cc-in-pip-package.patch
     - 0103-BUILD-changes-for-external-sqlite-package.patch
     - 0107-do-not-hardcode-ca-cert-location.patch
-    - 0108-P10-changes.patch                    #[arch == 'p10']
+    - 0108-P10-changes.patch                    #[ppc_arch == 'p10']
     # 02xx - GPU only patch specific to open-ce (maybe)
 {% if build_type == 'cuda' %}
     - 0201-add-additional-cuda-rpaths.patch
@@ -65,8 +65,8 @@ outputs:
 
     requirements:
       build:
-        - {{ compiler('c') }}      #[arch != 'p10']
-        - {{ compiler('cxx') }}    #[arch != 'p10']
+        - {{ compiler('c') }}      #[ppc_arch != 'p10']
+        - {{ compiler('cxx') }}    #[ppc_arch != 'p10']
       host:
         # conda build requirements
         - git >=2.2
