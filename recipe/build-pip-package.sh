@@ -18,11 +18,17 @@
 set -vex
 
 if [[ $ppc_arch == "p10" ]]
-then
-  export PATH=/opt/rh/gcc-toolset-10/root/usr/bin/:$PATH
-  export CC=/opt/rh/gcc-toolset-10/root/usr/bin/gcc
-  export CXX=/opt/rh/gcc-toolset-10/root/usr/bin/g++
-  export BAZEL_LINKLIBS=-l%:libstdc++.a
+then 
+    if [[ -z "${GCC_10_HOME}" ]];
+    then
+	echo "Please set GCC_10_HOME to the install path of gcc-toolset-10"
+        exit 1
+    else
+        export PATH=$GCC_10_HOME/bin:$PATH
+        export CC=$GCC_10_HOME/bin/gcc
+        export CXX=$GCC_10_HOME/bin/g++
+        export BAZEL_LINKLIBS=-l%:libstdc++.a
+    fi
 fi
 
 # Build Tensorflow from source
