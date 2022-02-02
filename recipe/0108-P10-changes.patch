@@ -1,13 +1,13 @@
-From c99b6b0e4ef4c3cf790fe974cb84fd2a766646a0 Mon Sep 17 00:00:00 2001
+From 2d3875a23539794745b4db121971b929d2e95d73 Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Mon, 10 Jan 2022 09:52:02 -0600
+Date: Wed, 2 Feb 2022 04:20:58 -0600
 Subject: [PATCH] P10 changes
 
 ---
  tensorflow/core/platform/platform_strings.h          | 1 +
  tensorflow/core/platform/platform_strings_computed.h | 5 +++++
- third_party/jpeg/BUILD.bazel                         | 2 +-
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ third_party/jpeg/BUILD.bazel                         | 4 ++--
+ 3 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/tensorflow/core/platform/platform_strings.h b/tensorflow/core/platform/platform_strings.h
 index b4c8a74d8e2..fc99f749522 100644
@@ -38,18 +38,20 @@ index 6a17f3bfc3a..464a3fb56b0 100644
  #define TF_PLAT_STR___PPC405__ TF_PLAT_STR_(__PPC405__)
  #else
 diff --git a/third_party/jpeg/BUILD.bazel b/third_party/jpeg/BUILD.bazel
-index cc17e06ff17..2bdc45e77e5 100644
+index cc17e06ff17..cf9aa2cac14 100644
 --- a/third_party/jpeg/BUILD.bazel
 +++ b/third_party/jpeg/BUILD.bazel
-@@ -38,7 +38,7 @@ libjpegturbo_copts = select({
+@@ -37,8 +37,8 @@ libjpegturbo_copts = select({
+         "-DNEON_INTRINSICS",
      ],
      ":linux_ppc64le": [
-         "-mcpu=power8",
+-        "-mcpu=power8",
 -        "-mtune=power8",
++        "-mcpu=power9",
 +        "-mtune=power10",
      ],
      "//conditions:default": [],
  })
 -- 
-2.27.0
+2.34.1
 
