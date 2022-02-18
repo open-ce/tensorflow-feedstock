@@ -1,18 +1,26 @@
-From 5d97899a19c8899704c95c5f49cc3d21421dbf98 Mon Sep 17 00:00:00 2001
+From 5fa524da2d298cbb60c2c4e145272d4a33da6e79 Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Tue, 30 Nov 2021 04:46:17 -0500
+Date: Mon, 7 Feb 2022 14:17:49 +0000
 Subject: [PATCH] Updated Dist-info for tf estimator, tensorboard and keras
  versions
 
 ---
- tensorflow/tools/pip_package/setup.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tensorflow/tools/pip_package/setup.py | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index 26306e43aaf..f6ab01b4cec 100644
+index a9ef0ee00b2..8d7d089e6f0 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
-@@ -101,11 +101,11 @@ REQUIRED_PACKAGES = [
+@@ -82,7 +82,6 @@ REQUIRED_PACKAGES = [
+     # Install other dependencies
+     'absl-py >= 0.4.0',
+     'astunparse >= 1.6.0',
+-    'libclang >= 9.0.1',
+     'flatbuffers >= 1.12, < 3.0', # capped as jax 0.1.71 needs < 3.0
+     'google_pasta >= 0.1.1',
+     'h5py >= 2.9.0', # capped since 3.3.0 lacks py3.6
+@@ -101,11 +100,11 @@ REQUIRED_PACKAGES = [
      # These need to be in sync with the existing TF version
      # They are updated during the release process
      # When updating these, please also update the nightly versions below
@@ -28,5 +36,5 @@ index 26306e43aaf..f6ab01b4cec 100644
  ]
  
 -- 
-2.27.0
+2.34.1
 

@@ -1,4 +1,4 @@
-{% set build_version = "2.7.0" %}
+{% set build_version = "2.7.1" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
@@ -30,9 +30,8 @@ source:
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0300-fix-constant_op_test.patch
-    - 0301-update-ICU-patch-for-CVE-2020-10531.patch
     - 0302-Fix-cub-BUILD-file-for-local_config_cuda-reference.patch    #[cudatoolkit == "10.2"]
-    - 0305-Updated-protobuf-to-3.14.patch                #[protobuf == "3.14.*"]
+    - 0305-Updated-protobuf-version.patch                #[protobuf == "3.19.*"]
     - 0306-Fix-absl-linker-error.patch                   #[x86_64]
     - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
     - 0309-Build-llvm-for-ppc64le-target.patch           #[ppc64le]
