@@ -1,5 +1,5 @@
 # *****************************************************************
-# (C) Copyright IBM Corp. 2018, 2021. All Rights Reserved.
+# (C) Copyright IBM Corp. 2018, 2022. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,6 +16,20 @@
 #!/bin/bash
 
 set -vex
+
+if [[ $ppc_arch == "p10" ]]
+then 
+    if [[ -z "${GCC_10_HOME}" ]];
+    then
+	echo "Please set GCC_10_HOME to the install path of gcc-toolset-10"
+        exit 1
+    else
+        export PATH=$GCC_10_HOME/bin:$PATH
+        export CC=$GCC_10_HOME/bin/gcc
+        export CXX=$GCC_10_HOME/bin/g++
+        export BAZEL_LINKLIBS=-l%:libstdc++.a
+    fi
+fi
 
 # Build Tensorflow from source
 SCRIPT_DIR=$RECIPE_DIR/../buildscripts
