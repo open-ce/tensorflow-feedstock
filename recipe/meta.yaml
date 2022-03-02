@@ -38,7 +38,7 @@ source:
     - 0310-Updated-Dist-info-for-tf-estimator-tensorboard-and-k.patch
 
 build:
-  number: 2
+  number: 3
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
