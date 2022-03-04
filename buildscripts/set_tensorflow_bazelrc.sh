@@ -1,6 +1,6 @@
 #!/bin/bash
 # *****************************************************************
-# (C) Copyright IBM Corp. 2018, 2021. All Rights Reserved.
+# (C) Copyright IBM Corp. 2018, 2022. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -72,6 +72,7 @@ ${CPU_TUNE_OPTION}
 ${CPU_TUNE_HOST_OPTION}
 ${VEC_OPTIONS}
 build:opt --define with_default_optimizations=true
+
 build --action_env TF_CONFIGURE_IOS="0"
 build --action_env TF_SYSTEM_LIBS="org_sqlite"
 build --define=PREFIX="$SYSTEM_LIBS_PREFIX"
