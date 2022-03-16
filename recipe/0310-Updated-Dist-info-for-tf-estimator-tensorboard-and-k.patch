@@ -1,40 +1,35 @@
-From 5fa524da2d298cbb60c2c4e145272d4a33da6e79 Mon Sep 17 00:00:00 2001
+From 8d0225a31ec415f88c7463b9927935e0ef1b5909 Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Mon, 7 Feb 2022 14:17:49 +0000
+Date: Wed, 9 Mar 2022 07:57:18 -0500
 Subject: [PATCH] Updated Dist-info for tf estimator, tensorboard and keras
- versions
 
 ---
- tensorflow/tools/pip_package/setup.py | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ tensorflow/tools/pip_package/setup.py | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index a9ef0ee00b2..8d7d089e6f0 100644
+index 58de3ad9c40..8bff8832718 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
-@@ -82,7 +82,6 @@ REQUIRED_PACKAGES = [
-     # Install other dependencies
-     'absl-py >= 0.4.0',
-     'astunparse >= 1.6.0',
--    'libclang >= 9.0.1',
-     'flatbuffers >= 1.12, < 3.0', # capped as jax 0.1.71 needs < 3.0
+@@ -78,7 +78,6 @@ REQUIRED_PACKAGES = [
      'google_pasta >= 0.1.1',
-     'h5py >= 2.9.0', # capped since 3.3.0 lacks py3.6
-@@ -101,11 +100,11 @@ REQUIRED_PACKAGES = [
-     # These need to be in sync with the existing TF version
+     'h5py >= 2.9.0',
+     'keras_preprocessing >= 1.1.1', # 1.1.0 needs tensorflow==1.7
+-    'libclang >= 9.0.1',
+     'numpy >= 1.20',
+     'opt_einsum >= 2.3.2',
+     'protobuf >= 3.9.2',
+@@ -92,8 +91,8 @@ REQUIRED_PACKAGES = [
      # They are updated during the release process
      # When updating these, please also update the nightly versions below
--    'tensorboard ~= 2.6',
--    'tensorflow_estimator ~= 2.7.0rc0, < 2.8',
-+    'tensorboard ~= 2.7',
-+    'tensorflow_estimator ~= 2.7.0, < 2.8',
-     # Keras release is not backward compatible with old tf release, and we have
-     # to make the version aligned between TF and Keras.
--    'keras >= 2.7.0rc0, < 2.8',
-+    'keras >= 2.7.0, < 2.8',
-     'tensorflow-io-gcs-filesystem >= 0.21.0',
+     'tensorboard >= 2.8, < 2.9',
+-    'tf-estimator-nightly == 2.8.0.dev2021122109',
+-    'keras >= 2.8.0rc0, < 2.9',
++    'tensorflow-estimator >= 2.8.0, < 2.9', 
++    'keras >= 2.8.0, < 2.9',
+     'tensorflow-io-gcs-filesystem >= 0.23.1',
  ]
  
 -- 
-2.34.1
+2.23.0
 
