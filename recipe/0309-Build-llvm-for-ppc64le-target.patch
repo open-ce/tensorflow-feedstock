@@ -1,64 +1,56 @@
-From 804330749cf17f2c96b2fd31b18495b6e55e6e47 Mon Sep 17 00:00:00 2001
+From 3fc6a1eed9c6a7485c2bf2cdee813aa9a248137c Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Wed, 9 Mar 2022 07:44:29 -0500
-Subject: [PATCH] Build llvm for ppc64le target
+Date: Mon, 21 Mar 2022 08:15:52 -0400
+Subject: [PATCH] Fixed LLVM build on ppc64le
 
 ---
- third_party/llvm/macos_build_fix.patch | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ third_party/llvm/fix_ppc64le.patch | 24 ++++++++++++++++++++++++
+ third_party/llvm/workspace.bzl     |  2 +-
+ 2 files changed, 25 insertions(+), 1 deletion(-)
+ create mode 100644 third_party/llvm/fix_ppc64le.patch
 
-diff --git a/third_party/llvm/macos_build_fix.patch b/third_party/llvm/macos_build_fix.patch
-index 4dba8676ea5..99d5981a1f8 100644
---- a/third_party/llvm/macos_build_fix.patch
-+++ b/third_party/llvm/macos_build_fix.patch
-@@ -1,15 +1,15 @@
--From 7b4ce5b36f6fc0e35c3614861d394b9f48d950a4 Mon Sep 17 00:00:00 2001
--From: Dan F-M <foreman.mackey@gmail.com>
--Date: Wed, 27 Oct 2021 21:44:40 -0400
--Subject: [PATCH] Adding macos darwin config
-+From 2e6bbdf4bc7e03fc874239e11cd1f73f5b2655e4 Mon Sep 17 00:00:00 2001
+diff --git a/third_party/llvm/fix_ppc64le.patch b/third_party/llvm/fix_ppc64le.patch
+new file mode 100644
+index 00000000000..3ed53b48164
+--- /dev/null
++++ b/third_party/llvm/fix_ppc64le.patch
+@@ -0,0 +1,24 @@
++From dffd421dd8a2410598f0053678f4c0bb9714daf9 Mon Sep 17 00:00:00 2001
 +From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-+Date: Wed, 9 Mar 2022 07:42:49 -0500
-+Subject: [PATCH] LLVM macos patch plus ppc64le
- 
- ---
-  utils/bazel/llvm-project-overlay/llvm/BUILD.bazel | 8 ++++++++
-- utils/bazel/llvm-project-overlay/llvm/config.bzl  | 4 ++--
-- 2 files changed, 10 insertions(+), 2 deletions(-)
-+ utils/bazel/llvm-project-overlay/llvm/config.bzl  | 5 +++--
-+ 2 files changed, 11 insertions(+), 2 deletions(-)
- 
- diff --git a/utils/bazel/llvm-project-overlay/llvm/BUILD.bazel b/utils/bazel/llvm-project-overlay/llvm/BUILD.bazel
--index 3e8bbe8a1cc1..8883b16b7350 100644
-+index 7c31359fb4ed..1aafa5d4ee0e 100644
- --- a/utils/bazel/llvm-project-overlay/llvm/BUILD.bazel
- +++ b/utils/bazel/llvm-project-overlay/llvm/BUILD.bazel
- @@ -16,6 +16,14 @@ package(
-@@ -28,10 +28,10 @@ index 3e8bbe8a1cc1..8883b16b7350 100644
-  # The necessary warnings and other compile flags should be provided by the
-  # toolchain or the `.bazelrc` file. This is just a workaround until we have a
- diff --git a/utils/bazel/llvm-project-overlay/llvm/config.bzl b/utils/bazel/llvm-project-overlay/llvm/config.bzl
--index ff64df694048..c9c35b01711c 100644
-+index 2046b2645362..9ed63e8d44a3 100644
- --- a/utils/bazel/llvm-project-overlay/llvm/config.bzl
- +++ b/utils/bazel/llvm-project-overlay/llvm/config.bzl
--@@ -76,8 +76,8 @@ os_defines = select({
-+@@ -83,9 +83,10 @@ os_defines = select({
-  # TODO: We should split out host vs. target here.
-  llvm_config_defines = os_defines + select({
-      "@bazel_tools//src/conditions:windows": native_arch_defines("X86", "x86_64-pc-win32"),
-@@ -40,7 +40,10 @@ index ff64df694048..c9c35b01711c 100644
- +    "//llvm:macos_arm64": native_arch_defines("AArch64", "arm64-apple-darwin"),
- +    "@bazel_tools//src/conditions:darwin": native_arch_defines("X86", "x86_64-unknown-darwin"),
-      "@bazel_tools//src/conditions:linux_aarch64": native_arch_defines("AArch64", "aarch64-unknown-linux-gnu"),
++Date: Mon, 21 Mar 2022 08:14:31 -0400
++Subject: [PATCH] Fix build on ppc64le
++
++---
++ utils/bazel/llvm-project-overlay/llvm/config.bzl | 1 +
++ 1 file changed, 1 insertion(+)
++
++diff --git a/utils/bazel/llvm-project-overlay/llvm/config.bzl b/utils/bazel/llvm-project-overlay/llvm/config.bzl
++index 772714f38941..9ed63e8d44a3 100644
++--- a/utils/bazel/llvm-project-overlay/llvm/config.bzl
+++++ b/utils/bazel/llvm-project-overlay/llvm/config.bzl
++@@ -86,6 +86,7 @@ llvm_config_defines = os_defines + select({
++     "//llvm:macos_arm64": native_arch_defines("AArch64", "arm64-apple-darwin"),
++     "@bazel_tools//src/conditions:darwin": native_arch_defines("X86", "x86_64-unknown-darwin"),
++     "@bazel_tools//src/conditions:linux_aarch64": native_arch_defines("AArch64", "aarch64-unknown-linux-gnu"),
 ++    "@bazel_tools//src/conditions:linux_ppc64le": native_arch_defines("PowerPC", "powerpc64le-unknown-linux-gnu"),
-      "//conditions:default": native_arch_defines("X86", "x86_64-unknown-linux-gnu"),
-  }) + [
++     "//conditions:default": native_arch_defines("X86", "x86_64-unknown-linux-gnu"),
++ }) + [
 +     # These shouldn't be needed by the C++11 standard, but are for some
- -- 
--2.30.1 (Apple Git-130)
++-- 
 +2.23.0
 +
+diff --git a/third_party/llvm/workspace.bzl b/third_party/llvm/workspace.bzl
+index 038e0ee5fe5..3e4e4f135c2 100644
+--- a/third_party/llvm/workspace.bzl
++++ b/third_party/llvm/workspace.bzl
+@@ -16,6 +16,6 @@ def repo(name):
+             "https://github.com/llvm/llvm-project/archive/{commit}.tar.gz".format(commit = LLVM_COMMIT),
+         ],
+         build_file = "//third_party/llvm:llvm.BUILD",
+-        patch_file = ["//third_party/llvm:macos_build_fix.patch"],
++        patch_file = ["//third_party/llvm:macos_build_fix.patch", "//third_party/llvm:fix_ppc64le.patch"],
+         link_files = {"//third_party/llvm:run_lit.sh": "mlir/run_lit.sh"},
+     )
 -- 
 2.23.0
 
