@@ -51,7 +51,7 @@ index 233231f5636..7bf6b17f3ce 100644
          name = "eigen_archive",
          build_file = "//third_party/eigen3:eigen_archive.BUILD",
          sha256 = EIGEN_SHA256,
-+        patch_file = "//third_party/eigen3:eigen.patch",
++        patch_file = ["//third_party/eigen3:eigen.patch"],
          strip_prefix = "eigen-{commit}".format(commit = EIGEN_COMMIT),
          urls = [
              "https://storage.googleapis.com/mirror.tensorflow.org/gitlab.com/libeigen/eigen/-/archive/{commit}/eigen-{commit}.tar.gz".format(commit = EIGEN_COMMIT),
