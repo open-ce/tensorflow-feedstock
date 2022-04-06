@@ -36,6 +36,9 @@ source:
     - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
     - 0309-Build-llvm-for-ppc64le-target.patch           #[ppc64le]
     - 0310-Updated-Dist-info-for-tf-estimator-tensorboard-and-k.patch
+    - 0311-Build-llvm-for-s390x-target.patch             #[s390x]
+    - 0312-EIGEN-grpc-fix-s390x-target.patch             #[s390x]
+    - 0313-hwloc-fix-s390x.patch                         #[s390x]
 
 build:
   number: 3
@@ -103,7 +106,8 @@ outputs:
         - wheel {{ wheel }}
         - six {{ six }}
         - typing_extensions {{ typing_extensions }}     #[py<38]
-        - sqlite 3.33.0
+        - sqlite 3.33.0                                 #[not s390x]
+        - sqlite {{ sqlite }}                           #[s390x]
         - grpcio {{ grpcio }}
       run:
         - python {{ python }}
