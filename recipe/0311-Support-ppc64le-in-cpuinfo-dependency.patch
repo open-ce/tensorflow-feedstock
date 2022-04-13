@@ -1,0 +1,36 @@
+From ff3a5a4b6c3ea75d74e7dba5236eaa07acf8d26f Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Mon, 28 Mar 2022 07:11:45 +0000
+Subject: [PATCH] Support ppc64le in cpuinfo dependency
+
+---
+ third_party/cpuinfo/cpuinfo.BUILD | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/third_party/cpuinfo/cpuinfo.BUILD b/third_party/cpuinfo/cpuinfo.BUILD
+index eb2937d20ef..dfea408db94 100644
+--- a/third_party/cpuinfo/cpuinfo.BUILD
++++ b/third_party/cpuinfo/cpuinfo.BUILD
+@@ -109,6 +109,7 @@ cc_library(
+         ":linux_mips64": COMMON_SRCS + LINUX_SRCS,
+         ":linux_riscv64": COMMON_SRCS + LINUX_SRCS,
+         ":linux_s390x": COMMON_SRCS + LINUX_SRCS,
++        ":linux_ppc64le": COMMON_SRCS + LINUX_SRCS,
+         ":macos_x86_64": COMMON_SRCS + X86_SRCS + MACH_SRCS + MACH_X86_SRCS,
+         ":macos_arm64": COMMON_SRCS + MACH_SRCS + MACH_ARM_SRCS,
+         ":windows_x86_64": COMMON_SRCS + X86_SRCS + WINDOWS_X86_SRCS,
+@@ -232,6 +233,11 @@ config_setting(
+     values = {"cpu": "s390x"},
+ )
+ 
++config_setting(
++    name = "linux_ppc64le",
++    values = {"cpu": "ppc"},
++)
++
+ config_setting(
+     name = "macos_x86_64",
+     values = {
+-- 
+2.34.1
+
