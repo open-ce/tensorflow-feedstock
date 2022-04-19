@@ -1,0 +1,29 @@
+diff --git a/third_party/llvm/fix_s390x.patch b/third_party/llvm/fix_s390x.patch
+new file mode 100644
+index 00000000000..eb448168861
+--- /dev/null
++++ b/third_party/llvm/fix_s390x.patch
+@@ -0,0 +1,12 @@
++diff --git a/utils/bazel/llvm-project-overlay/llvm/config.bzl b/utils/bazel/llvm-project-overlay/llvm/config.bzl
++index 2046b2645362..6bb22f389576 100644
++--- a/utils/bazel/llvm-project-overlay/llvm/config.bzl
+++++ b/utils/bazel/llvm-project-overlay/llvm/config.bzl
++@@ -86,6 +86,7 @@ llvm_config_defines = os_defines + select({
++     "@bazel_tools//src/conditions:darwin_arm64": native_arch_defines("AArch64", "arm64-apple-darwin"),
++     "@bazel_tools//src/conditions:darwin_x86_64": native_arch_defines("X86", "x86_64-unknown-darwin"),
++     "@bazel_tools//src/conditions:linux_aarch64": native_arch_defines("AArch64", "aarch64-unknown-linux-gnu"),
+++    "@bazel_tools//src/conditions:linux_s390x": native_arch_defines("SystemZ", "s390x-unknown-linux-gnu"),
++     "//conditions:default": native_arch_defines("X86", "x86_64-unknown-linux-gnu"),
++ }) + [
++     # These shouldn't be needed by the C++11 standard, but are for some
+diff --git a/third_party/llvm/workspace.bzl b/third_party/llvm/workspace.bzl
+index 7bc6b54a20f..a985cdf759a 100644
+--- a/third_party/llvm/workspace.bzl
++++ b/third_party/llvm/workspace.bzl
+@@ -16,5 +16,5 @@ def repo(name):
+             "https://github.com/llvm/llvm-project/archive/{commit}.tar.gz".format(commit = LLVM_COMMIT),
+         ],
+         build_file = "//third_party/llvm:BUILD.bazel",
+-        patch_file = "//third_party/llvm:macos_build_fix.patch",
++        patch_file = "//third_party/llvm:fix_s390x.patch",
+     )

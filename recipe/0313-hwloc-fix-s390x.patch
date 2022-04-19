@@ -1,0 +1,15 @@
+diff --git a/third_party/hwloc/BUILD.bazel b/third_party/hwloc/BUILD.bazel
+index 46149dd497f..c95616e1780 100644
+--- a/third_party/hwloc/BUILD.bazel
++++ b/third_party/hwloc/BUILD.bazel
+@@ -270,6 +270,10 @@ cc_library(
+             "hwloc/topology-linux.c",
+             "include/hwloc/linux.h",
+         ],
++        "@org_tensorflow//tensorflow:linux_s390x": [
++            "hwloc/topology-linux.c",
++            "include/hwloc/linux.h",
++        ],
+         "@org_tensorflow//tensorflow:freebsd": [
+             "hwloc/topology-freebsd.c",
+             "hwloc/topology-x86.c",

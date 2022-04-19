@@ -36,7 +36,7 @@ if [ -z "${cpu_opt_tune}"]; then
      CPU_ARCH_OPTION='';
      CPU_ARCH_HOST_OPTION='';
 else
-     if [[ "${ARCH}" == 'x86_64' ]]; then
+     if [[ "${ARCH}" == 'x86_64' || "${ARCH}" == 's390x' ]]; then
           CPU_ARCH_FRAG="-march=${cpu_opt_arch}"
      fi
      if [[ "${ARCH}" == 'ppc64le' ]]; then
@@ -97,5 +97,14 @@ if [[ $use_mkl == "true" && "${ARCH}" == 'x86_64' ]]; then
 echo "Enabled MKL"
 cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
 build --config=mkl
+EOF
+fi
+
+if [[ "${ARCH}" == 's390x' ]]; then
+echo "Building with more compiler flag for ${ARCH}"
+# extra compiler flag added for further optimization
+cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
+build:opt --copt=-O3
+build:opt --copt=-funroll-loops
 EOF
 fi

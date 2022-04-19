@@ -107,9 +107,9 @@ outputs:
         - wrapt {{ wrapt }}
         - wheel {{ wheel }}
         - six {{ six }}
-        - typing_extensions {{ typing_extensions }}
-        - sqlite 3.33.0           #[not s390x]
-        - sqlite {{ sqlite }}     #[s390x]
+        - typing_extensions {{ typing_extensions }}     #[py<38]
+        - sqlite 3.33.0                                 #[not s390x]
+        - sqlite {{ sqlite }}                           #[s390x]
         - grpcio {{ grpcio }}
       run:
         - python {{ python }}
