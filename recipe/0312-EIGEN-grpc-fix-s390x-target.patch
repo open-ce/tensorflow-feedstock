@@ -1,0 +1,46 @@
+diff --git a/tensorflow/distribute/experimental/rpc/kernels/BUILD b/tensorflow/distribute/experimental/rpc/kernels/BUILD
+index 9f92501443b..05c81fb5703 100644
+--- a/tensorflow/distribute/experimental/rpc/kernels/BUILD
++++ b/tensorflow/distribute/experimental/rpc/kernels/BUILD
+@@ -17,7 +17,7 @@ cc_library(
+     deps = [
+         "//tensorflow/distribute/experimental/rpc/proto:tf_rpc_service_proto_cc",
+         "//tensorflow/stream_executor/platform",
+-        "@com_github_grpc_grpc//:grpc++",
++        "//tensorflow:grpc++",
+     ],
+     alwayslink = 1,
+ )
+@@ -26,7 +26,7 @@ cc_library(
+     name = "grpc_credentials",
+     hdrs = ["grpc_credentials.h"],
+     deps = [
+-        "@com_github_grpc_grpc//:grpc++",
++        "//tensorflow:grpc++",
+     ] + grpc_credentials_dependency(),
+ )
+ 
+@@ -47,7 +47,7 @@ tf_kernel_library(
+         "//tensorflow/core/distributed_runtime/rpc:grpc_util",
+         "//tensorflow/distribute/experimental/rpc/proto:tf_rpc_service_proto_cc",
+         "//tensorflow/stream_executor/platform",
+-        "@com_github_grpc_grpc//:grpc++",
++        "//tensorflow:grpc++",
+         "@com_google_absl//absl/strings",
+         "@com_google_absl//absl/strings:str_format",
+     ],
+diff --git a/third_party/eigen3/workspace.bzl b/third_party/eigen3/workspace.bzl
+index 21799365434..116f5976d08 100644
+--- a/third_party/eigen3/workspace.bzl
++++ b/third_party/eigen3/workspace.bzl
+@@ -7,8 +7,8 @@ def repo():
+ 
+     # Attention: tools parse and update these lines.
+     # LINT.IfChange
+-    EIGEN_COMMIT = "7792b1e909a98703181aecb8810b4b654004c25d"
+-    EIGEN_SHA256 = "517a02cd24362fd9284ce61e8baeeabb4fee181941752da47eb4c07a52d38d4d"
++    EIGEN_COMMIT = "40bbe8a4d0eb3ec2bfd472fa30cac19e6e743b46"
++    EIGEN_SHA256 = "dc439a8b420d75c0664e55d334bf7228103db53d7a176030ff03d224a9429fa6"
+     # LINT.ThenChange(//tensorflow/lite/tools/cmake/modules/eigen.cmake)
+ 
+     tf_http_archive(
