@@ -37,6 +37,10 @@ source:
     - 0311-Support-ppc64le-in-cpuinfo-dependency.patch
     - 0312-Updated-Eigen-for-power.patch                 #[ppc64le]
     - 0313-lite-Switch-to-Flatbuffer-2.0.5.patch
+    - 0311-Build-llvm-for-s390x-target.patch             #[s390x]
+    - 0312-EIGEN-grpc-fix-s390x-target.patch             #[s390x]
+    - 0313-hwloc-fix-s390x.patch                         #[s390x]
+    - 0314-Fix-Tensor-content-swap-s390x.patch           #[s390x]
 
 build:
   number: 2
@@ -104,7 +108,8 @@ outputs:
         - wheel {{ wheel }}
         - six {{ six }}
         - typing_extensions {{ typing_extensions }}
-        - sqlite 3.33.0
+        - sqlite 3.33.0           #[not s390x]
+        - sqlite {{ sqlite }}     #[s390x]
         - grpcio {{ grpcio }}
       run:
         - python {{ python }}
