@@ -39,9 +39,10 @@ source:
     - 0311-Build-llvm-for-s390x-target.patch             #[s390x]
     - 0312-EIGEN-grpc-fix-s390x-target.patch             #[s390x]
     - 0313-hwloc-fix-s390x.patch                         #[s390x]
+    - 0314-Fix-Tensor-content-swap-s390x.patch           #[s390x]
 
 build:
-  number: 4
+  number: 5
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
