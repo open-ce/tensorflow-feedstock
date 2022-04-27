@@ -27,7 +27,7 @@ ARCH=`uname -p`
 NL=$'\n'
 BUILD_COPT="build:opt --copt="
 BUILD_HOST_COPT="build:opt --host_copt="
-if [ -z "${cpu_opt_tune}"]; then
+if [[ -z "${cpu_opt_tune}" ]]; then
      CPU_ARCH_OPTION='';
      CPU_ARCH_HOST_OPTION='';
 else
@@ -42,7 +42,7 @@ else
      CPU_ARCH_HOST_OPTION=${BUILD_HOST_COPT}${CPU_ARCH_FRAG}
 fi
 
-if [ -z "${cpu_opt_tune}"]; then
+if [[ -z "${cpu_opt_tune}" ]]; then
      CPU_TUNE_OPTION='';
      CPU_TUNE_HOST_OPTION='';
 else
@@ -51,7 +51,7 @@ else
      CPU_TUNE_HOST_OPTION=${BUILD_HOST_COPT}${CPU_TUNE_FRAG}
 fi
 
-if [ -z "${vector_settings}"]; then
+if [[ -z "${vector_settings}" ]]; then
      VEC_OPTIONS='';
 else
      vecs=$(echo ${vector_settings} | tr "," "\n")
