@@ -1,14 +1,14 @@
-From 8d0225a31ec415f88c7463b9927935e0ef1b5909 Mon Sep 17 00:00:00 2001
+From f56984c74c91c879dfa34651a102a5dc9b4f8629 Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Wed, 9 Mar 2022 07:57:18 -0500
-Subject: [PATCH] Updated Dist-info for tf estimator, tensorboard and keras
+Date: Tue, 17 May 2022 06:24:01 +0000
+Subject: [PATCH] Updated Dist-info for tensorboard and keras
 
 ---
- tensorflow/tools/pip_package/setup.py | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ tensorflow/tools/pip_package/setup.py | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index 58de3ad9c40..8bff8832718 100644
+index 265843ca118..bad545648be 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
 @@ -78,7 +78,6 @@ REQUIRED_PACKAGES = [
@@ -19,17 +19,15 @@ index 58de3ad9c40..8bff8832718 100644
      'numpy >= 1.20',
      'opt_einsum >= 2.3.2',
      'protobuf >= 3.9.2',
-@@ -92,8 +91,8 @@ REQUIRED_PACKAGES = [
-     # They are updated during the release process
+@@ -93,7 +92,7 @@ REQUIRED_PACKAGES = [
      # When updating these, please also update the nightly versions below
      'tensorboard >= 2.8, < 2.9',
--    'tf-estimator-nightly == 2.8.0.dev2021122109',
+     'tensorflow-estimator >= 2.8, < 2.9',
 -    'keras >= 2.8.0rc0, < 2.9',
-+    'tensorflow-estimator >= 2.8.0, < 2.9', 
-+    'keras >= 2.8.0, < 2.9',
++    'keras >= 2.8, < 2.9',
      'tensorflow-io-gcs-filesystem >= 0.23.1',
  ]
  
 -- 
-2.23.0
+2.34.1
 
