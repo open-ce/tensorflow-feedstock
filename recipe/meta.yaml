@@ -1,4 +1,4 @@
-{% set build_version = "2.7.1" %}
+{% set build_version = "2.7.2" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
@@ -42,7 +42,7 @@ source:
     - 0314-Fix-Tensor-content-swap-s390x.patch           #[s390x]
 
 build:
-  number: 5
+  number: 1
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
