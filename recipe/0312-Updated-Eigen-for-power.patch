@@ -1,0 +1,390 @@
+From 6a4ed9e46fc24688f8db1acf87325940b0ee2554 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Wed, 25 May 2022 11:13:48 -0400
+Subject: [PATCH] Updated Eigen for power
+
+---
+ tensorflow/core/kernels/cast_op.h             |  3 ---
+ tensorflow/core/kernels/cwise_ops.h           | 21 -------------------
+ tensorflow/core/kernels/cwise_ops_gradients.h |  5 -----
+ tensorflow/core/kernels/eigen_activations.h   |  3 ---
+ tensorflow/core/kernels/nextafter_op.h        |  1 -
+ tensorflow/core/kernels/quantization_utils.h  |  1 -
+ .../special_math/special_math_op_misc_impl.h  |  5 -----
+ .../CXX11/src/FixedPoint/PacketMathAVX2.h     |  4 +---
+ third_party/eigen3/workspace.bzl              |  4 ++--
+ 9 files changed, 3 insertions(+), 44 deletions(-)
+
+diff --git a/tensorflow/core/kernels/cast_op.h b/tensorflow/core/kernels/cast_op.h
+index cf0f0b44daa..5b9c6431262 100644
+--- a/tensorflow/core/kernels/cast_op.h
++++ b/tensorflow/core/kernels/cast_op.h
+@@ -201,7 +201,6 @@ typename std::enable_if<sizeof(I) == 4, void>::type EIGEN_DEVICE_FUNC
+ // Set n least significant bits to 0
+ template <typename I, typename O>
+ struct LSBZeroSetter {
+-  EIGEN_EMPTY_STRUCT_CTOR(LSBZeroSetter)
+ 
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const I operator()(const I& a) const {
+     constexpr int bits = MantissaWidth<I>() - MantissaWidth<O>();
+@@ -216,7 +215,6 @@ struct LSBZeroSetter {
+ 
+ template <typename I, typename O>
+ struct LSBZeroSetter<std::complex<I>, std::complex<O>> {
+-  EIGEN_EMPTY_STRUCT_CTOR(LSBZeroSetter)
+ 
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const std::complex<I> operator()(
+       const std::complex<I>& a) const {
+@@ -235,7 +233,6 @@ struct LSBZeroSetter<std::complex<I>, std::complex<O>> {
+ 
+ template <typename I, typename O>
+ struct LSBZeroSetter<std::complex<I>, O> {
+-  EIGEN_EMPTY_STRUCT_CTOR(LSBZeroSetter)
+   // Sets the 16 LSBits of the float to 0
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const std::complex<I> operator()(
+       const std::complex<I>& a) const {
+diff --git a/tensorflow/core/kernels/cwise_ops.h b/tensorflow/core/kernels/cwise_ops.h
+index ecc9937185e..f0c63c098ef 100644
+--- a/tensorflow/core/kernels/cwise_ops.h
++++ b/tensorflow/core/kernels/cwise_ops.h
+@@ -32,7 +32,6 @@ namespace internal {
+ #if GOOGLE_CUDA
+ template <>
+ struct scalar_arg_op<std::complex<float>> {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_arg_op)
+   typedef typename Eigen::NumTraits<std::complex<float>>::Real result_type;
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE float operator()(
+       const std::complex<float>& a) const {
+@@ -42,7 +41,6 @@ struct scalar_arg_op<std::complex<float>> {
+ 
+ template <>
+ struct scalar_arg_op<std::complex<double>> {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_arg_op)
+   typedef typename Eigen::NumTraits<std::complex<double>>::Real result_type;
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE double operator()(
+       const std::complex<double>& a) const {
+@@ -54,7 +52,6 @@ struct scalar_arg_op<std::complex<double>> {
+ #if EIGEN_HAS_CXX11_MATH == 0
+ template <typename T>
+ struct scalar_asinh_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_asinh_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T operator()(const T& a) const {
+     return static_cast<T>(std::asinh(a));
+   }
+@@ -66,7 +63,6 @@ struct functor_traits<scalar_asinh_op<T>> {
+ 
+ template <typename T>
+ struct scalar_acosh_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_acosh_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T operator()(const T& a) const {
+     return static_cast<T>(std::acosh(a));
+   }
+@@ -78,7 +74,6 @@ struct functor_traits<scalar_acosh_op<T>> {
+ 
+ template <typename T>
+ struct scalar_atanh_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_atanh_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T operator()(const T& a) const {
+     return static_cast<T>(std::atanh(a));
+   }
+@@ -157,7 +152,6 @@ struct functor_traits<safe_div_or_mod_op<T, DivOrMod>> {
+ 
+ template <typename T, typename Binary>
+ struct no_nan_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(no_nan_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T operator()(const T& a,
+                                                      const T& b) const {
+     if (b != T(0)) {
+@@ -181,7 +175,6 @@ struct div_no_nan_op;
+ template <typename T>
+ struct div_no_nan_op<T, /*IsComplex=*/false>
+     : public no_nan_op<T, scalar_quotient_op<T>> {
+-  EIGEN_EMPTY_STRUCT_CTOR(div_no_nan_op)
+ };
+ 
+ template <typename T>
+@@ -197,7 +190,6 @@ struct functor_traits<div_no_nan_op<T, /*IsComplex=*/false>> {
+ // by |b|^2, which may underflow to 0 for b != 0.
+ template <typename T>
+ struct div_no_nan_op<T, /*IsComplex=*/true> {
+-  EIGEN_EMPTY_STRUCT_CTOR(div_no_nan_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T operator()(const T& a,
+                                                      const T& b) const {
+     if (b == T(0)) {
+@@ -234,7 +226,6 @@ struct functor_traits<div_no_nan_op<T, /*IsComplex=*/true>> {
+ 
+ template <typename T>
+ struct mul_no_nan_op : public no_nan_op<T, scalar_product_op<T>> {
+-  EIGEN_EMPTY_STRUCT_CTOR(mul_no_nan_op)
+ };
+ 
+ template <typename T>
+@@ -671,7 +662,6 @@ struct functor_traits<scalar_round_up_op<Scalar, IsInteger>> {
+ 
+ template <typename Scalar>
+ struct bitwise_xor_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(bitwise_xor_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar
+   operator()(const Scalar& x, const Scalar& y) const {
+     return x ^ y;
+@@ -690,7 +680,6 @@ struct functor_traits<bitwise_xor_op<Scalar>> {
+ 
+ template <typename Scalar>
+ struct xlogy_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(xlogy_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar
+   operator()(const Scalar& x, const Scalar& y) const {
+     if (x == Scalar(0.)) {
+@@ -721,7 +710,6 @@ struct functor_traits<xlogy_op<Scalar>> {
+ 
+ template <typename Scalar>
+ struct xlog1py_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(xlog1py_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar
+   operator()(const Scalar& x, const Scalar& y) const {
+     if (x == Scalar(0.)) {
+@@ -756,7 +744,6 @@ struct functor_traits<xlog1py_op<Scalar>> {
+ 
+ template <typename Scalar>
+ struct xdivy_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(xdivy_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar
+   operator()(const Scalar& x, const Scalar& y) const {
+     if (x == Scalar(0.)) {
+@@ -787,7 +774,6 @@ struct functor_traits<xdivy_op<Scalar>> {
+ 
+ template <typename T>
+ struct scalar_erfinv_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_erfinv_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T operator()(const T& x) const {
+     constexpr T half = T(0.5);
+     T y = numext::ndtri(half * x + half);
+@@ -989,7 +975,6 @@ struct logical_not : base<bool, Eigen::internal::scalar_boolean_not_op<bool>> {
+ // Flip all bits. Named invert to be consistent with numpy.
+ template <typename T>
+ struct invert_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(invert_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T operator()(const T& a) const {
+     return ~a;
+   }
+@@ -1116,7 +1101,6 @@ struct safe_pow : base<T, Eigen::internal::safe_scalar_binary_pow_op<T, T>> {
+ template <typename T>
+ struct safe_pow_ignore_error_op {
+   static_assert(std::is_integral<T>::value, "Integer type expected");
+-  EIGEN_EMPTY_STRUCT_CTOR(safe_pow_ignore_error_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T operator()(const T& x,
+                                                      const T& y) const {
+     if (TF_PREDICT_FALSE(y < 0)) {
+@@ -1159,7 +1143,6 @@ struct polygamma : base<T, Eigen::internal::scalar_polygamma_op<T>> {};
+ 
+ template <typename Scalar>
+ struct scalar_atan2_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_atan2_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar
+   operator()(const Scalar& y, const Scalar& x) const {
+ #if TENSORFLOW_USE_ROCM
+@@ -1210,7 +1193,6 @@ struct logical_or : base<bool, Eigen::internal::scalar_boolean_or_op> {};
+ 
+ template <typename T>
+ struct bitwise_and_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(bitwise_and_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T operator()(const T& x,
+                                                      const T& y) const {
+     return x & y;
+@@ -1219,7 +1201,6 @@ struct bitwise_and_op {
+ 
+ template <typename T>
+ struct bitwise_or_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(bitwise_or_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T operator()(const T& x,
+                                                      const T& y) const {
+     return x | y;
+@@ -1237,7 +1218,6 @@ struct bitwise_xor : base<T, Eigen::internal::bitwise_xor_op<T>> {};
+ 
+ template <typename T>
+ struct left_shift_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(left_shift_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T operator()(const T& x,
+                                                      const T& y) const {
+     // Avoids UB: don't shift by larger than the bitwidth of T, and
+@@ -1255,7 +1235,6 @@ struct left_shift_op {
+ 
+ template <typename T>
+ struct right_shift_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(right_shift_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T operator()(const T& x,
+                                                      const T& y) const {
+     // Avoids UB: don't shift by larger than the bitwidth of T.
+diff --git a/tensorflow/core/kernels/cwise_ops_gradients.h b/tensorflow/core/kernels/cwise_ops_gradients.h
+index 78f77caa6fe..ffad345026b 100644
+--- a/tensorflow/core/kernels/cwise_ops_gradients.h
++++ b/tensorflow/core/kernels/cwise_ops_gradients.h
+@@ -26,7 +26,6 @@ namespace internal {
+ // Gradient for the tanh function
+ template <typename T>
+ struct scalar_tanh_gradient_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_tanh_gradient_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const T
+   operator()(const T& output, const T& output_gradient) const {
+     return output_gradient * (T(1) - output * output);
+@@ -49,7 +48,6 @@ struct functor_traits<scalar_tanh_gradient_op<T>> {
+ // Gradient for the sigmoid function
+ template <typename T>
+ struct scalar_sigmoid_gradient_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_sigmoid_gradient_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const T
+   operator()(const T& output, const T& output_gradient) const {
+     return output_gradient * output * (T(1) - output);
+@@ -72,7 +70,6 @@ struct functor_traits<scalar_sigmoid_gradient_op<T>> {
+ // Gradient for the inverse function
+ template <typename T>
+ struct scalar_inverse_gradient_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_inverse_gradient_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const T
+   operator()(const T& output, const T& output_gradient) const {
+     if (output_gradient == T(0)) {
+@@ -101,7 +98,6 @@ struct functor_traits<scalar_inverse_gradient_op<T>> {
+ // Gradient for the sqrt function
+ template <typename T>
+ struct scalar_sqrt_gradient_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_sqrt_gradient_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const T
+   operator()(const T& output, const T& output_gradient) const {
+     if (output_gradient == T(0)) {
+@@ -131,7 +127,6 @@ struct functor_traits<scalar_sqrt_gradient_op<T>> {
+ // Gradient for the rsqrt function
+ template <typename T>
+ struct scalar_rsqrt_gradient_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_rsqrt_gradient_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const T
+   operator()(const T& output, const T& output_gradient) const {
+     if (output_gradient == T(0)) {
+diff --git a/tensorflow/core/kernels/eigen_activations.h b/tensorflow/core/kernels/eigen_activations.h
+index 302033e47c5..2d4e4884eee 100644
+--- a/tensorflow/core/kernels/eigen_activations.h
++++ b/tensorflow/core/kernels/eigen_activations.h
+@@ -30,7 +30,6 @@ namespace Eigen {
+  */
+ template <typename T>
+ struct scalar_sigmoid_fast_derivative_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_sigmoid_fast_derivative_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T operator()(const T& y) const {
+     const T one = T(1);
+     return (one - y) * y;
+@@ -64,7 +63,6 @@ struct functor_traits<scalar_sigmoid_fast_derivative_op<T> > {
+  */
+ template <typename T>
+ struct scalar_tanh_fast_derivative_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_tanh_fast_derivative_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T operator()(const T& y) const {
+     const T one = T(1);
+     return one - (y * y);
+@@ -96,7 +94,6 @@ struct functor_traits<scalar_tanh_fast_derivative_op<T> > {
+  */
+ template <typename Scalar>
+ struct scalar_clip_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_clip_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const Scalar
+   operator()(const Scalar& a, const Scalar& b) const {
+     return numext::mini(numext::maxi(a, -b), b);
+diff --git a/tensorflow/core/kernels/nextafter_op.h b/tensorflow/core/kernels/nextafter_op.h
+index 3bf3ee5185d..7879543cc12 100644
+--- a/tensorflow/core/kernels/nextafter_op.h
++++ b/tensorflow/core/kernels/nextafter_op.h
+@@ -24,7 +24,6 @@ namespace functor {
+ 
+ template <typename T>
+ struct nextafter_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(nextafter_op)
+   // GPU kernels on ROCm may have issues including standard C++ APIs. Use
+   // specialized member functions and invoke HIP runtime APIs instead.
+ #if !TENSORFLOW_USE_ROCM
+diff --git a/tensorflow/core/kernels/quantization_utils.h b/tensorflow/core/kernels/quantization_utils.h
+index 71c31836d67..5f96473d024 100644
+--- a/tensorflow/core/kernels/quantization_utils.h
++++ b/tensorflow/core/kernels/quantization_utils.h
+@@ -666,7 +666,6 @@ inline void RequantizeManyInNewRange<quint8, qint32>(
+ 
+ template <int shift>
+ struct int64_right_shift_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(int64_right_shift_op)
+   EIGEN_DEVICE_FUNC
+   EIGEN_STRONG_INLINE const int64_t operator()(const int64_t a) const {
+     return a >> shift;
+diff --git a/tensorflow/core/kernels/special_math/special_math_op_misc_impl.h b/tensorflow/core/kernels/special_math/special_math_op_misc_impl.h
+index c290c47a384..8d39fabb5fb 100644
+--- a/tensorflow/core/kernels/special_math/special_math_op_misc_impl.h
++++ b/tensorflow/core/kernels/special_math/special_math_op_misc_impl.h
+@@ -124,7 +124,6 @@ generic_dawsn_interval_3(const Scalar& x) {
+ 
+ template <typename Scalar>
+ struct dawsn_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(dawsn_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar
+   operator()(const Scalar& x) const {
+     const Scalar half = Scalar(0.5);
+@@ -376,7 +375,6 @@ generic_expint_interval_7(const Scalar& x) {
+ 
+ template <typename Scalar>
+ struct expint_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(expint_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar
+   operator()(const Scalar& x) const {
+     const Scalar zero = Scalar(0.0);
+@@ -533,7 +531,6 @@ generic_fresnel_asymp(const Scalar& x, bool use_sin) {
+ 
+ template <typename Scalar>
+ struct fresnel_cos_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(fresnel_cos_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar
+   operator()(const Scalar& x) const {
+     const Scalar zero = Scalar(0.);
+@@ -567,7 +564,6 @@ struct fresnel_cos_op {
+ 
+ template <typename Scalar>
+ struct fresnel_sin_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(fresnel_sin_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar
+   operator()(const Scalar& x) const {
+     const Scalar zero = Scalar(0.);
+@@ -602,7 +598,6 @@ struct fresnel_sin_op {
+ // Implementation of Spence's Integral based on Cephes.
+ template <typename Scalar>
+ struct spence_op {
+-  EIGEN_EMPTY_STRUCT_CTOR(spence_op)
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar
+   operator()(const Scalar& x) const {
+     const Scalar A[] = {
+diff --git a/third_party/eigen3/unsupported/Eigen/CXX11/src/FixedPoint/PacketMathAVX2.h b/third_party/eigen3/unsupported/Eigen/CXX11/src/FixedPoint/PacketMathAVX2.h
+index 4c5e02abc9d..385aaf8c739 100644
+--- a/third_party/eigen3/unsupported/Eigen/CXX11/src/FixedPoint/PacketMathAVX2.h
++++ b/third_party/eigen3/unsupported/Eigen/CXX11/src/FixedPoint/PacketMathAVX2.h
+@@ -514,9 +514,7 @@ EIGEN_STRONG_INLINE QInt8 predux_max<Packet32q8i>(const Packet32q8i& a) {
+ template <>
+ struct scalar_product_op<QInt32, double> : binary_op_base<QInt32, double> {
+   typedef typename ScalarBinaryOpTraits<QInt32, double>::ReturnType result_type;
+-#ifndef EIGEN_SCALAR_BINARY_OP_PLUGIN
+-  EIGEN_EMPTY_STRUCT_CTOR(scalar_product_op)
+-#else
++#ifdef EIGEN_SCALAR_BINARY_OP_PLUGIN
+   scalar_product_op() { EIGEN_SCALAR_BINARY_OP_PLUGIN }
+ #endif
+   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE result_type
+diff --git a/third_party/eigen3/workspace.bzl b/third_party/eigen3/workspace.bzl
+index 4d327eedb37..97b0a85a4e2 100644
+--- a/third_party/eigen3/workspace.bzl
++++ b/third_party/eigen3/workspace.bzl
+@@ -7,8 +7,8 @@ def repo():
+ 
+     # Attention: tools parse and update these lines.
+     # LINT.IfChange
+-    EIGEN_COMMIT = "008ff3483a8c5604639e1c4d204eae30ad737af6"
+-    EIGEN_SHA256 = "e1dd31ce174c3d26fbe38388f64b09d2adbd7557a59e90e6f545a288cc1755fc"
++    EIGEN_COMMIT = "c2f15edc43367c3a11aacbb51c7431ccb5a31bb5"
++    EIGEN_SHA256 = "052754f4575ec9ae30e00e182eae22a2ec756768f07109b67428dc0c06feaecc"
+     # LINT.ThenChange(//tensorflow/lite/tools/cmake/modules/eigen.cmake)
+ 
+     tf_http_archive(
+-- 
+2.23.0
+

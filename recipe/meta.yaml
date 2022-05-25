@@ -1,4 +1,4 @@
-{% set build_version = "2.8.1" %}
+{% set build_version = "2.9.1" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
@@ -37,6 +37,8 @@ source:
     - 0309-Build-llvm-for-ppc64le-target.patch           #[ppc64le]
     - 0310-Updated-Dist-info-for-tf-estimator-tensorboard-and-k.patch
     - 0311-Support-ppc64le-in-cpuinfo-dependency.patch
+    - 0001-Updatd-eigen.patch
+    - 0001-Fixed-TF-as-per-new-eigen.patch
 
 build:
   number: 1
@@ -88,6 +90,7 @@ outputs:
         - absl-py {{ absl_py }}
         - astunparse {{ astunparse }}
         - flatbuffers {{ flatbuffers }}
+        - packaging
         - python-clang {{ clang }}
         - python-flatbuffers {{ flatbuffers }}
         - gast {{ gast }}
@@ -117,6 +120,7 @@ outputs:
         - astunparse {{ astunparse }}
         - python-clang {{ clang }}
         - flatbuffers {{ flatbuffers }}
+        - packaging
         - python-flatbuffers {{ flatbuffers }}
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}

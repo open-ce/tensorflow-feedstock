@@ -1,33 +1,36 @@
-From f56984c74c91c879dfa34651a102a5dc9b4f8629 Mon Sep 17 00:00:00 2001
+From 83f0751e1bc587e7f88c54a3ef7b5c18ed046cfc Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Tue, 17 May 2022 06:24:01 +0000
-Subject: [PATCH] Updated Dist-info for tensorboard and keras
+Date: Tue, 24 May 2022 05:15:59 -0400
+Subject: [PATCH] Updated Dist-info
 
 ---
- tensorflow/tools/pip_package/setup.py | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tensorflow/tools/pip_package/setup.py | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index 265843ca118..bad545648be 100644
+index cdcc355f4a6..250b94f2484 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
-@@ -78,7 +78,6 @@ REQUIRED_PACKAGES = [
+@@ -83,7 +83,6 @@ REQUIRED_PACKAGES = [
      'google_pasta >= 0.1.1',
      'h5py >= 2.9.0',
-     'keras_preprocessing >= 1.1.1', # 1.1.0 needs tensorflow==1.7
--    'libclang >= 9.0.1',
+     'keras_preprocessing >= 1.1.1',  # 1.1.0 needs tensorflow==1.7
+-    'libclang >= 13.0.0',
      'numpy >= 1.20',
      'opt_einsum >= 2.3.2',
-     'protobuf >= 3.9.2',
-@@ -93,7 +92,7 @@ REQUIRED_PACKAGES = [
-     # When updating these, please also update the nightly versions below
-     'tensorboard >= 2.8, < 2.9',
-     'tensorflow-estimator >= 2.8, < 2.9',
--    'keras >= 2.8.0rc0, < 2.9',
-+    'keras >= 2.8, < 2.9',
-     'tensorflow-io-gcs-filesystem >= 0.23.1',
+     'packaging',
+@@ -113,9 +112,9 @@ REQUIRED_PACKAGES = [
+     # version name.
+     # These are all updated during the TF release process.
+     standard_or_nightly('tensorboard >= 2.9, < 2.10', 'tb-nightly ~= 2.10.0.a'),
+-    standard_or_nightly('tensorflow_estimator >= 2.9.0rc0, < 2.10.0',
++    standard_or_nightly('tensorflow_estimator >= 2.9.0, < 2.10.0',
+                         'tf-estimator-nightly ~= 2.9.0.dev'),
+-    standard_or_nightly('keras >= 2.9.0rc0, < 2.10.0',
++    standard_or_nightly('keras >= 2.9.0, < 2.10.0',
+                         'keras-nightly ~= 2.9.0.dev'),
  ]
- 
+ REQUIRED_PACKAGES = [ p for p in REQUIRED_PACKAGES if p is not None ]
 -- 
-2.34.1
+2.23.0
 
