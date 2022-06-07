@@ -33,6 +33,8 @@ fi
 # Build the bazelrc
 $SCRIPT_DIR/set_tensorflow_bazelrc.sh $SRC_DIR/tensorflow
 
+#export BAZEL_LINKLIBS=-l%:libstdc++.a
+
 #Clean up old bazel cache to avoid problems building TF
 bazel clean --expunge
 bazel shutdown
@@ -42,7 +44,7 @@ bazel shutdown
 
 ARCH=`uname -m`
 if [[ $ARCH == "x86_64" ]]; then
-  cp $PREFIX/lib/python${PY_VER}/_sysconfigdata_x86_64_conda_cos6_linux_gnu.py $PREFIX/lib/python${PY_VER}/_sysconfigdata_x86_64_conda_linux_gnu.py
+  cp $PREFIX/lib/python${PY_VER}/_sysconfigdata__linux_x86_64-linux-gnu.py $PREFIX/lib/python${PY_VER}/_sysconfigdata_x86_64_conda_cos7_linux_gnu.py
 fi
 
 bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build \
