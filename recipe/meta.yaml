@@ -32,8 +32,6 @@ source:
     - 0300-fix-constant_op_test.patch
     - 0302-Fix-cub-BUILD-file-for-local_config_cuda-reference.patch    #[cudatoolkit == "10.2"]
     - 0305-Updated-protobuf-version.patch                #[protobuf == "3.19.*"]
-    - 0306-Fix-absl-linker-error.patch                   #[x86_64]
-    - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
     - 0309-Build-llvm-for-ppc64le-target.patch           #[ppc64le]
     - 0310-Updated-Dist-info-for-tf-estimator-tensorboard-and-k.patch
     - 0311-Support-ppc64le-in-cpuinfo-dependency.patch
