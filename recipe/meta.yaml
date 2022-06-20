@@ -76,7 +76,7 @@ outputs:
         - cudnn {{ cudnn }}               #[build_type == 'cuda']
         - nccl {{ nccl }}                 #[build_type == 'cuda']
         #- tensorrt {{ tensorrt }}     #[py<38 and build_type == 'cuda']
-        - zlib
+        - zlib {{ zlib }}
         #  This list needs to match exacly tensorflow/tools/pip_package/setup.py.
         #  This list is what is displayed on "conda info" for the package.
         #  This list needs to exactly match the setup.py because this is the
@@ -121,6 +121,7 @@ outputs:
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
         - h5py {{ h5py }}
+        - zlib {{ zlib }}
         - keras-preprocessing {{ keras_preprocessing }}
         - numpy {{ numpy }}
         - opt_einsum {{ opt_einsum }}
