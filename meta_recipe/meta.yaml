@@ -1,6 +1,6 @@
 # Recipe to build Tensorflow meta package
-{% set build_version = "2.8.1" %}
-{% set estimator_version = "2.8.0" %}
+{% set build_version = "2.9.1" %}
+{% set estimator_version = "2.9.0" %}
 
 package:
   name: tensorflow{{ '' if build_type == 'cuda' else '-cpu' }}

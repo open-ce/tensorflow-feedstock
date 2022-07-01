@@ -1,4 +1,4 @@
-{% set build_version = "2.8.1" %}
+{% set build_version = "2.9.1" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
@@ -32,11 +32,11 @@ source:
     - 0300-fix-constant_op_test.patch
     - 0302-Fix-cub-BUILD-file-for-local_config_cuda-reference.patch    #[cudatoolkit == "10.2"]
     - 0305-Updated-protobuf-version.patch                #[protobuf == "3.19.*"]
-    - 0306-Fix-absl-linker-error.patch                   #[x86_64]
-    - 0307-Fix-for-eigen-TensorReduction.patch           #[x86_64]
     - 0309-Build-llvm-for-ppc64le-target.patch           #[ppc64le]
     - 0310-Updated-Dist-info-for-tf-estimator-tensorboard-and-k.patch
     - 0311-Support-ppc64le-in-cpuinfo-dependency.patch
+    - 0312-Updated-Eigen-for-power.patch                 #[ppc64le]
+    - 0313-lite-Switch-to-Flatbuffer-2.0.5.patch
 
 build:
   number: 1
@@ -58,14 +58,13 @@ outputs:
       string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }} #[build_type == 'cuda']
       script_env:
         - CUDA_HOME               #[build_type == 'cuda']
-        - GCC_11_HOME             #[ppc_arch == 'p10']
       ignore_run_exports:
         - sqlite
 
     requirements:
       build:
-        - {{ compiler('c') }}      #[ppc_arch != 'p10']
-        - {{ compiler('cxx') }}    #[ppc_arch != 'p10']
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
       host:
         # conda build requirements
         - git >=2.2
@@ -78,7 +77,7 @@ outputs:
         - cudnn {{ cudnn }}               #[build_type == 'cuda']
         - nccl {{ nccl }}                 #[build_type == 'cuda']
         #- tensorrt {{ tensorrt }}     #[py<38 and build_type == 'cuda']
-        - zlib
+        - zlib {{ zlib }}
         #  This list needs to match exacly tensorflow/tools/pip_package/setup.py.
         #  This list is what is displayed on "conda info" for the package.
         #  This list needs to exactly match the setup.py because this is the
@@ -88,6 +87,7 @@ outputs:
         - absl-py {{ absl_py }}
         - astunparse {{ astunparse }}
         - flatbuffers {{ flatbuffers }}
+        - packaging
         - python-clang {{ clang }}
         - python-flatbuffers {{ flatbuffers }}
         - gast {{ gast }}
@@ -117,10 +117,12 @@ outputs:
         - astunparse {{ astunparse }}
         - python-clang {{ clang }}
         - flatbuffers {{ flatbuffers }}
+        - packaging
         - python-flatbuffers {{ flatbuffers }}
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
         - h5py {{ h5py }}
+        - zlib {{ zlib }}
         - keras-preprocessing {{ keras_preprocessing }}
         - numpy {{ numpy }}
         - opt_einsum {{ opt_einsum }}
