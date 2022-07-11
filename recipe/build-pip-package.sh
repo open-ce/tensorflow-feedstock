@@ -44,7 +44,7 @@ bazel shutdown
 
 ARCH=`uname -m`
 if [[ $ARCH == "x86_64" ]]; then
-  cp $PREFIX/lib/python${PY_VER}/_sysconfigdata__linux_x86_64-linux-gnu.py $PREFIX/lib/python${PY_VER}/_sysconfigdata_x86_64_conda_cos7_linux_gnu.py
+  cp $PREFIX/lib/python${PY_VER}/_sysconfigdata__linux_x86_64-linux-gnu.py $PREFIX/lib/python${PY_VER}/_sysconfigdata_x86_64_conda_linux_gnu.py
 fi
 
 bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build \
