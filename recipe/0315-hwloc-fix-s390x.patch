@@ -1,7 +1,7 @@
-diff --git a/third_party/hwloc/BUILD.bazel b/third_party/hwloc/BUILD.bazel
+diff --git a/third_party/hwloc/hwloc.BUILD b/third_party/hwloc/hwloc.BUILD
 index 46149dd497f..c95616e1780 100644
---- a/third_party/hwloc/BUILD.bazel
-+++ b/third_party/hwloc/BUILD.bazel
+--- a/third_party/hwloc/hwloc.BUILD
++++ b/third_party/hwloc/hwloc.BUILD
 @@ -270,6 +270,10 @@ cc_library(
              "hwloc/topology-linux.c",
              "include/hwloc/linux.h",

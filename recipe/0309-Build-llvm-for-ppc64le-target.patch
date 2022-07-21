@@ -1,13 +1,15 @@
-From 3fc6a1eed9c6a7485c2bf2cdee813aa9a248137c Mon Sep 17 00:00:00 2001
+From 737a8fcb0700bd5c11220bc0ec3897cd7d358a90 Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Mon, 21 Mar 2022 08:15:52 -0400
-Subject: [PATCH] Fixed LLVM build on ppc64le
+Date: Wed, 20 Jul 2022 15:31:48 +0000
+Subject: [PATCH] Fixed LLVM build
 
 ---
  third_party/llvm/fix_ppc64le.patch | 24 ++++++++++++++++++++++++
+ third_party/llvm/fix_s390x.patch   | 12 ++++++++++++
  third_party/llvm/workspace.bzl     |  2 +-
- 2 files changed, 25 insertions(+), 1 deletion(-)
+ 3 files changed, 37 insertions(+), 1 deletion(-)
  create mode 100644 third_party/llvm/fix_ppc64le.patch
+ create mode 100644 third_party/llvm/fix_s390x.patch
 
 diff --git a/third_party/llvm/fix_ppc64le.patch b/third_party/llvm/fix_ppc64le.patch
 new file mode 100644
@@ -39,8 +41,26 @@ index 00000000000..3ed53b48164
 +-- 
 +2.23.0
 +
+diff --git a/third_party/llvm/fix_s390x.patch b/third_party/llvm/fix_s390x.patch
+new file mode 100644
+index 00000000000..eb448168861
+--- /dev/null
++++ b/third_party/llvm/fix_s390x.patch
+@@ -0,0 +1,12 @@
++diff --git a/utils/bazel/llvm-project-overlay/llvm/config.bzl b/utils/bazel/llvm-project-overlay/llvm/config.bzl
++index 2046b2645362..6bb22f389576 100644
++--- a/utils/bazel/llvm-project-overlay/llvm/config.bzl
+++++ b/utils/bazel/llvm-project-overlay/llvm/config.bzl
++@@ -86,6 +86,7 @@ llvm_config_defines = os_defines + select({
++     "@bazel_tools//src/conditions:darwin_arm64": native_arch_defines("AArch64", "arm64-apple-darwin"),
++     "@bazel_tools//src/conditions:darwin_x86_64": native_arch_defines("X86", "x86_64-unknown-darwin"),
++     "@bazel_tools//src/conditions:linux_aarch64": native_arch_defines("AArch64", "aarch64-unknown-linux-gnu"),
+++    "@bazel_tools//src/conditions:linux_s390x": native_arch_defines("SystemZ", "s390x-unknown-linux-gnu"),
++     "//conditions:default": native_arch_defines("X86", "x86_64-unknown-linux-gnu"),
++ }) + [
++     # These shouldn't be needed by the C++11 standard, but are for some
 diff --git a/third_party/llvm/workspace.bzl b/third_party/llvm/workspace.bzl
-index 038e0ee5fe5..3e4e4f135c2 100644
+index 82d0f71ccbd..2e57961565a 100644
 --- a/third_party/llvm/workspace.bzl
 +++ b/third_party/llvm/workspace.bzl
 @@ -16,6 +16,6 @@ def repo(name):
@@ -48,9 +68,9 @@ index 038e0ee5fe5..3e4e4f135c2 100644
          ],
          build_file = "//third_party/llvm:llvm.BUILD",
 -        patch_file = ["//third_party/llvm:macos_build_fix.patch"],
-+        patch_file = ["//third_party/llvm:macos_build_fix.patch", "//third_party/llvm:fix_ppc64le.patch"],
++        patch_file = ["//third_party/llvm:macos_build_fix.patch", "//third_party/llvm:fix_ppc64le.patch", "//third_party/llvm:fix_s390x.patch"],
          link_files = {"//third_party/llvm:run_lit.sh": "mlir/run_lit.sh"},
      )
 -- 
-2.23.0
+2.34.1
 

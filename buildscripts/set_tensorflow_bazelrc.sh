@@ -22,7 +22,7 @@ BAZEL_RC_DIR=$1
 ARCH=`uname -p`
 
 XNNPACK_STATUS=true
-if [[ "${ARCH}" == 'ppc64le' ]]; then
+if [[ "${ARCH}" == 'ppc64le' || "${ARCH}" == 's390x' ]]; then
      XNNPACK_STATUS=false
 fi
 
