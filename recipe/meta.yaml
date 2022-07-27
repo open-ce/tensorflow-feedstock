@@ -39,6 +39,8 @@ source:
     - 0313-lite-Switch-to-Flatbuffer-2.0.5.patch
     - 0314-EIGEN-grpc-fix-s390x-target.patch             #[s390x]
     - 0315-hwloc-fix-s390x.patch                         #[s390x]
+    - 0316-s390x-fixes.patch                             #[s390x]
+    - 0317-Build-LLVM-for-s390x-target.patch             #[s390x]
 
 build:
   number: 2
