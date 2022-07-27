@@ -37,9 +37,13 @@ source:
     - 0311-Support-ppc64le-in-cpuinfo-dependency.patch
     - 0312-Updated-Eigen-for-power.patch                 #[ppc64le]
     - 0313-lite-Switch-to-Flatbuffer-2.0.5.patch
+    - 0314-EIGEN-grpc-fix-s390x-target.patch             #[s390x]
+    - 0315-hwloc-fix-s390x.patch                         #[s390x]
+    - 0316-s390x-fixes.patch                             #[s390x]
+    - 0317-Build-LLVM-for-s390x-target.patch             #[s390x]
 
 build:
-  number: 3
+  number: 4
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -104,8 +108,9 @@ outputs:
         - wrapt {{ wrapt }}
         - wheel {{ wheel }}
         - six {{ six }}
-        - typing_extensions {{ typing_extensions }}
-        - sqlite 3.33.0
+        - typing_extensions {{ typing_extensions }}     #[py<38]
+        - sqlite 3.33.0                                 #[not s390x]
+        - sqlite {{ sqlite }}                           #[s390x]
         - grpcio {{ grpcio }}
       run:
         - python {{ python }}
