@@ -69,7 +69,6 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
-        - binutils       #[s390x]
       host:
         # conda build requirements
         - git >=2.2
