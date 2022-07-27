@@ -62,13 +62,14 @@ outputs:
       string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }} #[build_type == 'cuda']
       script_env:
         - CUDA_HOME               #[build_type == 'cuda']
+        - GCC_11_HOME             #[ppc_arch == 'p10']
       ignore_run_exports:
         - sqlite
 
     requirements:
       build:
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
+        - {{ compiler('c') }}      # [ ppc_arch != "p10"]
+        - {{ compiler('cxx') }}    # [ ppc_arch != "p10"]
       host:
         # conda build requirements
         - git >=2.2
