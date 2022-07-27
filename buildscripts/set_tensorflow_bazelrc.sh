@@ -66,10 +66,10 @@ else
      done
 fi
 
-MMA=0
+USE_MMA=0
 if [[ $ppc_arch == "p10" ]]
 then
-    MMA=1
+    USE_MMA=1
 fi
 
 SYSTEM_LIBS_PREFIX=$PREFIX
@@ -90,7 +90,7 @@ build --define=PREFIX="$SYSTEM_LIBS_PREFIX"
 build --define=LIBDIR="$SYSTEM_LIBS_PREFIX/lib"
 build --define=INCLUDEDIR="$SYSTEM_LIBS_PREFIX/include"
 build --define=tflite_with_xnnpack="$XNNPACK_STATUS"
-build --copt="-DEIGEN_ALTIVEC_ENABLE_MMA_DYNAMIC_DISPATCH=$MMA"
+build --copt="-DEIGEN_ALTIVEC_ENABLE_MMA_DYNAMIC_DISPATCH=$USE_MMA"
 build --strip=always
 build --color=yes
 build --verbose_failures
