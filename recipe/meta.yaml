@@ -43,7 +43,7 @@ source:
     - 0317-Build-LLVM-for-s390x-target.patch             #[s390x]
 
 build:
-  number: 4
+  number: 5
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main

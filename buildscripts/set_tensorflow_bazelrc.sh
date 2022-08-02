@@ -91,7 +91,6 @@ build --define=LIBDIR="$SYSTEM_LIBS_PREFIX/lib"
 build --define=INCLUDEDIR="$SYSTEM_LIBS_PREFIX/include"
 build --define=tflite_with_xnnpack="$XNNPACK_STATUS"
 build --copt="-DEIGEN_ALTIVEC_ENABLE_MMA_DYNAMIC_DISPATCH=$USE_MMA"
-build --linkopt="-fuse-ld=gold"
 build --strip=always
 build --color=yes
 build --verbose_failures
@@ -114,5 +113,9 @@ echo "Building with more compiler flag for ${ARCH}"
 cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
 build:opt --copt=-O3
 build:opt --copt=-funroll-loops
+EOF
+else
+cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
+build --linkopt="-fuse-ld=gold"
 EOF
 fi
