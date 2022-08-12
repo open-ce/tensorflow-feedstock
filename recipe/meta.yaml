@@ -43,7 +43,7 @@ source:
     - 0317-Build-LLVM-for-s390x-target.patch             #[s390x]
 
 build:
-  number: 5
+  number: 6
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -109,7 +109,7 @@ outputs:
         - wheel {{ wheel }}
         - six {{ six }}
         - typing_extensions {{ typing_extensions }}     #[py<38]
-        - sqlite 3.33.0                                 #[not s390x]
+        - sqlite                                        #[not s390x]
         - sqlite {{ sqlite }}                           #[s390x]
         - grpcio {{ grpcio }}
       run:
