@@ -1,4 +1,4 @@
-{% set build_version = "2.9.1" %}
+{% set build_version = "2.9.2" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
@@ -43,7 +43,7 @@ source:
     - 0317-Build-LLVM-for-s390x-target.patch             #[s390x]
 
 build:
-  number: 6
+  number: 1
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
