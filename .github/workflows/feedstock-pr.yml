@@ -14,7 +14,7 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2.0.0
         with:
           auto-update-conda: true
-      - uses: open-ce/open-ce/.github/actions/feedstock-optional-pr@nish-github
+      - uses: npanpaliya/open-ce/.github/actions/feedstock-optional-pr@nish-github
   required_tests:
     runs-on: ubuntu-latest
     steps:
@@ -24,4 +24,4 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2.0.0
         with:
           auto-update-conda: true
-      - uses: open-ce/open-ce/.github/actions/feedstock-required-pr@nish-github
+      - uses: npanpaliya/open-ce/.github/actions/feedstock-required-pr@nish-github
