@@ -6,7 +6,7 @@ on:
 
 jobs:
   python-setup-worflow:
-    uses: open-ce/open-ce/.github/workflows/python-setup@nish-github
+    uses: open-ce/open-ce/.github/workflows/python-setup.yml@nish-github
     with:
       username: Open-CE
     secrets: inherit
