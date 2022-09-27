@@ -5,9 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  python-setup-worflow:
-    uses: open-ce/open-ce/.github/workflows/python-setup.yml@nish-github
-    secrets: inherit
+
   optional_tests:
     runs-on: ubuntu-latest
     steps:
