@@ -1,4 +1,4 @@
-{% set build_version = "2.9.1" %}
+{% set build_version = "2.9.2" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
