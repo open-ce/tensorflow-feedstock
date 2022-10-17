@@ -1,12 +1,12 @@
-From 46de90321ff9fa17dc937cb518fed8e16112b606 Mon Sep 17 00:00:00 2001
+From 1587b81bad7f225ffd741fced3efaf2a16d5c89b Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Fri, 22 Jul 2022 10:50:33 +0000
-Subject: [PATCH] Build LLVM for ppc64le
+Date: Thu, 6 Oct 2022 13:44:19 +0000
+Subject: [PATCH] Fix LLVM for power
 
 ---
  third_party/llvm/fix_ppc64le.patch | 24 ++++++++++++++++++++++++
- third_party/llvm/workspace.bzl     |  2 +-
- 2 files changed, 25 insertions(+), 1 deletion(-)
+ third_party/llvm/workspace.bzl     |  1 +
+ 2 files changed, 25 insertions(+)
  create mode 100644 third_party/llvm/fix_ppc64le.patch
 
 diff --git a/third_party/llvm/fix_ppc64le.patch b/third_party/llvm/fix_ppc64le.patch
@@ -40,15 +40,15 @@ index 00000000000..574bf7130ae
 +2.34.1
 +
 diff --git a/third_party/llvm/workspace.bzl b/third_party/llvm/workspace.bzl
-index 82d0f71ccbd..e619c12ad17 100644
+index c9760c3ab38..1457ca8535c 100644
 --- a/third_party/llvm/workspace.bzl
 +++ b/third_party/llvm/workspace.bzl
-@@ -16,6 +16,6 @@ def repo(name):
-             "https://github.com/llvm/llvm-project/archive/{commit}.tar.gz".format(commit = LLVM_COMMIT),
+@@ -20,6 +20,7 @@ def repo(name):
+             "//third_party/llvm:infer_type.patch",  # TODO(b/231285230): remove once resolved
+             "//third_party/llvm:build.patch",
+             "//third_party/llvm:macos_build_fix.patch",
++            "//third_party/llvm:fix_ppc64le.patch",
          ],
-         build_file = "//third_party/llvm:llvm.BUILD",
--        patch_file = ["//third_party/llvm:macos_build_fix.patch"],
-+        patch_file = ["//third_party/llvm:macos_build_fix.patch", "//third_party/llvm:fix_ppc64le.patch"],
          link_files = {"//third_party/llvm:run_lit.sh": "mlir/run_lit.sh"},
      )
 -- 
