@@ -35,6 +35,7 @@ source:
     - 0314-EIGEN-grpc-fix-s390x-target.patch             #[s390x]
     - 0315-hwloc-fix-s390x.patch                         #[s390x]
     - 0316-s390x-fixes.patch                             #[s390x]
+    - 0317-Fix-cublas-errors.patch                       #[build_type == 'cuda']
 
 build:
   number: 1
