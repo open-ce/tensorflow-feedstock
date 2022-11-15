@@ -1,0 +1,25 @@
+From 51cd94a7222c2c641802fcda4fbe21e7c91f6234 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Tue, 15 Nov 2022 04:03:29 -0500
+Subject: [PATCH] Fixed mnist test
+
+---
+ official/legacy/image_classification/mnist_main.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/official/legacy/image_classification/mnist_main.py b/official/legacy/image_classification/mnist_main.py
+index cf6063144..efaa01384 100644
+--- a/official/legacy/image_classification/mnist_main.py
++++ b/official/legacy/image_classification/mnist_main.py
+@@ -32,7 +32,7 @@ from official.utils.misc import model_helpers
+ 
+ FLAGS = flags.FLAGS
+ 
+-
++import os ; os.environ["TF_FORCE_GPU_ALLOW_GROWTH"]="true"
+ def build_model():
+   """Constructs the ML model used to predict handwritten digits."""
+ 
+-- 
+2.31.1
+
