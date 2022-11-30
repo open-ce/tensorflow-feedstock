@@ -22,6 +22,10 @@ requirements:
     - python                 {{ python }}
     - cudatoolkit            {{ cudatoolkit }} #[build_type == 'cuda']
 
+test:
+  imports:
+    - tensorflow
+
 about:
   home: http://tensorflow.org/
   license: Apache 2.0
