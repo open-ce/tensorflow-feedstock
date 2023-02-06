@@ -1,5 +1,5 @@
 # *****************************************************************
-# (C) Copyright IBM Corp. 2018, 2022. All Rights Reserved.
+# (C) Copyright IBM Corp. 2018, 2023. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 #!/bin/bash
 
 set -vex
+
+source open-ce-common-utils.sh
 
 if [[ $ppc_arch == "p10" ]]
 then 
@@ -100,5 +102,6 @@ mkdir -p "${PREFIX}"/etc/conda/deactivate.d
 cp "${RECIPE_DIR}"/../scripts/activate.sh "${PREFIX}"/etc/conda/activate.d/activate-${PKG_NAME}.sh
 cp "${RECIPE_DIR}"/../scripts/deactivate.sh "${PREFIX}"/etc/conda/deactivate.d/deactivate-${PKG_NAME}.sh
 
-bazel clean --expunge
-bazel shutdown
+PID=$(bazel info server_pid)
+echo "PID: $PID"
+cleanup_bazel $PID
