@@ -17,6 +17,8 @@
 
 set -vex
 
+source open-ce-common-utils.sh
+
 if [[ $ppc_arch == "p10" ]]
 then 
     if [[ -z "${GCC_11_HOME}" ]];
@@ -103,5 +105,6 @@ mkdir -p "${PREFIX}"/etc/conda/deactivate.d
 cp "${RECIPE_DIR}"/../scripts/activate.sh "${PREFIX}"/etc/conda/activate.d/activate-${PKG_NAME}.sh
 cp "${RECIPE_DIR}"/../scripts/deactivate.sh "${PREFIX}"/etc/conda/deactivate.d/deactivate-${PKG_NAME}.sh
 
-bazel clean --expunge
-bazel shutdown
+PID=$(bazel info server_pid)
+echo "PID: $PID"
+cleanup_bazel $PID
