@@ -51,10 +51,6 @@ $SCRIPT_DIR/set_tensorflow_bazelrc.sh $SRC_DIR/tensorflow
 
 #export BAZEL_LINKLIBS=-l%:libstdc++.a
 
-#Clean up old bazel cache to avoid problems building TF
-bazel clean --expunge
-bazel shutdown
-
 # On x86, use of new compilers (gcc8) gives "ModuleNotFoundError: No module named '_sysconfigdata_x86_64_conda_linux_gnu'"# This is due to the target triple difference with which python and conda-build are built. Below is the work around to this problem.
 # Conda-forge's python-feedstock has a patch https://github.com/conda-forge/python-feedstock/blob/master/recipe/patches/0010-Add-support-for-_CONDA_PYTHON_SYSCONFIGDATA_NAME-if-.patch which may address this problem.
 
