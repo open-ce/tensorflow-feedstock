@@ -17,6 +17,8 @@
 
 set -vex
 
+source open-ce-common-utils.sh
+
 if [[ $ppc_arch == "p10" ]]
 then 
     if [[ -z "${GCC_11_HOME}" ]];
