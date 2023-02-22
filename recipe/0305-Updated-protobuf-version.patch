@@ -1,50 +1,49 @@
-From 38ece4c0b10a81b278628f149023df547661c7e3 Mon Sep 17 00:00:00 2001
-From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Fri, 11 Mar 2022 04:39:27 -0500
-Subject: [PATCH] Updated protobuf to 3.19
+From 3ba54e649871868138b38be1387f866d544fa26a Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanap23@in.ibm.com>
+Date: Wed, 15 Feb 2023 12:47:06 +0000
+Subject: [PATCH] Updated protobuf to 3.19.6
 
 ---
  tensorflow/workspace2.bzl           |   6 +-
- third_party/protobuf/protobuf.patch | 181 ++++------------------------
- 2 files changed, 29 insertions(+), 158 deletions(-)
+ third_party/protobuf/protobuf.patch | 189 ++++------------------------
+ 2 files changed, 26 insertions(+), 169 deletions(-)
 
 diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
-index 60deadb1962..890d64bcbbd 100644
+index 2cb16d253cf..36d9e60e643 100644
 --- a/tensorflow/workspace2.bzl
 +++ b/tensorflow/workspace2.bzl
-@@ -455,14 +455,14 @@ def _tf_repositories():
+@@ -447,14 +447,14 @@ def _tf_repositories():
      tf_http_archive(
          name = "com_google_protobuf",
          patch_file = ["//third_party/protobuf:protobuf.patch"],
 -        sha256 = "cfcba2df10feec52a84208693937c17a4b5df7775e1635c1e3baffc487b24c9b",
 -        strip_prefix = "protobuf-3.9.2",
-+        sha256 = "25f1292d4ea6666f460a2a30038eef121e6c3937ae0f61d610611dfb14b0bd32",
-+        strip_prefix = "protobuf-3.19.1",
++        sha256 = "387e2c559bb2c7c1bc3798c4e6cff015381a79b2758696afcbf8e88730b47389",
++        strip_prefix = "protobuf-3.19.6",
          system_build_file = "//third_party/systemlibs:protobuf.BUILD",
          system_link_files = {
              "//third_party/systemlibs:protobuf.bzl": "protobuf.bzl",
              "//third_party/systemlibs:protobuf_deps.bzl": "protobuf_deps.bzl",
          },
 -        urls = tf_mirror_urls("https://github.com/protocolbuffers/protobuf/archive/v3.9.2.zip"),
-+        urls = tf_mirror_urls("https://github.com/protocolbuffers/protobuf/archive/v3.19.1.zip"),
++        urls = tf_mirror_urls("https://github.com/protocolbuffers/protobuf/archive/v3.19.6.zip"),
      )
  
      tf_http_archive(
 diff --git a/third_party/protobuf/protobuf.patch b/third_party/protobuf/protobuf.patch
-index 1aae0459185..3b66d914cae 100644
+index 1aae0459185..a0d667f924f 100644
 --- a/third_party/protobuf/protobuf.patch
 +++ b/third_party/protobuf/protobuf.patch
-@@ -1,8 +1,19 @@
-+From ef3ddf2dea3ff3548f85a0b4145692522025fe19 Mon Sep 17 00:00:00 2001
-+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-+Date: Fri, 11 Mar 2022 04:37:39 -0500
-+Subject: [PATCH] Protobuf changes
+@@ -1,8 +1,18 @@
++From d24ad413d7962d1bed0c2d680d061716d8e4670d Mon Sep 17 00:00:00 2001
++From: Nishidha Panpaliya <npanap23@in.ibm.com>
++Date: Wed, 15 Feb 2023 12:44:41 +0000
++Subject: [PATCH] Protobuf patch in TF
 +
 +---
-+ BUILD                                          | 4 +++-
-+ python/google/protobuf/pyext/message.cc        | 4 ++++
-+ python/google/protobuf/pyext/unknown_fields.cc | 2 +-
-+ 3 files changed, 8 insertions(+), 2 deletions(-)
++ BUILD                                   | 4 +++-
++ python/google/protobuf/pyext/message.cc | 4 ++++
++ 2 files changed, 7 insertions(+), 1 deletion(-)
 +
  diff --git a/BUILD b/BUILD
 -index dbae719ff..4e276c854 100644
@@ -56,7 +55,7 @@ index 1aae0459185..3b66d914cae 100644
   # ZLIB configuration
   ################################################################################
   
-@@ -11,15 +22,7 @@ index dbae719ff..4e276c854 100644
+@@ -11,15 +21,7 @@ index dbae719ff..4e276c854 100644
   
   ################################################################################
   # Protobuf Runtime Library
@@ -73,7 +72,7 @@ index 1aae0459185..3b66d914cae 100644
       copts = COPTS,
       includes = ["src/"],
       linkopts = LINK_OPTS,
-@@ -27,7 +30,7 @@ index dbae719ff..4e276c854 100644
+@@ -27,7 +29,7 @@ index dbae719ff..4e276c854 100644
       visibility = ["//visibility:public"],
   )
   
@@ -82,7 +81,7 @@ index 1aae0459185..3b66d914cae 100644
       copts = COPTS,
       includes = ["src/"],
       linkopts = LINK_OPTS,
-@@ -35,162 +38,27 @@ index dbae719ff..4e276c854 100644
+@@ -35,167 +37,22 @@ index dbae719ff..4e276c854 100644
       visibility = ["//visibility:public"],
       deps = [":protobuf_lite"] + PROTOBUF_DEPS,
   )
@@ -243,23 +242,22 @@ index 1aae0459185..3b66d914cae 100644
       if (collections == NULL) {
         return false;
       }
- diff --git a/python/google/protobuf/pyext/unknown_fields.cc b/python/google/protobuf/pyext/unknown_fields.cc
+-diff --git a/python/google/protobuf/pyext/unknown_fields.cc b/python/google/protobuf/pyext/unknown_fields.cc
 -index c3679c0d3..e80a1d97a 100755
-+index 7f4fb23ed..73a518c9f 100644
- --- a/python/google/protobuf/pyext/unknown_fields.cc
- +++ b/python/google/protobuf/pyext/unknown_fields.cc
+---- a/python/google/protobuf/pyext/unknown_fields.cc
+-+++ b/python/google/protobuf/pyext/unknown_fields.cc
 -@@ -221,7 +221,7 @@ const UnknownField* GetUnknownField(PyUnknownFieldRef* self) {
-+@@ -218,7 +218,7 @@ const UnknownField* GetUnknownField(PyUnknownFieldRef* self) {
-                   "The parent message might be cleared.");
-      return NULL;
-    }
-@@ -199,3 +67,6 @@ index c3679c0d3..e80a1d97a 100755
-    if (self->index >= total_size) {
-      PyErr_Format(PyExc_ValueError,
-                   "UnknownField does not exist. "
+-                  "The parent message might be cleared.");
+-     return NULL;
+-   }
+--  ssize_t total_size = fields->field_count();
+-+  Py_ssize_t total_size = fields->field_count();
+-   if (self->index >= total_size) {
+-     PyErr_Format(PyExc_ValueError,
+-                  "UnknownField does not exist. "
 +-- 
-+2.23.0
++2.34.1
 +
 -- 
-2.23.0
+2.34.1
 

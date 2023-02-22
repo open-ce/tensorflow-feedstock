@@ -1,5 +1,5 @@
 # *****************************************************************
-# (C) Copyright IBM Corp. 2018, 2022. All Rights Reserved.
+# (C) Copyright IBM Corp. 2018, 2023. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 #!/bin/bash
 
 set -vex
+
+source open-ce-common-utils.sh
 
 if [[ $ppc_arch == "p10" ]]
 then 
@@ -50,8 +52,6 @@ $SCRIPT_DIR/set_tensorflow_bazelrc.sh $SRC_DIR/tensorflow
 #export BAZEL_LINKLIBS=-l%:libstdc++.a
 
 #Clean up old bazel cache to avoid problems building TF
-bazel clean --expunge
-bazel shutdown
 
 # On x86, use of new compilers (gcc8) gives "ModuleNotFoundError: No module named '_sysconfigdata_x86_64_conda_linux_gnu'"# This is due to the target triple difference with which python and conda-build are built. Below is the work around to this problem.
 # Conda-forge's python-feedstock has a patch https://github.com/conda-forge/python-feedstock/blob/master/recipe/patches/0010-Add-support-for-_CONDA_PYTHON_SYSCONFIGDATA_NAME-if-.patch which may address this problem.
@@ -103,5 +103,7 @@ mkdir -p "${PREFIX}"/etc/conda/deactivate.d
 cp "${RECIPE_DIR}"/../scripts/activate.sh "${PREFIX}"/etc/conda/activate.d/activate-${PKG_NAME}.sh
 cp "${RECIPE_DIR}"/../scripts/deactivate.sh "${PREFIX}"/etc/conda/deactivate.d/deactivate-${PKG_NAME}.sh
 
-bazel clean --expunge
-bazel shutdown
+PID=$(bazel info server_pid)
+echo "PID: $PID"
+cleanup_bazel $PID
+
