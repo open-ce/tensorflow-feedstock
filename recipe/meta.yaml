@@ -101,7 +101,7 @@ outputs:
         # don't include tensorflow_estimator
         - termcolor {{ termcolor }}
         - wrapt {{ wrapt }}
-        - wheel {{ wheel }}
+        - wheel
         - six {{ six }}
         - typing_extensions {{ typing_extensions }}     #[py<38]
         - sqlite                                        #[not s390x]
@@ -133,7 +133,7 @@ outputs:
         # don't include tensorflow_estimator
         - termcolor {{ termcolor }}
         - wrapt {{ wrapt }}
-        - wheel {{ wheel }}
+        - wheel
         - six {{ six }}
         - typing_extensions {{ typing_extensions }}
         - grpcio {{ grpcio }}
