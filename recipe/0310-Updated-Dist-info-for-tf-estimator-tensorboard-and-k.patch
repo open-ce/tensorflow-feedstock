@@ -1,24 +1,24 @@
-From cb3237de8cbf6d6428123254a8e2d6676d8c4cbf Mon Sep 17 00:00:00 2001
+From f79aafdfd96a400df73188b405d17d60777ead3d Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Fri, 14 Oct 2022 07:42:40 +0000
-Subject: [PATCH] Updated Dist-info
+Date: Mon, 6 Mar 2023 12:57:56 +0000
+Subject: [PATCH] Updated Dist info for TF estimator
 
 ---
  tensorflow/tools/pip_package/setup.py | 1 -
  1 file changed, 1 deletion(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index 9adaf774444..316b3bf725c 100644
+index face32bbb9a..5aec6e1a325 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
-@@ -82,7 +82,6 @@ REQUIRED_PACKAGES = [
-     'google_pasta >= 0.1.1',
-     'h5py >= 2.9.0',
-     'keras_preprocessing >= 1.1.1',  # 1.1.0 needs tensorflow==1.7
+@@ -92,7 +92,6 @@ REQUIRED_PACKAGES = [
+     # TODO(b/239052279): replace with external dependency on JAX repo once JAX
+     # no longer relies on TF.
+     'jax >= 0.3.15',
 -    'libclang >= 13.0.0',
-     'numpy >= 1.20',
+     # TODO(b/263178356): numpy 1.24 breaks TF's tests
+     'numpy >= 1.22, <1.24',
      'opt_einsum >= 2.3.2',
-     'packaging',
 -- 
 2.34.1
 

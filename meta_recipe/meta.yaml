@@ -1,6 +1,6 @@
 # Recipe to build Tensorflow meta package
-{% set build_version = "2.10.1" %}
-{% set estimator_version = "2.10" %}
+{% set build_version = "2.12.0" %}
+{% set estimator_version = "2.12" %}
 
 package:
   name: tensorflow{{ '' if build_type == 'cuda' else '-cpu' }}
@@ -18,7 +18,7 @@ requirements:
     - tensorboard          =={{ tensorboard }}
     - tensorflow-estimator =={{ estimator_version }}
     - keras                =={{ keras }}
-    - tensorflow-io-gcs-filesystem {{ tensorflow_io_gcs_filesystem }} [not s390x]
+#    - tensorflow-io-gcs-filesystem {{ tensorflow_io_gcs_filesystem }} [not s390x]
     - python                 {{ python }}
     - cudatoolkit            {{ cudatoolkit }} #[build_type == 'cuda']
 

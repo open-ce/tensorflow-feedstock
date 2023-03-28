@@ -1,4 +1,4 @@
-{% set build_version = "2.10.1" %}
+{% set build_version = "2.12.0" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
@@ -22,7 +22,7 @@ source:
     - 0108-P10-changes.patch                    #[ppc_arch == 'p10']
     # 02xx - GPU only patch specific to open-ce (maybe)
 {% if build_type == 'cuda' %}
-    - 0201-add-additional-cuda-rpaths.patch
+#    - 0201-add-additional-cuda-rpaths.patch
     - 0202-Remove-extra-null-terminators.patch
     - 0204-Replace-var-lock-with-tmp-lock.patch
     - 0205-Fix-the-build-on-x86-opence-container.patch    #[x86_64] 
@@ -35,7 +35,7 @@ source:
     - 0314-EIGEN-grpc-fix-s390x-target.patch             #[s390x]
     - 0315-hwloc-fix-s390x.patch                         #[s390x]
     - 0316-s390x-fixes.patch                             #[s390x]
-    - 0317-Fix-cublas-errors.patch                       #[build_type == 'cuda']
+#    - 0317-Fix-cublas-errors.patch                       #[build_type == 'cuda']
 
 build:
   number: 1
@@ -93,6 +93,7 @@ outputs:
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
         - h5py {{ h5py }}
+        - jax {{ jax }}
         - keras-preprocessing {{ keras_preprocessing }}
         - numpy {{ numpy }}
         - opt_einsum {{ opt_einsum }}
@@ -124,6 +125,7 @@ outputs:
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
         - h5py {{ h5py }}
+        - jax {{ jax }}
         - zlib {{ zlib }}
         - keras-preprocessing {{ keras_preprocessing }}
         - numpy {{ numpy }}

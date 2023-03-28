@@ -1,6 +1,6 @@
-From b15e3197ff0f1f7cfefc84cc676874cf31ec7fbd Mon Sep 17 00:00:00 2001
+From e57551396e40530c5636dad05f84e2eb14cd9e9a Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Thu, 13 Oct 2022 06:57:23 +0000
+Date: Wed, 15 Mar 2023 03:54:15 +0000
 Subject: [PATCH] Remove extra null terminators
 
 TF_CUDA_TOOLKIT_PATH will be stored as an
@@ -10,18 +10,19 @@ with the shorter install path and append null terminators to keep the
 binary file the same size. We need to use c_str() to remove the extra
 null terminators.
 ---
- .../core/platform/default/cuda_libdevice_path.cc     | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ .../tsl/platform/default/cuda_libdevice_path.cc     | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/tensorflow/core/platform/default/cuda_libdevice_path.cc b/tensorflow/core/platform/default/cuda_libdevice_path.cc
-index a8b48a76d75..198e1b6dfc9 100644
---- a/tensorflow/core/platform/default/cuda_libdevice_path.cc
-+++ b/tensorflow/core/platform/default/cuda_libdevice_path.cc
-@@ -28,7 +28,17 @@ namespace tensorflow {
- std::vector<string> CandidateCudaRoots() {
+diff --git a/tensorflow/tsl/platform/default/cuda_libdevice_path.cc b/tensorflow/tsl/platform/default/cuda_libdevice_path.cc
+index 646f9f01cb5..40a760b95d4 100644
+--- a/tensorflow/tsl/platform/default/cuda_libdevice_path.cc
++++ b/tensorflow/tsl/platform/default/cuda_libdevice_path.cc
+@@ -32,7 +32,18 @@ namespace tsl {
+ std::vector<std::string> CandidateCudaRoots() {
  #if !defined(PLATFORM_GOOGLE)
    VLOG(3) << "CUDA root = " << TF_CUDA_TOOLKIT_PATH;
--  return {TF_CUDA_TOOLKIT_PATH, string("/usr/local/cuda")};
+-  return {TF_CUDA_TOOLKIT_PATH, std::string("/usr/local/cuda")};
++  //return {TF_CUDA_TOOLKIT_PATH, std::string("/usr/local/cuda")};
 +
 +/* WML-CE Issue #11827 - TF_CUDA_TOOLKIT_PATH will be stored as an
 +absolute path during the bazel build. Conda uses build paths that are
@@ -34,7 +35,7 @@ index a8b48a76d75..198e1b6dfc9 100644
 +  return {cuda_toolkit_path.c_str()};
 +
  #else
-   return {string("/usr/local/cuda")};
+   return {std::string("/usr/local/cuda")};
  #endif
 -- 
 2.34.1
