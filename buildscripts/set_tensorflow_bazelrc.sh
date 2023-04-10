@@ -26,6 +26,11 @@ if [[ "${ARCH}" == 'ppc64le' || "${ARCH}" == 's390x' ]]; then
      XNNPACK_STATUS=false
 fi
 
+XLA=true
+if [[ "${ARCH}" == 's390x' ]]; then
+     XLA=true
+fi
+
 ## 
 ## Use centralized optimization settings
 ##
@@ -75,7 +80,7 @@ fi
 SYSTEM_LIBS_PREFIX=$PREFIX
 cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
 import %workspace%/tensorflow/python_configure.bazelrc
-build:xla --define with_xla_support=true
+build:xla --define with_xla_support="$XLA"
 build --config=xla
 ${CPU_ARCH_OPTION}
 ${CPU_ARCH_HOST_OPTION}
@@ -90,6 +95,7 @@ build --define=PREFIX="$SYSTEM_LIBS_PREFIX"
 build --define=LIBDIR="$SYSTEM_LIBS_PREFIX/lib"
 build --define=INCLUDEDIR="$SYSTEM_LIBS_PREFIX/include"
 build --define=tflite_with_xnnpack="$XNNPACK_STATUS"
+build --define=tflite_kernel_use_xnnpack="$XNNPACK_STATUS"
 build --copt="-DEIGEN_ALTIVEC_ENABLE_MMA_DYNAMIC_DISPATCH=$USE_MMA"
 build --strip=always
 build --color=yes
