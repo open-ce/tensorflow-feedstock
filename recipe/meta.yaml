@@ -35,9 +35,8 @@ source:
     - 0314-EIGEN-grpc-fix-s390x-target.patch             #[s390x]
     - 0315-hwloc-fix-s390x.patch                         #[s390x]
     - 0316-s390x-fixes.patch                             #[s390x]
-#    - 0317-Fix-cublas-errors.patch                       #[build_type == 'cuda']
-    - 0001-Disable-big-endian-not-supported-error-from-tf-runti.patch  #[s390x]
-    - 0001-Fix-s390x-type-casting.patch                  #[s390x]
+    - 0317-Disable-big-endian-not-supported-error-from-tf-runti.patch  #[s390x]
+    - 0318-Fix-s390x-type-casting.patch                  #[s390x]
 
 build:
   number: 1
