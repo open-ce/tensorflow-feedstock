@@ -20,6 +20,25 @@ source:
     - 0103-BUILD-changes-for-external-sqlite-package.patch
     - 0107-do-not-hardcode-ca-cert-location.patch
     - 0108-P10-changes.patch                    #[ppc_arch == 'p10']
+
+    # Patches back ported from  TF 2.12 to address several CVEs
+    - patches/0101-CVE-2023-25672.patch
+    - patches/0102-CVE-2023-25673_and_25674.patch
+    - patches/0103-CVE-2023-25667.patch
+    - patches/0104-CVE-2023-25671.patch
+    - patches/0105-CVE-2023-27579.patch
+    - patches/0106-CVE-2023-25669.patch
+    - patches/0107-CVE-2023-25670.patch
+    - patches/0108-CVE-2023-25663.patch
+    - patches/0109-CVE-2023-25662.patch
+    - patches/0110-CVE-2023-25660.patch
+    - patches/0111-CVE-2023-25659.patch
+    - patches/0112-CVE-2023-25666.patch
+    - patches/0113-CVE-2023-25665.patch
+    - patches/0114-CVE-2023-25675.patch
+    - patches/0115-CVE-2023-25676.patch
+    - patches/0116-CVE-2023-25801.patch
+
     # 02xx - GPU only patch specific to open-ce (maybe)
 {% if build_type == 'cuda' %}
     - 0201-add-additional-cuda-rpaths.patch
@@ -43,7 +62,7 @@ source:
     - 0317-Build-LLVM-for-s390x-target.patch             #[s390x]
 
 build:
-  number: 2
+  number: 3
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
