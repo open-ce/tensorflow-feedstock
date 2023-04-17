@@ -37,6 +37,7 @@ source:
     - 0316-s390x-fixes.patch                             #[s390x]
     - 0317-Disable-big-endian-not-supported-error-from-tf-runti.patch  #[s390x]
     - 0318-Fix-s390x-type-casting.patch                  #[s390x]
+    - 0319-Fixed-jpeg-build-on-Power.patch        #[ppc64le]
 
 build:
   number: 1
