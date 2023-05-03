@@ -1,0 +1,24 @@
+From 33b9f80d0d6af439f237a4e3a7b8b591d3a09444 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Mon, 17 Apr 2023 05:34:21 -0400
+Subject: [PATCH] Fixed jpeg build on Power
+
+---
+ third_party/jpeg/jpeg.BUILD | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/third_party/jpeg/jpeg.BUILD b/third_party/jpeg/jpeg.BUILD
+index 8b3f9f0b401..4549491ac4d 100644
+--- a/third_party/jpeg/jpeg.BUILD
++++ b/third_party/jpeg/jpeg.BUILD
+@@ -142,6 +142,7 @@ cc_library(
+     srcs = [
+         "jchuff.h",
+         "jconfig.h",
++        "jconfigint.h",
+         "jdct.h",
+         "jerror.h",
+         "jinclude.h",
+-- 
+2.31.1
+

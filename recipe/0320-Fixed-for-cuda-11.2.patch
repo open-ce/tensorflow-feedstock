@@ -1,0 +1,32 @@
+From 2be385695b126b20bf483b8d9db783bfece1bed3 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Fri, 28 Apr 2023 12:42:04 +0000
+Subject: [PATCH] Fixed for cuda 11.2
+
+---
+ tensorflow/compiler/xla/stream_executor/cuda/cuda_graph.cc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/tensorflow/compiler/xla/stream_executor/cuda/cuda_graph.cc b/tensorflow/compiler/xla/stream_executor/cuda/cuda_graph.cc
+index 45eb8220d04..f2f2083dd8b 100644
+--- a/tensorflow/compiler/xla/stream_executor/cuda/cuda_graph.cc
++++ b/tensorflow/compiler/xla/stream_executor/cuda/cuda_graph.cc
+@@ -123,6 +123,7 @@ tsl::StatusOr<OwnedCudaGraph> CaptureCudaGraph(
+ 
+   VLOG(5) << "Captured CUDA graph " << graph;
+ 
++#if CUDA_VERSION >= 12000
+   // If verbose logging is enabled print captured CUDA graph debug information.
+   if (VLOG_IS_ON(100)) {
+     if (const char* path = getenv("XLA_CUDA_GRAPH_DEBUG_DIRECTORY"); path) {
+@@ -154,6 +155,7 @@ tsl::StatusOr<OwnedCudaGraph> CaptureCudaGraph(
+     }
+   }
+ 
++#endif  // CUDA_VERSION >= 12000
+   return OwnedCudaGraph(graph);
+ }
+ 
+-- 
+2.34.1
+
