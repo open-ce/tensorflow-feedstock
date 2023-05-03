@@ -128,7 +128,7 @@ outputs:
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
         - h5py {{ h5py }}
-        - jax {{ jax }}               #[not s390x]
+        - jax {{ jax }}
         - zlib {{ zlib }}
         - keras-preprocessing {{ keras_preprocessing }}
         - numpy {{ numpy }}
