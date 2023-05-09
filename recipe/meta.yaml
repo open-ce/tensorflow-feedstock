@@ -41,7 +41,7 @@ source:
     - 0320-Fixed-for-cuda-11.2.patch              #[cudatoolkit == "11.2"]
 
 build:
-  number: 1
+  number: 2
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -96,7 +96,7 @@ outputs:
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
         - h5py {{ h5py }}
-        - jax {{ jax }}
+        - jax {{ jax }}                  #[ppc_arch != 'p10']
         - keras-preprocessing {{ keras_preprocessing }}
         - numpy {{ numpy }}
         - opt_einsum {{ opt_einsum }}
@@ -128,7 +128,7 @@ outputs:
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
         - h5py {{ h5py }}
-        - jax {{ jax }}
+        - jax {{ jax }}                #[ppc_arch != 'p10']
         - zlib {{ zlib }}
         - keras-preprocessing {{ keras_preprocessing }}
         - numpy {{ numpy }}
