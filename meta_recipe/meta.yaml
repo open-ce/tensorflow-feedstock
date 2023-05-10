@@ -18,7 +18,7 @@ requirements:
     - tensorboard          =={{ tensorboard }}
     - tensorflow-estimator =={{ estimator_version }}
     - keras                =={{ keras }}
-#    - tensorflow-io-gcs-filesystem {{ tensorflow_io_gcs_filesystem }} [not s390x]
+    - tensorflow-io-gcs-filesystem {{ tensorflow_io_gcs_filesystem }} [not s390x]
     - python                 {{ python }}
     - cudatoolkit            {{ cudatoolkit }} #[build_type == 'cuda']
 
