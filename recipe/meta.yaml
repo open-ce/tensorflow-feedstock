@@ -38,6 +38,8 @@ source:
     - patches/0114-CVE-2023-25675.patch
     - patches/0115-CVE-2023-25676.patch
     - patches/0116-CVE-2023-25801.patch
+    - patches/0117-CVE-2023-25664.patch
+    - patches/0118-CVE-2023-25661.patch
 
     # 02xx - GPU only patch specific to open-ce (maybe)
 {% if build_type == 'cuda' %}
@@ -62,7 +64,7 @@ source:
     - 0317-Build-LLVM-for-s390x-target.patch             #[s390x]
 
 build:
-  number: 3
+  number: 4
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
