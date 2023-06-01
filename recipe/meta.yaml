@@ -96,7 +96,7 @@ outputs:
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
         - h5py {{ h5py }}
-        - jax {{ jax }}=cpu*    #[build_type == 'cpu' and ppc_arch != 'p10']
+        - jax {{ jax }}=cpu*    #[build_type == 'cpu']
         - jax {{ jax }}=cuda*   #[build_type == 'cuda']
         - keras-preprocessing {{ keras_preprocessing }}
         - numpy {{ numpy }}
@@ -129,7 +129,7 @@ outputs:
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
         - h5py {{ h5py }}
-        - jax {{ jax }}=cpu*    #[build_type == 'cpu' and ppc_arch != 'p10']
+        - jax {{ jax }}=cpu*    #[build_type == 'cpu']
         - jax {{ jax }}=cuda*   #[build_type == 'cuda']
         - zlib {{ zlib }}
         - keras-preprocessing {{ keras_preprocessing }}
