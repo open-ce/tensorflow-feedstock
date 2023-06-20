@@ -1,14 +1,14 @@
-From f79aafdfd96a400df73188b405d17d60777ead3d Mon Sep 17 00:00:00 2001
+From 1f5407515474febdf82341fe89e074cd2d9cd0fd Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Mon, 6 Mar 2023 12:57:56 +0000
-Subject: [PATCH] Updated Dist info for TF estimator
+Date: Fri, 16 Jun 2023 15:33:33 +0000
+Subject: [PATCH] Updated Dist info
 
 ---
- tensorflow/tools/pip_package/setup.py | 1 -
- 1 file changed, 1 deletion(-)
+ tensorflow/tools/pip_package/setup.py | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index face32bbb9a..5aec6e1a325 100644
+index d087ae2a671..072fee45c1f 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
 @@ -92,7 +92,6 @@ REQUIRED_PACKAGES = [
@@ -19,6 +19,17 @@ index face32bbb9a..5aec6e1a325 100644
      # TODO(b/263178356): numpy 1.24 breaks TF's tests
      'numpy >= 1.22, <1.24',
      'opt_einsum >= 2.3.2',
+@@ -112,8 +111,8 @@ REQUIRED_PACKAGES = [
+     # TODO(b/266362323): wrapt==1.15.0rc0 incompatible with TF 2.12.0 RC0 (and
+     # nightly, but works with TF 2.11)
+     'wrapt >= 1.11.0, <1.15',
+-    'tensorflow-io-gcs-filesystem >= 0.23.1;platform_machine!="arm64" or ' +
+-    'platform_system!="Darwin"',
++    'tensorflow-io-gcs-filesystem >= 0.23.1;platform_machine!="arm64" and ' +
++    'platform_system!="Darwin" and platform_machine!="s390x"',
+     # grpcio does not build correctly on big-endian machines due to lack of
+     # BoringSSL support.
+     # See https://github.com/tensorflow/tensorflow/issues/17882.
 -- 
 2.34.1
 
