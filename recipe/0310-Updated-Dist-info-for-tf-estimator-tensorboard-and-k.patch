@@ -1,17 +1,25 @@
-From d07389cea64efedafa01e4058fba2dbdd45f14f5 Mon Sep 17 00:00:00 2001
+From ec6340b03938e097d56218ac811979ce6e84fdc1 Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Wed, 12 Jul 2023 08:54:42 +0000
+Date: Fri, 14 Jul 2023 05:52:52 +0000
 Subject: [PATCH] Updated dist info
 
 ---
- tensorflow/tools/pip_package/setup.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tensorflow/tools/pip_package/setup.py | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index e77e6f81449..05df78adc9a 100644
+index e77e6f81449..8d7d65cc44f 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
-@@ -99,8 +99,8 @@ REQUIRED_PACKAGES = [
+@@ -89,7 +89,6 @@ REQUIRED_PACKAGES = [
+     'gast >= 0.2.1, <= 0.4.0',
+     'google_pasta >= 0.1.1',
+     'h5py >= 2.9.0',
+-    'libclang >= 13.0.0',
+     'numpy >= 1.22, <= 1.24.3',
+     'opt_einsum >= 2.3.2',
+     'packaging',
+@@ -99,8 +98,8 @@ REQUIRED_PACKAGES = [
      'termcolor >= 1.1.0',
      'typing_extensions>=3.6.6,<4.6.0',
      'wrapt >= 1.11.0',
