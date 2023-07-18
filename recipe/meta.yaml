@@ -40,6 +40,8 @@ source:
     - 0319-Fixed-jpeg-build-on-Power.patch        #[ppc64le]
     - 0320-Fixed-for-cuda-11.2.patch              #[cudatoolkit == "11.2"]
     - 0321-Update-cudnn-frontend-for-cuda-12.patch  #[cudatoolkit == "12.2"]
+    - 0322-Fix-cpuinfo.patch
+
 build:
   number: 1
   entry_points:
