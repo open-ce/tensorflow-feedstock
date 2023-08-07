@@ -63,7 +63,7 @@ fi
 bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build \
     --local_cpu_resources=HOST_CPUS*0.50 \
     --local_ram_resources=HOST_RAM*0.50 \
-    --jobs=HOST_CPUS*0.5 \
+    --jobs=32 \
     --config=opt \
     --config=numa \
     --curses=no \
