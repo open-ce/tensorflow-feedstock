@@ -38,9 +38,9 @@ source:
     - 0317-Disable-big-endian-not-supported-error-from-tf-runti.patch  #[s390x]
     - 0318-Fix-s390x-type-casting.patch                  #[s390x]
     - 0319-Fixed-jpeg-build-on-Power.patch        #[ppc64le]
-    - 0320-Fixed-for-cuda-11.2.patch              #[cudatoolkit == "11.2"]
     - 0321-Update-cudnn-frontend-for-cuda-12.patch  #[cudatoolkit == "12.2"]
     - 0322-Fix-cpuinfo.patch
+    - 0323-Fixed-cuda-11.8-build.patch              #[cudatoolkit == '11.8']
 
 build:
   number: 1
