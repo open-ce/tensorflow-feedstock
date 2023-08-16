@@ -1,20 +1,17 @@
-From 46843484c96d61eb8600f9d5dd52118fd262bb10 Mon Sep 17 00:00:00 2001
-From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Thu, 21 Jul 2022 14:07:55 +0000
-Subject: [PATCH] s390x fixes
+From b9be8d10fb71a3974d6cde8581c469e95af9cf7c Mon Sep 17 00:00:00 2001
+From: Deepali Chourasia <deepch23@in.ibm.com>
+Date: Mon, 14 Aug 2023 10:29:58 +0000
+Subject: [PATCH] S390x fixes
 
 ---
- tensorflow/core/api_def/base_api/api_def_Bitcast.pbtxt    | 4 ++--
- .../core/grappler/optimizers/arithmetic_optimizer_test.cc | 4 ++--
- tensorflow/python/eager/backprop_test.py                  | 4 ++--
- tensorflow/python/framework/tensor_util_test.py           | 2 +-
- tensorflow/python/tfcompile_wrapper.cc                    | 4 +++-
- tensorflow/stream_executor/tpu/c_api_conversions.cc       | 8 ++++----
- tensorflow/stream_executor/tpu/c_api_conversions.h        | 4 ++--
- 7 files changed, 16 insertions(+), 14 deletions(-)
+ tensorflow/core/api_def/base_api/api_def_Bitcast.pbtxt       | 4 ++--
+ .../core/grappler/optimizers/arithmetic_optimizer_test.cc    | 4 ++--
+ tensorflow/python/eager/backprop_test.py                     | 4 ++--
+ tensorflow/python/tfcompile_wrapper.cc                       | 5 +++--
+ 4 files changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/tensorflow/core/api_def/base_api/api_def_Bitcast.pbtxt b/tensorflow/core/api_def/base_api/api_def_Bitcast.pbtxt
-index 4a606566eb5..408aba6d99b 100644
+index 23c29c04683..e24f77d38c8 100644
 --- a/tensorflow/core/api_def/base_api/api_def_Bitcast.pbtxt
 +++ b/tensorflow/core/api_def/base_api/api_def_Bitcast.pbtxt
 @@ -47,8 +47,8 @@ tf.Tensor([0. 1. 1.], shape=(3,), dtype=float32)
@@ -27,12 +24,12 @@ index 4a606566eb5..408aba6d99b 100644
 +     [ 63 128   0   0]], shape=(3, 4), dtype=uint8)
  
  *NOTE*: Bitcast is implemented as a low-level cast, so machines with different
- endian orderings will give different results.
+ endian orderings will give different results. A copy from input buffer to output
 diff --git a/tensorflow/core/grappler/optimizers/arithmetic_optimizer_test.cc b/tensorflow/core/grappler/optimizers/arithmetic_optimizer_test.cc
-index a3d8d226504..68711c74bb9 100644
+index bd10921cb87..07487a5f2b7 100644
 --- a/tensorflow/core/grappler/optimizers/arithmetic_optimizer_test.cc
 +++ b/tensorflow/core/grappler/optimizers/arithmetic_optimizer_test.cc
-@@ -715,7 +715,7 @@ TEST_F(ArithmeticOptimizerTest, TrivialSumsSimple) {
+@@ -717,7 +717,7 @@ TEST_F(ArithmeticOptimizerTest, TrivialSumsSimple) {
    ASSERT_EQ(new_const->input_size(), 1);
    EXPECT_EQ(new_const->input(0), "^x");
    EXPECT_EQ(new_const->attr().at("value").tensor().tensor_content(),
@@ -41,7 +38,7 @@ index a3d8d226504..68711c74bb9 100644
  
    const NodeDef* new_mul = node_map.GetNode(optimized_mul_name);
    ASSERT_NE(new_mul, nullptr);
-@@ -762,7 +762,7 @@ TEST_F(ArithmeticOptimizerTest, TrivialSumsSimpleWithControlDep) {
+@@ -764,7 +764,7 @@ TEST_F(ArithmeticOptimizerTest, TrivialSumsSimpleWithControlDep) {
    ASSERT_EQ(new_const->input_size(), 1);
    EXPECT_EQ(new_const->input(0), "^x");
    EXPECT_EQ(new_const->attr().at("value").tensor().tensor_content(),
@@ -51,10 +48,10 @@ index a3d8d226504..68711c74bb9 100644
    const NodeDef* new_mul = node_map.GetNode(optimized_mul_name);
    ASSERT_NE(new_mul, nullptr);
 diff --git a/tensorflow/python/eager/backprop_test.py b/tensorflow/python/eager/backprop_test.py
-index 0db892e3fff..62273b50c80 100644
+index 230da35ad08..9f33ab8ccdf 100644
 --- a/tensorflow/python/eager/backprop_test.py
 +++ b/tensorflow/python/eager/backprop_test.py
-@@ -1851,7 +1851,7 @@ class JacobianTest(test.TestCase):
+@@ -1869,7 +1869,7 @@ class JacobianTest(test.TestCase):
  
      theoretical, numerical = gradient_checker_v2.compute_gradient(
          def_function.function(_inner), [array_ops.ones([10, 4, 4, 1])])
@@ -63,7 +60,7 @@ index 0db892e3fff..62273b50c80 100644
  
      @def_function.function
      def _outer():
-@@ -1862,7 +1862,7 @@ class JacobianTest(test.TestCase):
+@@ -1880,7 +1880,7 @@ class JacobianTest(test.TestCase):
        return tape.gradient(y, x)
  
      self.assertAllClose(array_ops.reshape(numerical, [-1]),
@@ -72,32 +69,20 @@ index 0db892e3fff..62273b50c80 100644
  
    @test_util.run_in_graph_and_eager_modes
    def test_indexed_slices(self):
-diff --git a/tensorflow/python/framework/tensor_util_test.py b/tensorflow/python/framework/tensor_util_test.py
-index edb79a8874d..b196bcb1b3c 100644
---- a/tensorflow/python/framework/tensor_util_test.py
-+++ b/tensorflow/python/framework/tensor_util_test.py
-@@ -229,7 +229,7 @@ class TensorUtilTest(test.TestCase, parameterized.TestCase):
-         """
-       dtype: DT_HALF
-       tensor_shape { dim { size: 2 } }
--      tensor_content: "\000I\000M"
-+      tensor_content: "I\000M\000"
-       """, t)
- 
-     a = tensor_util.MakeNdarray(t)
 diff --git a/tensorflow/python/tfcompile_wrapper.cc b/tensorflow/python/tfcompile_wrapper.cc
-index c8818309919..b02ba0036e1 100644
+index 71e302f6321..3b3ac74910e 100644
 --- a/tensorflow/python/tfcompile_wrapper.cc
 +++ b/tensorflow/python/tfcompile_wrapper.cc
-@@ -15,6 +15,7 @@ limitations under the License.
+@@ -14,7 +14,7 @@ limitations under the License.
+ ==============================================================================*/
  
  #include <string>
- 
+-
 +#include "llvm/Support/Host.h"
- #include "pybind11/cast.h"
- #include "pybind11/pybind11.h"
- #include "pybind11/pytypes.h"
-@@ -45,7 +46,8 @@ PYBIND11_MODULE(_pywrap_tfcompile, m) {
+ #include "pybind11/cast.h"  // from @pybind11
+ #include "pybind11/pybind11.h"  // from @pybind11
+ #include "pybind11/pytypes.h"  // from @pybind11
+@@ -45,7 +45,8 @@ PYBIND11_MODULE(_pywrap_tfcompile, m) {
          flags.graph = std::move(graph);
          flags.config = std::move(config);
          flags.target_triple = std::move(target_triple);
@@ -107,47 +92,6 @@ index c8818309919..b02ba0036e1 100644
          flags.target_features = std::move(target_features);
          flags.entry_point = std::move(entry_point);
          flags.cpp_class = std::move(cpp_class);
-diff --git a/tensorflow/stream_executor/tpu/c_api_conversions.cc b/tensorflow/stream_executor/tpu/c_api_conversions.cc
-index 24c2565e76e..68c5a128745 100644
---- a/tensorflow/stream_executor/tpu/c_api_conversions.cc
-+++ b/tensorflow/stream_executor/tpu/c_api_conversions.cc
-@@ -171,8 +171,8 @@ static void CreateVectorBase(const absl::Span<Src> src, DstList* dst) {
- static void CreateVector(const absl::Span<const int64_t> src, Int64List* dst) {
-   return CreateVectorBase<const int64_t, int64_t, Int64List>(src, dst);
- }
--void CreateVector(const absl::Span<const float> src, FloatList* dst) {
--  return CreateVectorBase<const float, float, FloatList>(src, dst);
-+void CreateVector(const absl::Span<const double> src, FloatList* dst) {
-+  return CreateVectorBase<const double, double, FloatList>(src, dst);
- }
- static void CreateVector(const absl::Span<const bool> src, BoolList* dst) {
-   return CreateVectorBase<const bool, bool, BoolList>(src, dst);
-@@ -210,8 +210,8 @@ static absl::Span<const int64_t> MakeSpan(const Int64List& src_list) {
-   return MakeSpanBase<int64_t, int64_t, Int64List>(src_list);
- }
- 
--absl::Span<const float> MakeSpan(const FloatList& src_list) {
--  return MakeSpanBase<float, float, FloatList>(src_list);
-+absl::Span<const double> MakeSpan(const FloatList& src_list) {
-+  return MakeSpanBase<double, double, FloatList>(src_list);
- }
- static absl::Span<const bool> MakeSpan(const BoolList& src_list) {
-   return MakeSpanBase<bool, bool, BoolList>(src_list);
-diff --git a/tensorflow/stream_executor/tpu/c_api_conversions.h b/tensorflow/stream_executor/tpu/c_api_conversions.h
-index 0c4fed1771c..9ae98a70e57 100644
---- a/tensorflow/stream_executor/tpu/c_api_conversions.h
-+++ b/tensorflow/stream_executor/tpu/c_api_conversions.h
-@@ -35,8 +35,8 @@ limitations under the License.
- // XLA/StreamExecutor data structures.
- namespace ApiConverter {
- 
--absl::Span<const float> MakeSpan(const FloatList& src_list);
--void CreateVector(const absl::Span<const float> src, FloatList* dst);
-+absl::Span<const double> MakeSpan(const FloatList& src_list);
-+void CreateVector(const absl::Span<const double> src, FloatList* dst);
- void Destroy(FloatList* float_list);
- 
- // se::DeviceMemoryBase
 -- 
-2.34.1
+2.40.1
 

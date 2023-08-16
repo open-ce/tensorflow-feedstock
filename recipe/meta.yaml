@@ -39,9 +39,9 @@ source:
     - 0318-Fix-s390x-type-casting.patch                  #[s390x]
     - 0319-Fixed-jpeg-build-on-Power.patch        #[ppc64le]
     - 0321-Update-cudnn-frontend-for-cuda-12.patch  #[cudatoolkit == "12.2"]
-    - 0322-Fix-cpuinfo.patch
+    - 0322-Fix-cpuinfo.patch                        #[ppc64le or x86_64]
     - 0323-Fixed-cuda-11.8-build.patch              #[cudatoolkit == '11.8']
-
+    - 0324-Boringssl-patched-for-s390x.patch        #[s390x]
 build:
   number: 1
   entry_points:
