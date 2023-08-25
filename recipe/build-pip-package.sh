@@ -60,10 +60,23 @@ if [[ $ARCH == "x86_64" ]]; then
   cp $PREFIX/lib/python${PY_VER}/_sysconfigdata__linux_x86_64-linux-gnu.py $PREFIX/lib/python${PY_VER}/_sysconfigdata_x86_64_conda_cos7_linux_gnu.py
 fi
 
+BAZEL_JOBS="HOST_CPUS*0.5"
+if [ -z ${LIMIT_BUILD_RESOURCES+x} ];
+then
+    echo "ERROR: LIMIT_BUILD_RESOURCES is unset. Please set it to 1 if the build system is low in resources, else set it to 0"
+    exit 1
+else
+    echo "LIMIT_BUILD_RESOURCES is set to $LIMIT_BUILD_RESOURCES"
+    if [[ ${LIMIT_BUILD_RESOURCES} == true || ${LIMIT_BUILD_RESOURCES} == 1 ]];
+    then
+        BAZEL_JOBS="32"
+    fi
+fi
+
 bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build \
     --local_cpu_resources=HOST_CPUS*0.50 \
     --local_ram_resources=HOST_RAM*0.50 \
-    --jobs=32 \
+    --jobs=$BAZEL_JOBS   \
     --config=opt \
     --config=numa \
     --curses=no \

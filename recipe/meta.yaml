@@ -1,4 +1,4 @@
-{% set build_version = "2.12.0" %}
+{% set build_version = "2.13.0" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
@@ -30,18 +30,19 @@ source:
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0300-fix-constant_op_test.patch
-    - 0305-Updated-protobuf-version.patch                #[protobuf == "3.19.*"]
+    #- 0305-Updated-protobuf-version.patch                #[protobuf == "3.19.*"]
     - 0310-Updated-Dist-info-for-tf-estimator-tensorboard-and-k.patch
     - 0314-EIGEN-grpc-fix-s390x-target.patch             #[s390x]
     - 0315-hwloc-fix-s390x.patch                         #[s390x]
     - 0316-s390x-fixes.patch                             #[s390x]
     - 0317-Disable-big-endian-not-supported-error-from-tf-runti.patch  #[s390x]
     - 0318-Fix-s390x-type-casting.patch                  #[s390x]
-    - 0319-Fixed-jpeg-build-on-Power.patch        #[ppc64le]
-    - 0320-Fixed-for-cuda-11.2.patch              #[cudatoolkit == "11.2"]
+    - 0321-Update-cudnn-frontend-for-cuda-12.patch  #[build_type == "cuda"]
+    - 0322-Fix-cpuinfo.patch                        #[ppc64le or x86_64]
+    - 0324-Boringssl-patched-for-s390x.patch        #[s390x]
 
 build:
-  number: 4
+  number: 1
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -61,6 +62,7 @@ outputs:
       script_env:
         - CUDA_HOME               #[build_type == 'cuda']
         - GCC_11_HOME             #[ppc_arch == 'p10']
+        - LIMIT_BUILD_RESOURCES
       ignore_run_exports:
         - sqlite
 
@@ -96,8 +98,6 @@ outputs:
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
         - h5py {{ h5py }}
-        - jax {{ jax }}=cpu*    #[build_type == 'cpu']
-        - jax {{ jax }}=cuda*   #[build_type == 'cuda']
         - keras-preprocessing {{ keras_preprocessing }}
         - numpy {{ numpy }}
         - opt_einsum {{ opt_einsum }}
@@ -129,8 +129,6 @@ outputs:
         - gast {{ gast }}
         - google-pasta {{ google_pasta }}
         - h5py {{ h5py }}
-        - jax {{ jax }}=cpu*    #[build_type == 'cpu']
-        - jax {{ jax }}=cuda*   #[build_type == 'cuda']
         - zlib {{ zlib }}
         - keras-preprocessing {{ keras_preprocessing }}
         - numpy {{ numpy }}
