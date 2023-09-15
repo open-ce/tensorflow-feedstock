@@ -1,0 +1,26 @@
+From e0e154db7c249124b7571e473d17b9570413d6b3 Mon Sep 17 00:00:00 2001
+From: Aman-Surkar <aman_surkar@persistent.com>
+Date: Thu, 14 Sep 2023 12:27:41 +0000
+Subject: [PATCH] Added fix for a vuln in printing empty tensors
+
+---
+ tensorflow/core/framework/tensor.cc | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/tensorflow/core/framework/tensor.cc b/tensorflow/core/framework/tensor.cc
+index ca3930e85ca..7a6007d69c3 100644
+--- a/tensorflow/core/framework/tensor.cc
++++ b/tensorflow/core/framework/tensor.cc
+@@ -1224,6 +1224,9 @@ template <>
+ string SummarizeArray<bool>(int64_t limit, int64_t num_elts,
+                             const TensorShape& tensor_shape, const char* data,
+                             const bool print_v2) {
++  if (data == nullptr) {
++    return strings::StrCat("");  // we already print type and shape
++  }
+   // We first convert all chars to be 0/1 to not get InvalidEnumValue sanitizer
+   // error
+   auto mutable_data = std::unique_ptr<char[]>(new char[num_elts]);
+-- 
+2.40.1
+
