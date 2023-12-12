@@ -1,38 +1,24 @@
-From bdc8e1b77be2300e4452b2d5dc57ddd1aadf38b0 Mon Sep 17 00:00:00 2001
-From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Wed, 23 Aug 2023 05:52:41 +0000
-Subject: [PATCH] Updated Dist Info of TF
+From 22955a8d8a2316da3c7cc884c332e48ad11dea27 Mon Sep 17 00:00:00 2001
+From: ArchanaShinde1 <archana.shinde2504@gmail.com>
+Date: Thu, 7 Dec 2023 13:29:54 +0000
+Subject: [PATCH] Update
 
 ---
- tensorflow/tools/pip_package/setup.py | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ tensorflow/tools/pip_package/setup.py | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index e77e6f81449..7c6a133d168 100644
+index 2475ee5d7ce..c39de99ed3e 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
-@@ -89,7 +89,6 @@ REQUIRED_PACKAGES = [
-     'gast >= 0.2.1, <= 0.4.0',
+@@ -88,7 +88,6 @@ REQUIRED_PACKAGES = [
+     'gast >=0.2.1,!=0.5.0,!=0.5.1,!=0.5.2',
      'google_pasta >= 0.1.1',
      'h5py >= 2.9.0',
 -    'libclang >= 13.0.0',
-     'numpy >= 1.22, <= 1.24.3',
+     'ml_dtypes == 0.2.0',
+     'numpy >= 1.23.5',
      'opt_einsum >= 2.3.2',
-     'packaging',
-@@ -97,10 +96,10 @@ REQUIRED_PACKAGES = [
-     'setuptools',
-     'six >= 1.12.0',
-     'termcolor >= 1.1.0',
--    'typing_extensions>=3.6.6,<4.6.0',
-+    'typing_extensions>=3.6.6',
-     'wrapt >= 1.11.0',
--    'tensorflow-io-gcs-filesystem >= 0.23.1;platform_machine!="arm64" or ' +
--    'platform_system!="Darwin"',
-+    'tensorflow-io-gcs-filesystem >= 0.23.1;platform_machine!="arm64" and ' +
-+    'platform_system!="Darwin" and platform_machine!="s390x"',
-     # grpcio does not build correctly on big-endian machines due to lack of
-     # BoringSSL support.
-     # See https://github.com/tensorflow/tensorflow/issues/17882.
 -- 
 2.40.1
 
