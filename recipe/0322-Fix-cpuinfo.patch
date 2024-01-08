@@ -1,7 +1,7 @@
-From ba2c5f49780a4d7c0094d864aafafff2eaf8c2a1 Mon Sep 17 00:00:00 2001
-From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Tue, 18 Jul 2023 12:12:18 +0000
-Subject: [PATCH] Fix cpuinfo and downgrade boringssl
+From d4be7902ea4759bdbba613da6c2c5c243197b3a8 Mon Sep 17 00:00:00 2001
+From: ArchanaShinde1 <archana.shinde2504@gmail.com>
+Date: Mon, 11 Dec 2023 12:38:27 +0000
+Subject: [PATCH] Update1
 
 ---
  tensorflow/workspace2.bzl                  |  7 +++--
@@ -10,18 +10,18 @@ Subject: [PATCH] Fix cpuinfo and downgrade boringssl
  create mode 100644 third_party/0001-Support-for-ppc64le.patch
 
 diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
-index da9295adaba..527794eab57 100644
+index 7e9faa558a4..be782cae40e 100644
 --- a/tensorflow/workspace2.bzl
 +++ b/tensorflow/workspace2.bzl
-@@ -166,6 +166,7 @@ def _tf_repositories():
+@@ -170,6 +170,7 @@ def _tf_repositories():
      tf_http_archive(
          name = "cpuinfo",
-         strip_prefix = "cpuinfo-3dc310302210c1891ffcfb12ae67b11a3ad3a150",
+         strip_prefix = "cpuinfo-87d8234510367db49a65535021af5e1838a65ac2",
 +        patch_file = ["//third_party:0001-Support-for-ppc64le.patch"],
-         sha256 = "ba668f9f8ea5b4890309b7db1ed2e152aaaf98af6f9a8a63dbe1b75c04e52cb9",
-         urls = tf_mirror_urls("https://github.com/pytorch/cpuinfo/archive/3dc310302210c1891ffcfb12ae67b11a3ad3a150.zip"),
+         sha256 = "609fc42c47482c1fc125dccac65e843f640e792540162581c4b7eb6ff81c826a",
+         urls = tf_mirror_urls("https://github.com/pytorch/cpuinfo/archive/87d8234510367db49a65535021af5e1838a65ac2.zip"),
      )
-@@ -564,10 +565,10 @@ def _tf_repositories():
+@@ -571,10 +572,10 @@ def _tf_repositories():
  
      tf_http_archive(
          name = "boringssl",
@@ -37,21 +37,21 @@ index da9295adaba..527794eab57 100644
      # Note: if you update this, you have to update libpng too. See cl/437813808
 diff --git a/third_party/0001-Support-for-ppc64le.patch b/third_party/0001-Support-for-ppc64le.patch
 new file mode 100644
-index 00000000000..65c914ea873
+index 00000000000..129f24b9c35
 --- /dev/null
 +++ b/third_party/0001-Support-for-ppc64le.patch
 @@ -0,0 +1,36 @@
-+From def97b3f85d390edce6d1b8cfa2ab1f49c1f66a6 Mon Sep 17 00:00:00 2001
-+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-+Date: Tue, 18 Jul 2023 12:11:01 +0000
-+Subject: [PATCH] Port on ppc64le
++From 12501fe25ad9bbb2a99f5f65201fcc9262192b98 Mon Sep 17 00:00:00 2001
++From: ArchanaShinde1 <archana.shinde2504@gmail.com>
++Date: Mon, 11 Dec 2023 11:06:45 +0000
++Subject: [PATCH] Support for ppc64le
 +
 +---
 + BUILD.bazel | 6 ++++++
 + 1 file changed, 6 insertions(+)
 +
 +diff --git a/BUILD.bazel b/BUILD.bazel
-+index 0c92064..d30f075 100644
++index 231d18f..e7134e0 100644
 +--- a/BUILD.bazel
 ++++ b/BUILD.bazel
 +@@ -113,6 +113,7 @@ cc_library(
@@ -60,9 +60,9 @@ index 00000000000..65c914ea873
 +         ":linux_s390x": COMMON_SRCS + LINUX_SRCS,
 ++        ":linux_ppc64le": COMMON_SRCS + LINUX_SRCS,
 +         ":macos_x86_64": COMMON_SRCS + X86_SRCS + MACH_SRCS + MACH_X86_SRCS,
++         ":macos_x86_64_legacy": COMMON_SRCS + X86_SRCS + MACH_SRCS + MACH_X86_SRCS,
 +         ":macos_arm64": COMMON_SRCS + MACH_SRCS + MACH_ARM_SRCS,
-+         ":windows_x86_64": COMMON_SRCS + X86_SRCS + WINDOWS_X86_SRCS,
-+@@ -239,6 +240,11 @@ config_setting(
++@@ -241,6 +242,11 @@ config_setting(
 +     values = {"cpu": "s390x"},
 + )
 + 
@@ -72,7 +72,7 @@ index 00000000000..65c914ea873
 ++)
 ++
 + config_setting(
-+     name = "macos_x86_64",
++     name = "macos_x86_64_legacy",
 +     values = {
 +-- 
 +2.40.1

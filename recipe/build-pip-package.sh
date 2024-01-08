@@ -19,6 +19,8 @@ set -vex
 
 source open-ce-common-utils.sh
 
+export TF_PYTHON_VERSION=$PY_VER
+  
 if [[ $ppc_arch == "p10" ]]
 then 
     if [[ -z "${GCC_11_HOME}" ]];
@@ -78,8 +80,6 @@ bazel --bazelrc=$SRC_DIR/tensorflow/tensorflow.bazelrc build \
     --local_ram_resources=HOST_RAM*0.50 \
     --jobs=$BAZEL_JOBS   \
     --config=opt \
-    --config=numa \
-    --curses=no \
     //tensorflow/tools/pip_package:build_pip_package
 
 # build a whl file
