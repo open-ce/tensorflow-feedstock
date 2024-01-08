@@ -23,7 +23,6 @@ source:
     # 02xx - GPU only patch specific to open-ce (maybe)
 {% if build_type == 'cuda' %}
 #    - 0201-add-additional-cuda-rpaths.patch
-#    - 0202-Remove-extra-null-terminators.patch
     - 0204-Replace-var-lock-with-tmp-lock.patch
     - 0205-Fix-the-build-on-x86-opence-container.patch    #[x86_64] 
 {% endif %}
