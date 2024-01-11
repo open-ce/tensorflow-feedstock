@@ -1,6 +1,6 @@
 {% set build_version = "2.14.1" %}
 
-##This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
+#This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
   name: tensorflow-base
   version: {{ build_version }}
