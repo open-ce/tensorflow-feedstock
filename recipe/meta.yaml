@@ -20,6 +20,7 @@ source:
     - 0103-BUILD-changes-for-external-sqlite-package.patch
     - 0107-do-not-hardcode-ca-cert-location.patch
     - 0108-P10-changes.patch                    #[ppc_arch == 'p10']
+    - 0109-Changes-of-flatbuffer-v23.1.21.patch
     # 02xx - GPU only patch specific to open-ce (maybe)
 {% if build_type == 'cuda' %}
 #    - 0201-add-additional-cuda-rpaths.patch
