@@ -1,7 +1,7 @@
-From b9be8d10fb71a3974d6cde8581c469e95af9cf7c Mon Sep 17 00:00:00 2001
-From: Deepali Chourasia <deepch23@in.ibm.com>
-Date: Mon, 14 Aug 2023 10:29:58 +0000
-Subject: [PATCH] S390x fixes
+From ceb1dd9a97bcaa3ea53d51f6a1ca10c03c53776b Mon Sep 17 00:00:00 2001
+From: Aman-Surkar <aman_surkar@persistent.com>
+Date: Wed, 10 Jan 2024 08:49:28 +0000
+Subject: [PATCH] s390x-fixes
 
 ---
  tensorflow/core/api_def/base_api/api_def_Bitcast.pbtxt       | 4 ++--
@@ -48,7 +48,7 @@ index bd10921cb87..07487a5f2b7 100644
    const NodeDef* new_mul = node_map.GetNode(optimized_mul_name);
    ASSERT_NE(new_mul, nullptr);
 diff --git a/tensorflow/python/eager/backprop_test.py b/tensorflow/python/eager/backprop_test.py
-index 230da35ad08..9f33ab8ccdf 100644
+index 883ab62df25..58358d23121 100644
 --- a/tensorflow/python/eager/backprop_test.py
 +++ b/tensorflow/python/eager/backprop_test.py
 @@ -1869,7 +1869,7 @@ class JacobianTest(test.TestCase):
@@ -70,7 +70,7 @@ index 230da35ad08..9f33ab8ccdf 100644
    @test_util.run_in_graph_and_eager_modes
    def test_indexed_slices(self):
 diff --git a/tensorflow/python/tfcompile_wrapper.cc b/tensorflow/python/tfcompile_wrapper.cc
-index 71e302f6321..3b3ac74910e 100644
+index df221eb7e72..b3c530e9523 100644
 --- a/tensorflow/python/tfcompile_wrapper.cc
 +++ b/tensorflow/python/tfcompile_wrapper.cc
 @@ -14,7 +14,7 @@ limitations under the License.
@@ -79,19 +79,19 @@ index 71e302f6321..3b3ac74910e 100644
  #include <string>
 -
 +#include "llvm/Support/Host.h"
- #include "pybind11/cast.h"  // from @pybind11
- #include "pybind11/pybind11.h"  // from @pybind11
- #include "pybind11/pytypes.h"  // from @pybind11
-@@ -45,7 +45,8 @@ PYBIND11_MODULE(_pywrap_tfcompile, m) {
-         flags.graph = std::move(graph);
-         flags.config = std::move(config);
+ #ifdef __s390x__
+ #include "llvm/TargetParser/Host.h"
+ #endif
+@@ -56,7 +56,8 @@ PYBIND11_MODULE(_pywrap_tfcompile, m) {
+                                          : target_cpu);
+ #else
          flags.target_triple = std::move(target_triple);
 -        flags.target_cpu = std::move(target_cpu);
 +        flags.target_cpu = std::move(target_cpu.empty() ?
 +                       llvm::sys::getHostCPUName().str() : target_cpu);
+ #endif
          flags.target_features = std::move(target_features);
          flags.entry_point = std::move(entry_point);
-         flags.cpp_class = std::move(cpp_class);
 -- 
-2.40.1
+2.34.1
 

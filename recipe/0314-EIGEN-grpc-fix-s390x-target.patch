@@ -1,17 +1,17 @@
-From 873fe9b4d3c112616fd276b3a002396f02f83d63 Mon Sep 17 00:00:00 2001
-From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Tue, 4 Apr 2023 11:33:40 +0000
-Subject: [PATCH] GRPC fix for s390x
+From 3684ed466a5aeb5862a1d512d545d19938bce1a1 Mon Sep 17 00:00:00 2001
+From: Aman-Surkar <aman_surkar@persistent.com>
+Date: Wed, 10 Jan 2024 08:13:09 +0000
+Subject: [PATCH] EIGEN-grpc-fix-s390x-target
 
 ---
  tensorflow/distribute/experimental/rpc/kernels/BUILD | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/tensorflow/distribute/experimental/rpc/kernels/BUILD b/tensorflow/distribute/experimental/rpc/kernels/BUILD
-index f8757df41e0..104784e35aa 100644
+index f9a525364c5..7bd5ef305de 100644
 --- a/tensorflow/distribute/experimental/rpc/kernels/BUILD
 +++ b/tensorflow/distribute/experimental/rpc/kernels/BUILD
-@@ -19,7 +19,7 @@ cc_library(
+@@ -20,7 +20,7 @@ cc_library(
          "//tensorflow/compiler/xla/stream_executor/platform",
          "//tensorflow/distribute/experimental/rpc/proto:tf_rpc_service_cc_grpc_proto",
          "//tensorflow/distribute/experimental/rpc/proto:tf_rpc_service_proto_cc",
@@ -20,7 +20,7 @@ index f8757df41e0..104784e35aa 100644
      ],
      alwayslink = 1,
  )
-@@ -28,7 +28,7 @@ cc_library(
+@@ -29,7 +29,7 @@ cc_library(
      name = "grpc_credentials",
      hdrs = ["grpc_credentials.h"],
      deps = [
@@ -29,15 +29,15 @@ index f8757df41e0..104784e35aa 100644
      ] + grpc_credentials_dependency(),
  )
  
-@@ -50,7 +50,7 @@ tf_kernel_library(
+@@ -63,7 +63,7 @@ tf_kernel_library(
          "//tensorflow/core/distributed_runtime/rpc:grpc_util",
          "//tensorflow/distribute/experimental/rpc/proto:tf_rpc_service_cc_grpc_proto",
          "//tensorflow/distribute/experimental/rpc/proto:tf_rpc_service_proto_cc",
 -        "@com_github_grpc_grpc//:grpc++",
 +        "//tensorflow:grpc++",
+         "@com_google_absl//absl/status",
          "@com_google_absl//absl/strings",
          "@com_google_absl//absl/strings:str_format",
-     ],
 -- 
 2.34.1
 

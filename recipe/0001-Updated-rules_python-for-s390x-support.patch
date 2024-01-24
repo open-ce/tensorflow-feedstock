@@ -1,0 +1,29 @@
+From a38d255bb17afd61b533a686ef02d202a9b9565f Mon Sep 17 00:00:00 2001
+From: Aman-Surkar <aman_surkar@persistent.com>
+Date: Fri, 12 Jan 2024 10:34:08 +0000
+Subject: [PATCH] Updated-rules_python-for-s390x-support
+
+---
+ WORKSPACE | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/WORKSPACE b/WORKSPACE
+index fb3af8a2bea..07208801b1c 100644
+--- a/WORKSPACE
++++ b/WORKSPACE
+@@ -14,9 +14,9 @@ http_archive(
+ 
+ http_archive(
+     name = "rules_python",
+-    sha256 = "84aec9e21cc56fbc7f1335035a71c850d1b9b5cc6ff497306f84cced9a769841",
+-    strip_prefix = "rules_python-0.23.1",
+-    url = "https://github.com/bazelbuild/rules_python/releases/download/0.23.1/rules_python-0.23.1.tar.gz",
++    sha256 = "5868e73107a8e85d8f323806e60cad7283f34b32163ea6ff1020cf27abef6036",
++    strip_prefix = "rules_python-0.25.0",
++    url = "https://github.com/bazelbuild/rules_python/releases/download/0.25.0/rules_python-0.25.0.tar.gz",
+ )
+ 
+ load("@rules_python//python:repositories.bzl", "python_register_toolchains")
+-- 
+2.34.1
+

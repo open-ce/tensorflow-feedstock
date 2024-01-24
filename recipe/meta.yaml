@@ -40,6 +40,7 @@ source:
     - 0321-Update-cudnn-frontend-for-cuda-12.patch  #[build_type == "cuda"]
     - 0322-Fix-cpuinfo.patch                        #[ppc64le or x86_64]
     - 0324-Boringssl-patched-for-s390x.patch        #[s390x]
+    - 0001-Updated-rules_python-for-s390x-support.patch #[s390x]
 
 build:
   number: 1
