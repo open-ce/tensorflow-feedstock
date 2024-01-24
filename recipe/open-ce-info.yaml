@@ -275,8 +275,8 @@ third_party_packages:
 - name: rules_python
   license: Apache-2
   url:
-    - https://github.com/bazelbuild/rules_python/releases/download/0.28.0/rules_python-0.28.0.tar.gz
-  version: 0.28.0
+    - https://github.com/bazelbuild/rules_python/releases/download/0.25.0/rules_python-0.25.0.tar.gz
+  version: 0.25.0
 - name: rules_android
   license: Apache-2
   url:
