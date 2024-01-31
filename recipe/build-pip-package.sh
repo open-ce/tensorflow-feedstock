@@ -21,14 +21,18 @@ source open-ce-common-utils.sh
 
 if [[ $ppc_arch == "p10" ]]
 then 
-    if [[ -z "${GCC_11_HOME}" ]];
+    if [[ -z "${GCC_HOME}" ]];
     then
-	echo "Please set GCC_11_HOME to the install path of gcc-toolset-11"
+	echo "Please set GCC_HOME to the install path of gcc-toolset-11"
         exit 1
     else
-        export PATH=$GCC_11_HOME/bin:$PATH
-        export CC=$GCC_11_HOME/bin/gcc
-        export CXX=$GCC_11_HOME/bin/g++
+        export PATH=$GCC_HOME/bin:$PATH
+        export CC=$GCC_HOME/bin/gcc
+        export CXX=$GCC_HOME/bin/g++
+        export CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=[1-9]/-D_FORTIFY_SOURCE=0}
+        export CXXFLAGS=${CXXFLAGS/-D_FORTIFY_SOURCE=[1-9]/-D_FORTIFY_SOURCE=0}
+        export CXXFLAGS="$CXXFLAGS -fPIC"
+        export CFLAGS="$CFLAGS -fPIC -Wno-stringop-overflow -Wno-array-parameter -Wno-array-bounds"
         export BAZEL_LINKLIBS=-l%:libstdc++.a
     fi
 fi

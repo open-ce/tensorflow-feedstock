@@ -20,6 +20,7 @@ source:
     - 0103-BUILD-changes-for-external-sqlite-package.patch
     - 0107-do-not-hardcode-ca-cert-location.patch
     - 0108-P10-changes.patch                    #[ppc_arch == 'p10']
+    - 0109-Fix-p10-build-on-hwloc.patch         #[ppc_arch == 'p10']
     # 02xx - GPU only patch specific to open-ce (maybe)
 {% if build_type == 'cuda' %}
 #    - 0201-add-additional-cuda-rpaths.patch
@@ -60,7 +61,7 @@ outputs:
       string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }} #[build_type == 'cuda']
       script_env:
         - CUDA_HOME               #[build_type == 'cuda']
-        - GCC_11_HOME             #[ppc_arch == 'p10']
+        - GCC_HOME             #[ppc_arch == 'p10']
       ignore_run_exports:
         - sqlite
 

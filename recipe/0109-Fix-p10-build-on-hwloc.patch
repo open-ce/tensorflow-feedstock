@@ -1,0 +1,25 @@
+From fd7280cb17ecfb1708d833bbb85c97bc543f7e2f Mon Sep 17 00:00:00 2001
+From: ArchanaShinde1 <archana.shinde2504@gmail.com>
+Date: Mon, 29 Jan 2024 13:37:03 +0000
+Subject: [PATCH] Fix p10 build on hwloc
+
+---
+ third_party/hwloc/hwloc.BUILD | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/third_party/hwloc/hwloc.BUILD b/third_party/hwloc/hwloc.BUILD
+index 7bc6d61892d..7bc15d2edc9 100644
+--- a/third_party/hwloc/hwloc.BUILD
++++ b/third_party/hwloc/hwloc.BUILD
+@@ -110,7 +110,7 @@ _INCLUDE_PRIVATE_HWLOC_AUTOIGEN_CONFIG_H_COMMON_SUBS = {
+     "#undef HAVE_SYS_MMAN_H": "#define HAVE_SYS_MMAN_H 1",
+     "#undef HAVE_SYS_PARAM_H": "#define HAVE_SYS_PARAM_H 1",
+     "#undef HAVE_SYS_STAT_H": "#define HAVE_SYS_STAT_H 1",
+-    "#undef HAVE_SYS_SYSCTL_H": "#define HAVE_SYS_SYSCTL_H 1",
++#    "#undef HAVE_SYS_SYSCTL_H": "#define HAVE_SYS_SYSCTL_H 1",
+     "#undef HAVE_SYS_TYPES_H": "#define HAVE_SYS_TYPES_H 1",
+     "#undef HAVE_SYS_UTSNAME_H": "#define HAVE_SYS_UTSNAME_H 1",
+     "#undef HAVE_TIME_H": "#define HAVE_TIME_H 1",
+-- 
+2.40.1
+
