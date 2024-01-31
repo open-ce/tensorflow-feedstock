@@ -1,0 +1,31 @@
+From b133b3e1a30647e2f7711a568d1d8f2ac35af898 Mon Sep 17 00:00:00 2001
+From: Deepali Chourasia <deepch23@in.ibm.com>
+Date: Wed, 31 Jan 2024 12:39:55 +0000
+Subject: [PATCH] skip Wno-stringop-overflow
+
+---
+ .bazelrc | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/.bazelrc b/.bazelrc
+index a2ff5848fcf..4477bf0ee32 100644
+--- a/.bazelrc
++++ b/.bazelrc
+@@ -314,6 +314,7 @@ build:linux --copt="-Wno-deprecated"
+ build:linux --copt="-Wno-deprecated-declarations"
+ build:linux --copt="-Wno-ignored-attributes"
+ build:linux --copt="-Wno-array-bounds"
++build:linux --copt="-Wno-stringop-overflow"
+ 
+ # Add unused-result as an error on Linux.
+ build:linux --copt="-Wunused-result"
+@@ -705,4 +706,4 @@ build:tf_fuzztest --action_env=CC=clang
+ build:tf_fuzztest --action_env=CXX=clang++
+ build:tf_fuzztest --spawn_strategy=sandboxed
+ build:tf_fuzztest --config=monolithic
+-build:tf_fuzztest --@libjpeg_turbo//:noasm=yes
+\ No newline at end of file
++build:tf_fuzztest --@libjpeg_turbo//:noasm=yes
+-- 
+2.40.1
+

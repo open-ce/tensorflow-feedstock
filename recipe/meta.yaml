@@ -40,6 +40,7 @@ source:
     - 0318-Fix-s390x-type-casting.patch                  #[s390x]
     - 0319-Fixed-jpeg-build-on-Power.patch        #[ppc64le]
     - 0320-Fixed-for-cuda-11.2.patch              #[cudatoolkit == "11.2"]
+    - 0001-skip-Wno-stringop-overflow.patch
 
 build:
   number: 4
