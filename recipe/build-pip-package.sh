@@ -29,10 +29,6 @@ then
         export PATH=$GCC_HOME/bin:$PATH
         export CC=$GCC_HOME/bin/gcc
         export CXX=$GCC_HOME/bin/g++
-        export CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=[1-9]/-D_FORTIFY_SOURCE=0}
-        export CXXFLAGS=${CXXFLAGS/-D_FORTIFY_SOURCE=[1-9]/-D_FORTIFY_SOURCE=0}
-        export CXXFLAGS="$CXXFLAGS -fPIC"
-        export CFLAGS="$CFLAGS -fPIC -Wno-stringop-overflow -Wno-array-parameter -Wno-array-bounds"
         export BAZEL_LINKLIBS=-l%:libstdc++.a
     fi
 fi
