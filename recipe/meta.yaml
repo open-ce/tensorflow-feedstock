@@ -43,7 +43,7 @@ source:
     - 0001-skip-Wno-stringop-overflow.patch       #[ppc_arch == 'p10']
 
 build:
-  number: 4
+  number: 5
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
