@@ -35,6 +35,9 @@ then
     fi
 fi
 
+export CXXFLAGS="$(echo ${CXXFLAGS} | sed -e 's/ -fno-plt//')"
+export CFLAGS="$(echo ${CFLAGS} | sed -e 's/ -fno-plt//')"
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PREFIX/lib
 # Build Tensorflow from source
 SCRIPT_DIR=$RECIPE_DIR/../buildscripts
 

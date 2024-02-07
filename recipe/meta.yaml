@@ -39,7 +39,9 @@ source:
     - 0318-Fix-s390x-type-casting.patch                  #[s390x]
     - 0321-Update-cudnn-frontend-for-cuda-12.patch  #[build_type == "cuda"]
     - 0322-Fix-cpuinfo.patch                        #[ppc64le or x86_64]
+    - 0323-update-rules-python.patch                #[ppc64le]
     - 0324-Boringssl-patched-for-s390x.patch        #[s390x]
+    - requirements.patch   #TBD: this will be needed for py310 and py39 too
 
 build:
   number: 1
