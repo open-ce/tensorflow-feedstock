@@ -35,9 +35,16 @@ then
     fi
 fi
 
-export CXXFLAGS="$(echo ${CXXFLAGS} | sed -e 's/ -fno-plt//')"
-export CFLAGS="$(echo ${CFLAGS} | sed -e 's/ -fno-plt//')"
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PREFIX/lib
+ARCH=`uname -p`
+if [[ "${ARCH}" == 'ppc64le' ]]; then
+    # remove -fno-plt as it causes failure with numpy installation
+    # https://github.com/numpy/numpy/issues/25436
+    export CXXFLAGS="$(echo ${CXXFLAGS} | sed -e 's/ -fno-plt//')"
+    export CFLAGS="$(echo ${CFLAGS} | sed -e 's/ -fno-plt//')"
+    # fix for h5py installation to find libhdf5.so
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PREFIX/lib
+fi
+
 # Build Tensorflow from source
 SCRIPT_DIR=$RECIPE_DIR/../buildscripts
 
