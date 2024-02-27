@@ -44,7 +44,7 @@ source:
     - 0326-fix-build-for-ppc.patch                  #[ppc64le]
 
 build:
-  number: 1
+  number: 2
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -63,7 +63,7 @@ outputs:
       string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }} #[build_type == 'cuda']
       script_env:
         - CUDA_HOME               #[build_type == 'cuda']
-        - GCC_11_HOME             #[ppc_arch == 'p10']
+        - GCC_HOME             #[ppc_arch == 'p10']
         - LIMIT_BUILD_RESOURCES
       ignore_run_exports:
         - sqlite
