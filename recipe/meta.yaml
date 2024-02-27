@@ -61,7 +61,7 @@ outputs:
       string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }} #[build_type == 'cuda']
       script_env:
         - CUDA_HOME               #[build_type == 'cuda']
-        - GCC_11_HOME             #[ppc_arch == 'p10']
+        - GCC_HOME             #[ppc_arch == 'p10']
         - LIMIT_BUILD_RESOURCES
       ignore_run_exports:
         - sqlite
