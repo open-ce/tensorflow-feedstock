@@ -23,16 +23,26 @@ export TF_PYTHON_VERSION=$PY_VER
   
 if [[ $ppc_arch == "p10" ]]
 then 
-    if [[ -z "${GCC_11_HOME}" ]];
+    if [[ -z "${GCC_HOME}" ]];
     then
-	echo "Please set GCC_11_HOME to the install path of gcc-toolset-11"
+	echo "Please set GCC_HOME to the install path of gcc-toolset-12"
         exit 1
     else
-        export PATH=$GCC_11_HOME/bin:$PATH
-        export CC=$GCC_11_HOME/bin/gcc
-        export CXX=$GCC_11_HOME/bin/g++
+        export PATH=$GCC_HOME/bin:$PATH
+        export CC=$GCC_HOME/bin/gcc
+        export CXX=$GCC_HOME/bin/g++
         export BAZEL_LINKLIBS=-l%:libstdc++.a
     fi
+fi
+
+ARCH=`uname -p`
+if [[ "${ARCH}" == 'ppc64le' ]]; then
+    # remove -fno-plt as it causes failure with numpy installation
+    # https://github.com/numpy/numpy/issues/25436
+    export CXXFLAGS="$(echo ${CXXFLAGS} | sed -e 's/ -fno-plt//')"
+    export CFLAGS="$(echo ${CFLAGS} | sed -e 's/ -fno-plt//')"
+    # fix for h5py installation to find libhdf5.so
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PREFIX/lib
 fi
 
 # Build Tensorflow from source
