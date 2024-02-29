@@ -43,6 +43,8 @@ if [[ "${ARCH}" == 'ppc64le' ]]; then
     export CFLAGS="$(echo ${CFLAGS} | sed -e 's/ -fno-plt//')"
     # fix for h5py installation to find libhdf5.so
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PREFIX/lib
+    # fix to find hdf5.h file
+    export CFLAGS=$CFLAGS:$PREFIX/include
 fi
 
 # Build Tensorflow from source
