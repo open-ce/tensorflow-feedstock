@@ -41,10 +41,9 @@ if [[ "${ARCH}" == 'ppc64le' ]]; then
     # https://github.com/numpy/numpy/issues/25436
     export CXXFLAGS="$(echo ${CXXFLAGS} | sed -e 's/ -fno-plt//')"
     export CFLAGS="$(echo ${CFLAGS} | sed -e 's/ -fno-plt//')"
-    # fix for h5py installation to find libhdf5.so
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PREFIX/lib
-    # fix to find hdf5.h file
-    export CFLAGS=$CFLAGS:$PREFIX/include
+    # fix for 'pip install h5py' to find libhdf5.so and hdf5.h
+    export HDF5_INCLUDEDIR=$PREFIX/include
+    export HDF5_LIBDIR=$PREFIX/lib
 fi
 
 # Build Tensorflow from source
