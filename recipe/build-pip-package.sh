@@ -101,9 +101,9 @@ echo "U_CAPI const void * U_EXPORT2 uprv_getICUData_conversion() { return icudt6
 cp icudt69b_dat.c icu_conversion_data_big_endian.c
 gzip icu_conversion_data_big_endian.c
 split -a 3 -b 100000 icu_conversion_data_big_endian.c.gz icu_conversion_data_big_endian.c.gz.
+rm -rf ${SRC_DIR}/third_party/icu/data/icu_conversion*
 cp ${SRC_DIR}/icu/icu4c/source/data/out/tmp/icu_conversion_data_big_endian.c.gz.* ${SRC_DIR}/third_party/icu/data/
 fi
-
 
 #export BAZEL_LINKLIBS=-l%:libstdc++.a
 
