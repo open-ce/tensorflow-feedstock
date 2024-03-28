@@ -46,6 +46,13 @@ if [[ "${ARCH}" == 'ppc64le' ]]; then
     export HDF5_LIBDIR=$PREFIX/lib
 fi
 
+ ARCH=`uname -p`
+ if [[ "${ARCH}" == 's390x' ]]; then
+     # fix for h5py installation to find libhdf5.so
+    export HDF5_INCLUDEDIR=$PREFIX/include
+    export HDF5_LIBDIR=$PREFIX/lib
+ fi
+
 # Build Tensorflow from source
 SCRIPT_DIR=$RECIPE_DIR/../buildscripts
 
@@ -61,6 +68,42 @@ then
 fi
 # Build the bazelrc
 $SCRIPT_DIR/set_tensorflow_bazelrc.sh $SRC_DIR/tensorflow
+
+ARCH=`uname -p`
+if [[ "${ARCH}" == 's390x' ]];
+then
+cd $SRC_DIR
+export ICU_MAJOR_VERSION="69"
+export ICU_RELEASE="release-69-1"
+git clone  --depth 1 --single-branch --branch release-69-1 https://github.com/unicode-org/icu.git
+cd icu/icu4c/source/
+git branch
+# create ./filters.json
+cat << 'EOF' > filters.json
+{
+  "localeFilter": {
+    "filterType": "language",
+    "includelist": [
+      "en"
+    ]
+  }
+}
+EOF
+ICU_DATA_FILTER_FILE=filters.json ./runConfigureICU Linux
+pwd
+make clean && make
+# Workaround makefile issue where not all of the resource files may have been processed
+find data/out/build/ -name '*pool.res' -print0 | xargs -0 touch
+make
+cd data/out/tmp
+LD_LIBRARY_PATH=../../../lib ../../../bin/genccode "icudt${ICU_MAJOR_VERSION}b.dat"
+echo "U_CAPI const void * U_EXPORT2 uprv_getICUData_conversion() { return icudt69b_dat.bytes; }" >> "icudt69b_dat.c"
+cp icudt69b_dat.c icu_conversion_data_big_endian.c
+gzip icu_conversion_data_big_endian.c
+split -a 3 -b 100000 icu_conversion_data_big_endian.c.gz icu_conversion_data_big_endian.c.gz.
+cp ${SRC_DIR}/icu/icu4c/source/data/out/tmp/icu_conversion_data_big_endian.c.gz.* ${SRC_DIR}/third_party/icu/data/
+fi
+
 
 #export BAZEL_LINKLIBS=-l%:libstdc++.a
 

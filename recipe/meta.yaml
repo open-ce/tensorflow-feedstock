@@ -32,19 +32,20 @@ source:
     - 0300-fix-constant_op_test.patch
     #- 0305-Updated-protobuf-version.patch                #[protobuf == "3.19.*"]
     - 0310-Updated-Dist-info-for-tf-estimator-tensorboard-and-k.patch
-    - 0314-EIGEN-grpc-fix-s390x-target.patch             #[s390x]
-    - 0315-hwloc-fix-s390x.patch                         #[s390x]
-    - 0316-s390x-fixes.patch                             #[s390x]
-    - 0317-Disable-big-endian-not-supported-error-from-tf-runti.patch  #[s390x]
-    - 0318-Fix-s390x-type-casting.patch                  #[s390x]
+    - 0001-Combine-patch-for-s390x.patch    #[s390x]
+#    - 0314-EIGEN-grpc-fix-s390x-target.patch             #[s390x]
+#    - 0315-hwloc-fix-s390x.patch                         #[s390x]
+#    - 0316-s390x-fixes.patch                             #[s390x]
+#    - 0317-Disable-big-endian-not-supported-error-from-tf-runti.patch  #[s390x]
+#    - 0318-Fix-s390x-type-casting.patch                  #[s390x]
     - 0321-Update-cudnn-frontend-for-cuda-12.patch  #[build_type == "cuda"]
     - 0322-Fix-cpuinfo.patch                        #[ppc64le or x86_64]
-    - 0324-Boringssl-patched-for-s390x.patch        #[s390x]
-    - 0325-update-rules-python.patch                #[ppc64le]
-    - 0326-fix-build-for-ppc.patch                  #[ppc64le]
+#    - 0324-Boringssl-patched-for-s390x.patch        #[s390x]
+#    - 0325-update-rules-python.patch                #[ppc64le]
+    - 0326-fix-build-for-ppc.patch                  #[ppc64le or s390x]
 
 build:
-  number: 2
+  number: 3
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -72,6 +73,7 @@ outputs:
       build:
         - {{ compiler('c') }}      # [ ppc_arch != "p10"]
         - {{ compiler('cxx') }}    # [ ppc_arch != "p10"]
+        - make
       host:
         # conda build requirements
         - git >=2.2
