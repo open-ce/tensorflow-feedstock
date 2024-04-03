@@ -73,9 +73,9 @@ ARCH=`uname -p`
 if [[ "${ARCH}" == 's390x' ]];
 then
 cd $SRC_DIR
-export ICU_MAJOR_VERSION="69"
-export ICU_RELEASE="release-69-1"
-git clone  --depth 1 --single-branch --branch release-69-1 https://github.com/unicode-org/icu.git
+export ICU_MAJOR_VERSION="73"
+export ICU_RELEASE="release-${ICU_MAJOR_VERSION}-1"
+git clone --depth 1 --single-branch --branch "$ICU_RELEASE" https://github.com/unicode-org/icu.git
 cd icu/icu4c/source/
 git branch
 # create ./filters.json
@@ -97,12 +97,13 @@ find data/out/build/ -name '*pool.res' -print0 | xargs -0 touch
 make
 cd data/out/tmp
 LD_LIBRARY_PATH=../../../lib ../../../bin/genccode "icudt${ICU_MAJOR_VERSION}b.dat"
-echo "U_CAPI const void * U_EXPORT2 uprv_getICUData_conversion() { return icudt69b_dat.bytes; }" >> "icudt69b_dat.c"
-cp icudt69b_dat.c icu_conversion_data_big_endian.c
+echo "U_CAPI const void * U_EXPORT2 uprv_getICUData_conversion() { return icudt${ICU_MAJOR_VERSION}b_dat.bytes; }" >> "icudt${ICU_MAJOR_VERSION}b_dat.c"
+cp icudt${ICU_MAJOR_VERSION}b_dat.c icu_conversion_data_big_endian.c
 gzip icu_conversion_data_big_endian.c
 split -a 3 -b 100000 icu_conversion_data_big_endian.c.gz icu_conversion_data_big_endian.c.gz.
 rm -rf ${SRC_DIR}/third_party/icu/data/icu_conversion*
 cp ${SRC_DIR}/icu/icu4c/source/data/out/tmp/icu_conversion_data_big_endian.c.gz.* ${SRC_DIR}/third_party/icu/data/
+cd $SRC_DIR
 fi
 
 #export BAZEL_LINKLIBS=-l%:libstdc++.a
