@@ -2,7 +2,7 @@ tests:
    - name: SetupTensorFlow Models repo
      command: |
          echo "setup"
-         TF_MODELS_VERSION=2.12.0
+         TF_MODELS_VERSION=2.14.2
          conda install -y git
          git clone --recursive -b v${TF_MODELS_VERSION} https://github.com/tensorflow/models
          cd models
