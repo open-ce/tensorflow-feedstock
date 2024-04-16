@@ -39,7 +39,7 @@ source:
     - 0326-fix-build-for-ppc.patch                  #[ppc64le or s390x]
 
 build:
-  number: 3
+  number: 4
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -102,6 +102,7 @@ outputs:
         - protobuf {{ protobuf }}
         # don't include tensorboard with base
         # don't include tensorflow_estimator
+        - termcolor
         - wrapt {{ wrapt }}
         - wheel
         - six {{ six }}
@@ -133,7 +134,6 @@ outputs:
         - protobuf {{ protobuf }}
         # don't include tensorboard with base
         # don't include tensorflow_estimator
-        - termcolor {{ termcolor }}
         - wrapt {{ wrapt }}
         - wheel
         - six {{ six }}
