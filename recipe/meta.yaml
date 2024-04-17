@@ -102,7 +102,6 @@ outputs:
         - protobuf {{ protobuf }}
         # don't include tensorboard with base
         # don't include tensorflow_estimator
-        - termcolor
         - wrapt {{ wrapt }}
         - wheel
         - six {{ six }}
@@ -134,6 +133,7 @@ outputs:
         - protobuf {{ protobuf }}
         # don't include tensorboard with base
         # don't include tensorflow_estimator
+        - termcolor
         - wrapt {{ wrapt }}
         - wheel
         - six {{ six }}
