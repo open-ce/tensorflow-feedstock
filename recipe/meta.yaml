@@ -37,6 +37,7 @@ source:
     - 0322-Fix-cpuinfo.patch                        #[ppc64le or x86_64]
     - 0325-update-rules-python.patch                #[ppc64le]
     - 0326-fix-build-for-ppc.patch                  #[ppc64le or s390x]
+    - 0327-Revert-Add-host-triple-option.-Previously-the-tool-w.patch #[ppc64le and build_type == "cuda"]
 
 build:
   number: 4
