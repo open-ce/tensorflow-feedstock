@@ -40,7 +40,7 @@ source:
     - 0327-Revert-Add-host-triple-option.-Previously-the-tool-w.patch #[ppc64le and build_type == "cuda"]
 
 build:
-  number: 4
+  number: 5
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -71,7 +71,7 @@ outputs:
         - make
       host:
         # conda build requirements
-        - git >=2.2
+        - git >=2.2                # [not x86_64]
         - bazel {{ bazel }}
         - pip
         - setuptools {{ setuptools }}
