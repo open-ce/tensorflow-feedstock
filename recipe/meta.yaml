@@ -38,9 +38,10 @@ source:
     - 0325-update-rules-python.patch                #[ppc64le]
     - 0326-fix-build-for-ppc.patch                  #[ppc64le or s390x]
     - 0327-Revert-Add-host-triple-option.-Previously-the-tool-w.patch #[ppc64le and build_type == "cuda"]
+    - 0001-Removed-tf-io-dependency.patch           #[s390x]
 
 build:
-  number: 4
+  number: 5
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main

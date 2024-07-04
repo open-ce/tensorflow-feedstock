@@ -1,0 +1,24 @@
+From 9b57785a0acb2bdf9e2e43162323a730e6f84447 Mon Sep 17 00:00:00 2001
+From: Aman Surkar <Aman.Surkar@ibm.com>
+Date: Thu, 4 Jul 2024 06:32:48 +0000
+Subject: [PATCH] Removed tf-io dependency
+
+---
+ tensorflow/tools/pip_package/setup.py | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
+index fdb718d1628..1af77e63925 100644
+--- a/tensorflow/tools/pip_package/setup.py
++++ b/tensorflow/tools/pip_package/setup.py
+@@ -102,7 +102,6 @@ REQUIRED_PACKAGES = [
+     'termcolor >= 1.1.0',
+     'typing_extensions >= 3.6.6',
+     'wrapt >= 1.11.0, < 1.15',
+-    'tensorflow-io-gcs-filesystem >= 0.23.1',
+     # grpcio does not build correctly on big-endian machines due to lack of
+     # BoringSSL support.
+     # See https://github.com/tensorflow/tensorflow/issues/17882.
+-- 
+2.40.1
+
