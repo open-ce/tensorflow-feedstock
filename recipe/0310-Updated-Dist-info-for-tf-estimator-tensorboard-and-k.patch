@@ -1,14 +1,14 @@
-From 092f3f30bdc51f9a672f3ce52baa8e1f451f6cba Mon Sep 17 00:00:00 2001
+From 13f66af9adfa120e4d9a9d822ef218d3bf0f92b3 Mon Sep 17 00:00:00 2001
 From: Aman Surkar <Aman.Surkar@ibm.com>
-Date: Tue, 6 Aug 2024 11:41:29 +0000
+Date: Mon, 19 Aug 2024 12:19:38 +0000
 Subject: [PATCH] Updated-Dist-info-for-tf-estimator-tensorboard-and-k
 
 ---
- tensorflow/tools/pip_package/setup.py | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ tensorflow/tools/pip_package/setup.py | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index e64c0d4344b..fb50265bb4e 100644
+index e64c0d4344b..24785c71044 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
 @@ -89,7 +89,6 @@ REQUIRED_PACKAGES = [
@@ -19,9 +19,12 @@ index e64c0d4344b..fb50265bb4e 100644
      'numpy >= 1.22, <= 1.24.3',
      'opt_einsum >= 2.3.2',
      'packaging',
-@@ -99,8 +98,8 @@ REQUIRED_PACKAGES = [
+@@ -97,10 +96,10 @@ REQUIRED_PACKAGES = [
+     'setuptools',
+     'six >= 1.12.0',
      'termcolor >= 1.1.0',
-     'typing_extensions>=3.6.6,<4.6.0',
+-    'typing_extensions>=3.6.6,<4.6.0',
++    'typing_extensions>=3.6.6',
      'wrapt >= 1.11.0',
 -    'tensorflow-io-gcs-filesystem >= 0.23.1;platform_machine!="arm64" or ' +
 -    'platform_system!="Darwin"',
