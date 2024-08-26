@@ -1,4 +1,4 @@
-{% set build_version = "2.13.0" %}
+{% set build_version = "2.13.1" %}
 
 #This is the recipe to build both CPU and CUDA variants of tensorflow-base and libtensorflow
 package:
@@ -40,6 +40,7 @@ source:
     - 0321-Update-cudnn-frontend-for-cuda-12.patch  #[build_type == "cuda"]
     - 0322-Fix-cpuinfo.patch                        #[ppc64le or x86_64]
     - 0324-Boringssl-patched-for-s390x.patch        #[s390x]
+    - 0001-Disabled-SYS_SYSCTL-for-P10.patch    #[ppc_arch == 'p10']
 
 build:
   number: 1
@@ -61,7 +62,7 @@ outputs:
       string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }} #[build_type == 'cuda']
       script_env:
         - CUDA_HOME               #[build_type == 'cuda']
-        - GCC_11_HOME             #[ppc_arch == 'p10']
+        - GCC_HOME             #[ppc_arch == 'p10']
         - LIMIT_BUILD_RESOURCES
       ignore_run_exports:
         - sqlite

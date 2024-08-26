@@ -119,3 +119,10 @@ cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
 build --linkopt="-fuse-ld=gold"
 EOF
 fi
+
+if [[ "${ARCH}" == 's390x' || $ppc_arch == "p10" ]]
+then
+cat >> $BAZEL_RC_DIR/tensorflow.bazelrc << EOF
+build --copt="-Wno-stringop-overflow"
+EOF
+fi

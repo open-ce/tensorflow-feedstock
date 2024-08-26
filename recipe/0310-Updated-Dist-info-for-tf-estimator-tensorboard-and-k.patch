@@ -1,14 +1,14 @@
-From bdc8e1b77be2300e4452b2d5dc57ddd1aadf38b0 Mon Sep 17 00:00:00 2001
-From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Wed, 23 Aug 2023 05:52:41 +0000
-Subject: [PATCH] Updated Dist Info of TF
+From 13f66af9adfa120e4d9a9d822ef218d3bf0f92b3 Mon Sep 17 00:00:00 2001
+From: Aman Surkar <Aman.Surkar@ibm.com>
+Date: Mon, 19 Aug 2024 12:19:38 +0000
+Subject: [PATCH] Updated-Dist-info-for-tf-estimator-tensorboard-and-k
 
 ---
  tensorflow/tools/pip_package/setup.py | 7 +++----
  1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index e77e6f81449..7c6a133d168 100644
+index e64c0d4344b..24785c71044 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
 @@ -89,7 +89,6 @@ REQUIRED_PACKAGES = [

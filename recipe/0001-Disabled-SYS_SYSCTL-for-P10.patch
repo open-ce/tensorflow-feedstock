@@ -1,0 +1,25 @@
+From 0f66409b7266eaf8e2c1a964297a21ca8e1fc94d Mon Sep 17 00:00:00 2001
+From: Aman Surkar <Aman.Surkar@ibm.com>
+Date: Mon, 12 Aug 2024 10:52:04 +0000
+Subject: [PATCH] Disabled SYS_SYSCTL for P10
+
+---
+ third_party/hwloc/hwloc.BUILD | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/third_party/hwloc/hwloc.BUILD b/third_party/hwloc/hwloc.BUILD
+index 7bc6d61892d..235eea04416 100644
+--- a/third_party/hwloc/hwloc.BUILD
++++ b/third_party/hwloc/hwloc.BUILD
+@@ -110,7 +110,7 @@ _INCLUDE_PRIVATE_HWLOC_AUTOIGEN_CONFIG_H_COMMON_SUBS = {
+     "#undef HAVE_SYS_MMAN_H": "#define HAVE_SYS_MMAN_H 1",
+     "#undef HAVE_SYS_PARAM_H": "#define HAVE_SYS_PARAM_H 1",
+     "#undef HAVE_SYS_STAT_H": "#define HAVE_SYS_STAT_H 1",
+-    "#undef HAVE_SYS_SYSCTL_H": "#define HAVE_SYS_SYSCTL_H 1",
++    "#undef HAVE_SYS_SYSCTL_H": "#undef HAVE_SYS_SYSCTL_H",
+     "#undef HAVE_SYS_TYPES_H": "#define HAVE_SYS_TYPES_H 1",
+     "#undef HAVE_SYS_UTSNAME_H": "#define HAVE_SYS_UTSNAME_H 1",
+     "#undef HAVE_TIME_H": "#define HAVE_TIME_H 1",
+-- 
+2.40.1
+
