@@ -168,6 +168,12 @@ outputs:
         - protobuf {{ protobuf }}
         - _tensorflow_select {{ tensorflow_select_version }}
 
+test:
+  imports:
+    - tensorflow
+  commands:
+    - pip check
+ 
 about:
   home: http://tensorflow.org/
   license: Apache 2.0
