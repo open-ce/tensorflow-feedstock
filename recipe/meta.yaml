@@ -173,6 +173,8 @@ test:
     - tensorflow
   commands:
     - pip check
+  requires:
+    - pip
  
 about:
   home: http://tensorflow.org/
