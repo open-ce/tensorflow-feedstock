@@ -41,7 +41,7 @@ source:
     - 0001-Removed-tf-io-dependency.patch           #[s390x]
 
 build:
-  number: 5
+  number: 6
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
@@ -168,6 +168,14 @@ outputs:
         - protobuf {{ protobuf }}
         - _tensorflow_select {{ tensorflow_select_version }}
 
+test:
+  imports:
+    - tensorflow
+  commands:
+    - pip check
+  requires:
+    - pip
+ 
 about:
   home: http://tensorflow.org/
   license: Apache 2.0
