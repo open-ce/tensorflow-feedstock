@@ -150,6 +150,10 @@ pip install --no-deps $SRC_DIR/tensorflow_pkg/*p${CONDA_PY}*.whl
 
 # The tensorboard package has the proper entrypoint
 rm -f ${PREFIX}/bin/tensorboard
+if [[ "${ARCH}" == 'ppc64le' ]]; then
+  rm -rf ${PREFIX}/lib/python${PY_VER}/site-packages/tensorflow/include/external/python_ppc64le-unknown-linux-gnu/lib/python${PY_VER}/site-packages/setuptools-68.2.2.dist-info
+  rm -rf ${PREFIX}/lib/python${PY_VER}/site-packages/tensorflow/include/external/python_ppc64le-unknown-linux-gnu/lib/python${PY_VER}/ensurepip/_bundled/setuptools-65.5*
+fi
 
 echo "PREFIX: $PREFIX"
 echo "RECIPE_DIR: $RECIPE_DIR"
