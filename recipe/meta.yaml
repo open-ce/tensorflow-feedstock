@@ -41,7 +41,7 @@ source:
     - 0001-Removed-tf-io-dependency.patch           #[s390x]
 
 build:
-  number: 7
+  number: 8
   entry_points:
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
     - tflite_convert = tensorflow.lite.python.tflite_convert:main
