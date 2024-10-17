@@ -172,9 +172,11 @@ test:
   imports:
     - tensorflow
   commands:
-    - pip check
+# disabled pip check here, as it needs additional packages like keras, tensorboard etc.
+#    - pip check
   requires:
     - pip
+    - ml_dtypes {{ ml_dtypes }}
  
 about:
   home: http://tensorflow.org/
