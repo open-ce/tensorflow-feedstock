@@ -1,17 +1,17 @@
-From 99da70188e54c5d9b0019c54f2838abf1fbfb4c1 Mon Sep 17 00:00:00 2001
-From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Tue, 16 Mar 2021 01:52:08 -0500
-Subject: [PATCH] SQlite BUILD changes for external sqlite package
+From c612eb9b7600b26e1bb5b26bb486b3d4225e6275 Mon Sep 17 00:00:00 2001
+From: Archana-Shinde1 <archana.shinde1@ibm.com>
+Date: Tue, 2 Sep 2025 12:29:41 +0000
+Subject: [PATCH] BUILD changes for external sqlite package
 
 ---
- third_party/systemlibs/sqlite.BUILD | 27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ third_party/systemlibs/sqlite.BUILD | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
 diff --git a/third_party/systemlibs/sqlite.BUILD b/third_party/systemlibs/sqlite.BUILD
-index 20ee1eb..1e914b1 100644
+index 88a84a96137..973d2ff2a07 100644
 --- a/third_party/systemlibs/sqlite.BUILD
 +++ b/third_party/systemlibs/sqlite.BUILD
-@@ -1,12 +1,37 @@
+@@ -1,12 +1,36 @@
  licenses(["unencumbered"])  # Public Domain
  
 +HEADERS = [
@@ -22,8 +22,8 @@ index 20ee1eb..1e914b1 100644
 +LIBS = [
 +   "libsqlite3.so",
 +   "libsqlite3.so.0",
-+   "libsqlite3.so.0.8.6",
 +]
++
 +
  # Production build of SQLite library that's baked into TensorFlow.
  cc_library(
@@ -41,9 +41,8 @@ index 20ee1eb..1e914b1 100644
 +    cmd = """
 +      cp -fL "$(INCLUDEDIR)/sqlite3.h" "$(@D)" &&
 +      cp -fL "$(INCLUDEDIR)/sqlite3ext.h" "$(@D)" &&
-+      cp -fL "$(LIBDIR)/libsqlite3.so.0.8.6" "$(@D)" &&
-+      ln -sf "$(LIBDIR)/libsqlite3.so.0.8.6" "$(@D)/libsqlite3.so.0" &&
-+      ln -sf "$(LIBDIR)/libsqlite3.so.0.8.6" "$(@D)/libsqlite3.so"
++      cp -fL "$(LIBDIR)/libsqlite3.so.0" "$(@D)" &&
++      ln -sf "libsqlite3.so.0" "$(@D)/libsqlite3.so"
 +    """,
 +)
 +
@@ -51,5 +50,5 @@ index 20ee1eb..1e914b1 100644
  py_library(
      name = "python",
 -- 
-1.8.3.1
+2.40.1
 
